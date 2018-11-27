@@ -30,7 +30,6 @@ In the above code, it is possible to see all the console.log output, because `ag
     showSate();
 
     console.log(`You are at ${stageOfDevelopment}`);
-![Example 1 - var]()
 
 In this case, it won't be possible to see the second output of `console.log()`, because `stageOfDevelopment`
 was declared inside a function, and it is just visible there.
