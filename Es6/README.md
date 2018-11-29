@@ -16,7 +16,7 @@ We can declare a variable in the old school way  using **var:** `var someVariabl
 
     console.log(`You are at ${stageOfDevelopment}`);
 
-In the above code, it is possible to see all the console.log output, because `age` and `stafeOfDevelopment` have global scope. But if you wondering about the function scope, take a look at below example:
+In the above code, it is possible to see all the console.log output, because `age` and `stafeOfDevelopment` have global scope. But if you are wondering about the function scope, take a look at below example:
 
     var age = 20;
 
@@ -90,6 +90,6 @@ Another interesting thing in `let` is when it is used in loop `for`. Let's look 
 
 The default behavior of `let` binds the current value of each iteration and the second `console.log` output will show 0 through 9. This behavior cannot be reproduced with `var` because the entire loop will be executed before of the second `console.log`, and each iteration `i` will be overwritten. With `var` our second `console.log` will always output 10.
 
-**const** works in the same way as `let` in terms of scope, the difference is that `const` cannot be updated. It's something that is constant.
+**const** works in the same way as `let` in terms of scope, the difference is that `const` cannot be updated because it's a constant.
 
 
