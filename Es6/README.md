@@ -47,7 +47,7 @@ was declared inside a function, and it is just visible there.
 
 
 How about **let** and **const** ? How can we use them? 
-Rather than been scoped to the function, `let` and `const` they are scoped to the block. And what's a block? A block is any code inside `{}`, as you can see in the below example:
+Rather than been scoped to the function, `let` and `const` are scoped to the block. And what's a block? A block is any code inside `{}`, as you can see in the below example:
  
     var age = 20;
 
@@ -60,7 +60,7 @@ Rather than been scoped to the function, `let` and `const` they are scoped to th
 
 This modified code from the first example won't output the second console.log, because `stageOfDevelopment` has a block scope and it's visible by the `if(age >= 12 && age <= 20){}`. 
 
-Another point that we must know, is that `let`you cannot redeclare the same variable in the same scope, you can just update the date inside it, like this:
+Another point that we must know is, with `let` you cannot redeclare the same variable in the same scope, you can just update the data inside it, like this:
 
     let age = 20;
     console.log(age); //age =  20;
@@ -77,7 +77,7 @@ Another point that we must know, is that `let`you cannot redeclare the same vari
 
     console.log(age); //age = 200;
 
-In this example, you can notice that if you redeclare 'let' in the same scope, it will throw an error on our console, but in a different scope (different block of code), it works normally.
+In this example, you can notice that if you redeclare 'let' variable in the same scope, it will throw an error on our console, but in a different scope (different block of code), it works normally.
 
 Another interesting thing in `let` is when it is used in loop `for`. Let's look at the following example:
 
@@ -88,7 +88,7 @@ Another interesting thing in `let` is when it is used in loop `for`. Let's look 
         },1000);
     }
 
-The default behavior of `let` binds the current value of each iteration and the second `console.log` output will show 0 through 9. This behavior cannot be reproduced with `var` because the entire loop will be executed before of the second `console.log`, and each iteration `i` will be overwritten. With `var` our second `console.log` will always output 10.
+The default behavior of `let` binds the current value of each iteration and consequently, the second `console.log` output will show the numbers starting from 0 through 9. However, this behavior cannot be reproduced with `var` because the entire loop will be executed before of the second `console.log`, and each iteration `i` will be overwritten. Thus, our second `console.log` will always output 10.
 
 **const** works in the same way as `let` in terms of scope, the difference is that `const` cannot be updated because it's a constant.
 
