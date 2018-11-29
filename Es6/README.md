@@ -90,6 +90,6 @@ Another interesting thing in `let` is when it is used in loop `for`. Let's look 
 
 The default behavior of `let` binds the current value of each iteration and consequently, the second `console.log` output will show the numbers starting from 0 through 9. However, this behavior cannot be reproduced with `var` because the entire loop will be executed before of the second `console.log`, and each iteration `i` will be overwritten. Thus, our second `console.log` will always output 10.
 
-**const** works in the same way as `let` in terms of scope, the difference is that `const` cannot be updated because it's a constant.
+**const** works in the same way as `let` in terms of scope, the difference is that `const` cannot be updated, because **const** is a constant.
 
 
