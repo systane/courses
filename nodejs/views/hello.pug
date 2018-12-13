@@ -1,0 +1,19 @@
+extends layout
+
+block content
+
+    div.wrapper
+        p criszao
+
+        //when using variables at attributes, you need to use literal templates 
+        img(src='myPhoto.jpg' alt=`my name is: ${name}`) 
+
+    //when using variables as text inside tags, you need to use #{} notation
+    p my name is: #{name} and I'm #{age} years old.
+
+    // With - we can declare variables
+    - const upName = name.toUpperCase();
+    p #{upName}
+
+    p the current time is: #{h.moment().format()}
+
