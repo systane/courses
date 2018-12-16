@@ -23,6 +23,12 @@ const userSchema = new Schema({
 });
 
 
+//creates a field (gravatar) on the fly
+userSchema.virtual('gravatar').get(function () {
+    const hash = md5(this.email);
+    return `https://gravatar.com/avatar/${hash}?s=200`
+})
+
 userSchema.plugin(passportLocalMongoose, {usernameField: 'email'}); //plugin to simplify the building username and password login with Passport (authentication middleware for Node.js.)
 userSchema.plugin(mongodbErrorHandler); //transform mongodb unfriendly errors to friendly erros in order to show to the user
 
