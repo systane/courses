@@ -44,3 +44,23 @@ exports.register = async (req, res, next) => {
     await register(user, req.body.password);
     next(); // pass to authController.login
 }
+
+exports.account = (req, res) => {
+    res.render('account', {title: 'Edit your account'});
+}
+
+exports.updateAccount = async (req, res) => {
+    const updates = {
+        name: req.body.name,
+        email: req.body.email
+    };
+
+    const user = await User.findOneAndUpdate(
+        {_id: req.user._id}, //query
+        {$set: updates}, //updates
+        {new: true, runValidators: true, context: 'query'} //options do validate the data that will be update, because mongobd just validate the date when saving in the 1° time
+    );
+    
+    req.flash('success', 'Updatetd the profile');
+    res.redirect('back'); //send the users right back to the other router that they have
+}
