@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-// const Store = mongoose.model('Store');
+const User = mongoose.model('User');
+const promisify = require('es6-promisify');
 
 exports.loginForm = (req, res) => {
     res. render('login', {title: 'Login'});
@@ -33,4 +34,13 @@ exports.validateRegister = (req, res, next) => {
     }
     next();//there were no errors - continue with the process of save the register
 
+}
+
+exports.register = async (req, res, next) => {
+    const user = new User({email: req.body.email, name: req.body.name});
+    
+    //We need pass User as second argument because User.register isn't a top level function, so in order to bind this function to its Object, you must pass the object as second argument
+    const register = promisify(User.register, User); //turn possible return a promise from a function callback based (User.register(entity, callbackFunction))
+    await register(user, req.body.password);
+    next(); // pass to authController.login
 }
