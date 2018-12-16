@@ -54,4 +54,12 @@ storeSchema.pre('save', async function (next) {
     //TODO make more resiliant so slugs are unique
 });
 
+storeSchema.statics.getTagsList = function() {
+    return this.aggregate([
+        {$unwind: '$tags'},
+        {$group: {_id: '$tags', count: {$sum: 1}}},
+        {$sort: {count: -1}} // count: 1 --> sort the data asc and count: -1 --> sort desc
+    ]);
+}
+
 module.exports = mongoose.model('Store', storeSchema);
