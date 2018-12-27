@@ -101,3 +101,23 @@ exports.getStoresByTag = async(req, res) => {
 
     res.render('tag', {tags, title: 'Tags', tagName, stores});
 }
+
+
+/*
+    API
+*/
+
+exports.searchStores = async (req, res) => {
+    const stores = await Store.find({
+        $text: {
+            $search: req.query.q
+        }
+    }, 
+    { 
+        score: {$meta: 'textScore'}//2º argument -> creates a "virtual field" that counts and ranks how many times the value from 'req.query.q' appears in our query result.
+    })
+    .sort({
+        score: {$meta: 'textScore'}
+    });
+    res.json(stores);
+}
