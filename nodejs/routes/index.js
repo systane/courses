@@ -69,6 +69,8 @@ router.get('/reverse/:name', (req, res) => {
   res.send(reverse);
 });
 
+router.get('/map', storeController.mapPage);
+
 
 
 /*
@@ -76,5 +78,6 @@ router.get('/reverse/:name', (req, res) => {
 */
 
 router.get('/api/search', catchErrors(storeController.searchStores));
+router.get('/api/stores/near', catchErrors(storeController.mapStores));
 
 module.exports = router;
