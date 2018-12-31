@@ -77,4 +77,57 @@ storeSchema.statics.getTagsList = function() {
     ]);
 }
 
+storeSchema.statics.getTopStores = function(){
+    return this.aggregate([
+        //lookup stores and populate their reviews
+        {
+            $lookup: {
+                //from: 'reviews' mongoBD put our model as lowercase and add 's' at the final
+                from: 'reviews', localField: '_id', 
+                foreignField: 'store', as: 'reviews'
+            }
+        },
+        //Filter for only items that have 2 or more reviews
+        {
+            $match: {'reviews.1': {$exists: true}} //reviews.1 --> where the second item in the reviews exist, 
+        },
+        //Add the average reviews field
+        {
+            $project: { 
+                photo: '$$ROOT.photo', //$$ROOT --> It's the selector to the original document
+                name: '$$ROOT.name',
+                reviews: '$$ROOT.reviews',
+                slug: '$$ROOT.slug',
+                averageRating: {$avg: '$reviews.rating'} //create a new field.
+                //'$reviews' --> The '$' sign is used to take the data that it's being piped from our match
+            }
+        },
+        //Sort it by out new field, highest reviews first
+        {$sort: {averageRating: -1}},
+        //limit to at most 10
+        {$limit: 10}
+    ]);
+}
+
+//Find reviews where the stores _id property === reviews store property
+storeSchema.virtual('reviews', {
+    ref: 'Review',
+    localField: '_id',
+    foreignField: 'store'
+}, {
+    //virtual fields aren't explicit, so if you want to see them we must explicitly call the virtual property
+    //but using the below option these fields become explicit
+    toJson: {virtuals: true},
+    toObject: {virtuals: true}
+});
+
+
+function autopopulate(next) {
+    this.populate('reviews');
+    next();
+}
+
+storeSchema.pre('find', autopopulate);
+storeSchema.pre('findOne', autopopulate);
+
 module.exports = mongoose.model('Store', storeSchema);

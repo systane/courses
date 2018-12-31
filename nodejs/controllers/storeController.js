@@ -86,7 +86,7 @@ exports.updateStore = async(req, res) => {
 }
 
 exports.getStoreBySlug = async(req, res, next) => {
-    const store = await Store.findOne({slug: req.params.slug}).populate('author'); //populate the author object
+    const store = await Store.findOne({slug: req.params.slug}).populate('author reviews'); //populate the author object
 
     if(!store)return next();
     res.render('store', {title: store.name, store});
@@ -101,6 +101,12 @@ exports.getStoresByTag = async(req, res) => {
     const [tags, stores] = await Promise.all([tagsPromise, storesPromise]);
 
     res.render('tag', {tags, title: 'Tags', tagName, stores});
+}
+
+exports.getTopStores = async(req, res) => {
+    const stores = await Store.getTopStores();
+
+    res.render('topStores', {stores, title: `Top ${stores.length} Stores`});
 }
 
 
