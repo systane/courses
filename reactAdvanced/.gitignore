@@ -1,1 +1,4 @@
 starter_files
+backend/node_modules
+frontend/node_modules
+*package-lock.json
