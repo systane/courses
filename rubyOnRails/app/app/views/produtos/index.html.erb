@@ -1,0 +1,22 @@
+<% if flash[:notice] %>
+    <div class="alert alert-success" role="alert"><%= flash[:notice] %></div>
+<% end %>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <td>Nome</td>
+            <td>Descrição</td>
+            <td>Quantidade</td>
+            <td>Preço</td>
+            <td></tr>
+    </thead>
+    <tbody>
+        <%= render partial: "produto", collection: @produtos %>
+    </tbody>
+</table>
+
+<%= link_to 'Cria novo produto', new_produto_path %> 
+<%# o links/Urls com _path mostram o caminho relativo, nesse caso produtos/new, 
+    já o _url mostra o caminho completo (https:localhost:3000/produtos/new)
+%>
