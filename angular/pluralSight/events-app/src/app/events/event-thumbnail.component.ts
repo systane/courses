@@ -24,7 +24,16 @@ export class EventThumbnailComponent {
   //@Ouput indica que dados serão transmitidos para o component pai
   @Output() eventClick = new EventEmitter()
 
+
+  //Variavel publica que pode ser acessada via template variable no component pai,
+  //para isso basta declarar uma variable no componente pai com '#'
+  someProperty:any = "Some Value"
+
   handleClickMe() {
     this.eventClick.emit('foo')
+  }
+
+  logFoo() {
+    console.log('foo');
   }
 }
