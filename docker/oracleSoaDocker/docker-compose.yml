@@ -1,0 +1,10 @@
+version: '3'
+services:
+  ubuntu_soa:
+    build:
+      dockerfile: dockerfile
+      context: .
+    image: ubuntu_soa_img
+    container_name: ubuntu_soa_container
+    volumes: 
+      - /opt/oracle/:/opt

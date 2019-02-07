@@ -1,0 +1,31 @@
+FROM ubuntu
+MAINTAINER Luis Fernando
+RUN apt-get update
+RUN apt-get upgrade -y
+
+# Install OpenJDK-8
+RUN apt-get update && \
+  apt-get install -y openjdk-8-jdk && \
+  apt-get install -y ant && \
+  apt-get clean;
+
+# Fix certificate issues
+RUN apt-get update && \
+  apt-get install ca-certificates-java && \
+  apt-get clean && \
+  update-ca-certificates -f;
+
+# Setup JAVA_HOME -- useful for docker commandline
+ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64/
+RUN export JAVA_HOME
+
+#Install nano
+RUN apt-get install nano
+
+WORKDIR /
+
+#Install oracle soa suite in silent mode
+#RUN java -jar /dockerSharedFolder/oracle/soa_suite12210/fmw_122110/fmw_12.2.1.0.0_soa_quickstart.jar -silent
+
+#ADD /opt/soa_suite12210/fmw_122110 /opt/
+
