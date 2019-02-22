@@ -1,7 +1,7 @@
 # **Spring Framework: An Overview**
 Spring is a modular framework to web development,and it has many features that we'll be talking in this article. But first let's define the base concepts to understand how this awesome framewok works.
 
-**Ioc Containers:** The Spring container is the core of the Spring Framework. Containers will create, configure, wire and manage objects their entire life cycle. With the DI (Dependency Inversion) spring can manage this objects (Spring Beans) easily.
+**Ioc Containers:** The Spring container is the core of the Spring Framework. Containers will create, configure, wire and manage objects and their entire life cycle. With the DI (Dependency Inversion) spring can manage this objects (Spring Beans) easily.
 
 The container gets its instructions of what Beans to instantiate, configure and assemble by reading the configuration metadata provided. This configuration can be Java annotation, XML or Java code.
 
@@ -15,9 +15,12 @@ There are two of types of Spring containers:
 
 **Beans:** they are the objects that form the backbone of your application. They're managed by the Spring Ioc Container (Spring Context). 
 
-Beans have some important properties like the **scope**. This attribute defines how Spring Context will instance a new bean each time one is needed. If you need only one instance of a bean, you should define the scope as **singleton** (default scope), you need a new instance on each request you should use a **request** scope. in addition to that, you can also configure methods to execute before the destruction or after the initialization of a bean or a group of beans. If all this functionalities doens't fit, you can entirely customize the instantiation logic, dependency-resolution logic just defining BeanPostProcessor implementations.
+Beans have some important properties like the **scope**. This attribute defines how Spring Context will instance a new bean each time one is needed. If you need only one instance of a bean, you should define the scope as **singleton** (default scope), otherwise if you need a new instance on each request you should use a **request** scope. In addition to that, you can also configure methods to execute before the destruction or after the initialization of a bean or a group of beans. You can also entirely customize the instantiation logic, dependency-resolution logic of one bean, just defining BeanPostProcessor implementations.
 
-**Dependency Injection:** Helps you in gluing classes together and the same time keeping them independent and the entire procedure of DI is controlled by the Spring Framework. In the bellow code the Computer class knows how the Screen class is build and all its dependencies (if the screen would had depended of other classes, the computer class will be know about it).
+**Dependency Injection:** It Helps you in gluing classes together and the same time keeping them independent and the entire procedure of DI can be controlled by the Spring Framework just using annotations. 
+
+But what is Dependency Injection in the pratice?
+In the bellow code the Computer class knows how the Screen class is build and all its dependencies (if the screen would had depended of other classes, the computer class will be know about it).
 
     public class Computer {
       private Screen screen;
@@ -28,7 +31,7 @@ Beans have some important properties like the **scope**. This attribute defines 
     }
 
 
-But in the bellow piece of code, the Computer class knows nothing about the Screen, and that's Dependency Injection.
+But let's take a look in another piece of code, the Computer class knows nothing about the Screen, and that's Dependency Injection.
 
     public class Computer {
       private Screen screen;
@@ -60,7 +63,8 @@ Spring Boot is a framework used to create a Micro Service, it and enables you to
 **How does it work?**
 Spring Boot automatically configures your application based on the dependencies you have added to the project by usind **@EnableAutoConfiguration**. For example, if you have MySQL database in your classpath, but you haven't configured any database connection, then Spring Boot auto-configures an in-memory database.
 
-The start point of any Spring Boot application is the class with **@SpringBootApplication**. The framewok will automatically scan all the component included in the project by usind **@ComponentScan**. The **@SpringBootApplication** includes **@EnableAutoConfiguration** (Enable the auto configuration of the spring), **@ComponentScan** and **@SpringBootConfiguration**
+The start point of any Spring Boot application is the class with **@SpringBootApplication**. The framewok will automatically scan all the component included in the project by usind **@ComponentScan**. The **@SpringBootApplication** includes **@EnableAutoConfiguration** (Enable the auto configuration of the spring), **@ComponentScan** and **@SpringBootConfiguration**.
+
 
 
 
