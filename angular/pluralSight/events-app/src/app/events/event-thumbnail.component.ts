@@ -39,7 +39,7 @@ export class EventThumbnailComponent {
 
   //Variavel publica que pode ser acessada via template variable no component pai,
   //para isso basta declarar uma variable no componente pai com '#'
-  someProperty: any = "Some Value"
+  // someProperty: any = "Some Value"
 
   handleClickMe() {
     this.eventClick.emit('foo')
