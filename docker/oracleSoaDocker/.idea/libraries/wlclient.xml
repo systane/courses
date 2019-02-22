@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="wlclient">
+    <CLASSES>
+      <root url="jar:///opt/oracle/Middleware/Oracle_Home/wlserver/server/lib/wlclient.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
