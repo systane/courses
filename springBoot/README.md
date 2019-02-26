@@ -54,7 +54,7 @@ Spring mvc framework provides an MVC architecture that easy and flexible the web
 
 ![Architecture Spring MVC](https://www.tutorialspoint.com/spring/images/spring_dispatcherservlet.png)
 
-As shown in the aboce diagram the DispatcherServlet receives all the HTTP request and consults the HandlerMapping to call the appropriate Controller. After the Controller takes the request and make all the necessary processing, it will returns the view name to the DispatcherServlet. The DispatcherServlet will take help from ViewResolver to pick up the defined view to return in the response. Once the view is ready, the DispatcherServlet passes the necessary data to the view wich is finally rendered on the browser.
+As shown in the above diagram the DispatcherServlet receives all the HTTP request and consults the HandlerMapping to call the appropriate Controller. After the Controller takes the request and make all the necessary processing, it will returns the view name to the DispatcherServlet. The DispatcherServlet will take help from ViewResolver to pick up the defined view to return in the response. Once the view is ready, the DispatcherServlet passes the necessary data to the view wich is finally rendered on the browser.
 
 # *Spring Boot*
 
