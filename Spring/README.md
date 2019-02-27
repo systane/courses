@@ -89,3 +89,5 @@ The below image shows the basic architecture of batch processing and Spring has 
 - **Step:** Is a domain object that encapuslates an independent, sequential phase of a batch job. Each step has an individual StepExecution.
 
 - **JobLauncher:** Represents a simple interface for launching a Job with a given set of JobParameters.
+
+- **Listerners:** Listerners can be used to listen events that may happen in a job execution.For example, if an ItemWriter needs to be notified when the Step has been completed, to start writing itens at database, you can configure an listener.
