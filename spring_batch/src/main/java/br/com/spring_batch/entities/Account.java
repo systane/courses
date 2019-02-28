@@ -2,6 +2,7 @@ package br.com.spring_batch.entities;
 
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 public class Account {

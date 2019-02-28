@@ -1,7 +1,7 @@
 package br.com.spring_batch.endpoints;
 
+import br.com.spring_batch.services.AccountService;
 import br.com.spring_batch.entities.Account;
-import br.com.spring_batch.repositories.AccountRepository;
 import org.springframework.batch.core.*;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
@@ -14,20 +14,25 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 public class MainEndpoint {
 
+    private final AccountService accountService;
+
     @Autowired
-    private AccountRepository accountRepository;
+    public MainEndpoint(AccountService accountService) {
+        this.accountService = accountService;
+    }
 
     @RequestMapping("/")
     public String home(){
 
-        List<Account> accounts = accountRepository.readAccount();
+        Account account = accountService.readAccount();
 
-        if(!CollectionUtils.isEmpty(accounts)){
-            accounts.stream().forEach(account -> System.out.println(account.toString()));
+        if(Objects.nonNull(account)){
+            System.out.println(account.toString());
         }
         else {
             System.out.println("nothing fetched");
