@@ -23,25 +23,22 @@ public class AccountProcessor implements ItemProcessor<Account, Person> {
     @Override
     public Person process(Account account) throws Exception {
 
-//        accountList.stream().forEach(account -> {
-            Person person = new Person();
+        Person person = new Person();
 
-            person.setName("joaozinho");
-            person.setAccount_id(account.getAccount_id());
-            person.setPerson_id(7L);
+        person.setName("joaozinho");
+        person.setAccount_id(account.getAccount_id());
+        person.setPerson_id(8L);
 
-            String[] email = account.getEmail().split("@");
-            String aliasEmail = email[0];
-            String novoEmail = aliasEmail + "@outlook.com";
-            account.setEmail(novoEmail);
+        String[] email = account.getEmail().split("@");
+        String aliasEmail = email[0];
+        String novoEmail = aliasEmail + "@outlook.com";
+        account.setEmail(novoEmail);
 
-            account = accountService.save(account);
-            person = personService.save(person);
+        account = accountService.save(account);
+        person = personService.save(person);
 
-            System.out.println("Updated Account: " + account.toString());
+        System.out.println("Updated Account: " + account.toString());
 
-            return person;
-//        });
-
+        return person;
     }
 }
