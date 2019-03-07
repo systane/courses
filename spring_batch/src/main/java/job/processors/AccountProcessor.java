@@ -1,45 +1,41 @@
 package job.processors;
 
 import br.com.spring_batch.entities.Account;
-import br.com.spring_batch.entities.Xugus;
-import br.com.spring_batch.repositories.AccountRepository;
-import br.com.spring_batch.repositories.XugusRepository;
+import br.com.spring_batch.entities.Person;
 import br.com.spring_batch.services.AccountService;
-import org.apache.commons.lang3.Validate;
 import org.springframework.batch.item.ItemProcessor;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-public class AccountProcessor implements ItemProcessor<Account, Xugus> , InitializingBean {
+@Component
+public class AccountProcessor implements ItemProcessor<Account, Person> {
 
-    private AccountRepository accountRepository;
+    private final AccountService accountService;
+//    private final PersonService personService;
 
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        Validate.notNull(accountRepository, "accountRepository deve ser fornecido");
+    @Autowired
+    public AccountProcessor(AccountService accountService) {
+        this.accountService = accountService;
+//        this.personService = personService;
     }
 
-    public void setAccountRepository(AccountRepository accountRepository){
-        this.accountRepository = accountRepository;
-    }
-
-
     @Override
-    public Xugus process(Account account) throws Exception {
-        Xugus xugus = new Xugus();
+    public Person process(Account account) throws Exception {
+        Person person = new Person();
 
-        xugus.setPerson_id(account.getPerson_id());
-        xugus.setNome("Xugao");
+        person.setName("joaozinho");
+        person.setAccount_id(account.getAccount_id());
 
         String[] email = account.getEmail().split("@");
         String aliasEmail = email[0];
         String novoEmail = aliasEmail + "@outlook.com";
+        account.setEmail(novoEmail);
 
-        Account updatedAccount = accountRepository.alterAccount(account.getPerson_id(), novoEmail);
-        System.out.println(updatedAccount.toString());
+        account = accountService.save(account);
+//        person = personService.save(person);
 
-//        Xugus xugusSalvo = xugusRepository.insert(xugus);
+        System.out.println("Conta alterada" + account.toString());
 
-        return xugus;
+        return person;
     }
 }

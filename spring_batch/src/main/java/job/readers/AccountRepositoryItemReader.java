@@ -1,35 +1,34 @@
 package job.readers;
 
-import br.com.spring_batch.services.AccountService;
 import br.com.spring_batch.entities.Account;
-import org.apache.commons.lang3.Validate;
+import br.com.spring_batch.services.AccountService;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.NonTransientResourceException;
 import org.springframework.batch.item.ParseException;
 import org.springframework.batch.item.UnexpectedInputException;
-import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-import java.util.List;
+import java.util.Objects;
 
-public class AccountRepositoryItemReader implements ItemReader<Account>, InitializingBean {
+@Component
+public class AccountRepositoryItemReader implements ItemReader<Account>{
 
-    private AccountService accountService;
+    private final AccountService accountService;
+
+    @Autowired
+    public AccountRepositoryItemReader(AccountService accountService) {
+        this.accountService = accountService;
+    }
 
     @Override
     public Account read() throws Exception, UnexpectedInputException, ParseException, NonTransientResourceException {
-        Account account = accountService.readAccount();
-        System.out.println(account.toString());
+        Account account = accountService.findByEmailisLike("%@hotmail.com");
+
+        if(Objects.nonNull(account)){
+            System.out.println(account.toString());
+        }
 
         return account;
-    }
-
-
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        Validate.notNull(accountService, "accountService deve ser fornecido");
-    }
-
-    public void setAccountService(AccountService accountService){
-        this.accountService = accountService;
     }
 }

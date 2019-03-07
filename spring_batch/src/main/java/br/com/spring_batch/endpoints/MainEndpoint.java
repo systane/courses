@@ -1,7 +1,7 @@
 package br.com.spring_batch.endpoints;
 
-import br.com.spring_batch.services.AccountService;
 import br.com.spring_batch.entities.Account;
+import br.com.spring_batch.services.AccountService;
 import org.springframework.batch.core.*;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
@@ -10,10 +10,9 @@ import org.springframework.batch.core.repository.JobRestartException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import java.util.List;
+
 import java.util.Objects;
 
 @RestController
@@ -29,7 +28,7 @@ public class MainEndpoint {
     @RequestMapping("/")
     public String home(){
 
-        Account account = accountService.readAccount();
+        Account account = accountService.findById(1L);
 
         if(Objects.nonNull(account)){
             System.out.println(account.toString());

@@ -2,11 +2,11 @@ package br.com.spring_batch;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ImportResource;
+import org.springframework.context.annotation.ComponentScan;
 
 
 @SpringBootApplication
-@ImportResource({"/spring/batch/config/database.xml", "/spring/batch/config/context.xml"})
+@ComponentScan(basePackages = {"br.com.spring_batch", "job"})
 public class Application {
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);

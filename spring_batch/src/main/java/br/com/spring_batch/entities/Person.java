@@ -1,20 +1,15 @@
 package br.com.spring_batch.entities;
 
-
 import lombok.Data;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-/**
- * This entity represents the Account table.
- */
 @Data
 @Entity
-public class Account {
+public class Person {
     @Id
+    private Long person_id;
     private Long account_id;
-    private String username;
-    private String password;
-    private String email;
+    private String name;
 }
