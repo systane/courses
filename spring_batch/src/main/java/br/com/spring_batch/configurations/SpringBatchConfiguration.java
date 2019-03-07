@@ -3,9 +3,10 @@ package br.com.spring_batch.configurations;
 
 import br.com.spring_batch.entities.Account;
 import br.com.spring_batch.entities.Person;
+import job.Listeners.readers.AccountRepositoryItemListener;
 import job.processors.AccountProcessor;
 import job.readers.AccountRepositoryItemReader;
-import job.step.listener.BaseStepListener;
+import job.Listeners.step.BaseStepListener;
 import job.writers.CsvWriter;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
@@ -34,11 +35,12 @@ public class SpringBatchConfiguration {
     private final AccountProcessor accountProcessor;
     private final CsvWriter csvWriter;
     private final BaseStepListener baseStepListener;
+    private final AccountRepositoryItemListener accountRepositoryItemListener;
 
     @Autowired
     public SpringBatchConfiguration(Environment environment, DataSource dataSource, JobBuilderFactory jobFactory, StepBuilderFactory stepFactory,
                                     AccountRepositoryItemReader accountRepositoryItemReader,
-                                    AccountProcessor accountProcessor, CsvWriter csvWriter, BaseStepListener baseStepListener) {
+                                    AccountProcessor accountProcessor, CsvWriter csvWriter, BaseStepListener baseStepListener, AccountRepositoryItemListener accountRepositoryItemListener) {
         this.environment = environment;
         this.dataSource = dataSource;
         this.jobFactory = jobFactory;
@@ -47,14 +49,17 @@ public class SpringBatchConfiguration {
         this.accountProcessor = accountProcessor;
         this.csvWriter = csvWriter;
         this.baseStepListener = baseStepListener;
+        this.accountRepositoryItemListener = accountRepositoryItemListener;
     }
 
     @Bean
-    protected Step step1(AccountRepositoryItemReader reader, AccountProcessor processor, CsvWriter writer, BaseStepListener listener){
+    protected Step step1(AccountRepositoryItemReader reader, AccountProcessor processor, CsvWriter writer,
+                         BaseStepListener listener, AccountRepositoryItemListener readerListener){
         return stepFactory.get("step1")
-                .listener(listener)
+//                .listener(listener)
                 .<Account, Person>chunk(1)
                 .reader(reader)
+                .listener(readerListener)
                 .processor(processor)
                 .writer(writer)
                 .build();

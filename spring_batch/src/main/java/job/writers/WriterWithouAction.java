@@ -2,7 +2,6 @@ package job.writers;
 
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.stereotype.Component;
-
 import java.util.List;
 
 @Component

@@ -1,17 +1,17 @@
 package br.com.spring_batch.services;
 
 import br.com.spring_batch.entities.Account;
-import br.com.spring_batch.repositories.IAccountRepository;
+import br.com.spring_batch.repositories.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AccountService {
 
-    private final IAccountRepository accountRepository;
+    private final AccountRepository accountRepository;
 
     @Autowired
-    public AccountService(IAccountRepository accountRepository) {
+    public AccountService(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
     }
 
@@ -19,7 +19,7 @@ public class AccountService {
         return accountRepository.findById(id).orElse(null);
     }
 
-    public Account findByEmailisLike(String email){
+    public Account findByEmailIsLike(String email){
         return accountRepository.findByEmailIsLike(email);
     }
 

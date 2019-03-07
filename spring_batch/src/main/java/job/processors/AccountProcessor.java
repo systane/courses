@@ -3,6 +3,7 @@ package job.processors;
 import br.com.spring_batch.entities.Account;
 import br.com.spring_batch.entities.Person;
 import br.com.spring_batch.services.AccountService;
+import br.com.spring_batch.services.PersonService;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -11,31 +12,36 @@ import org.springframework.stereotype.Component;
 public class AccountProcessor implements ItemProcessor<Account, Person> {
 
     private final AccountService accountService;
-//    private final PersonService personService;
+    private final PersonService personService;
 
     @Autowired
-    public AccountProcessor(AccountService accountService) {
+    public AccountProcessor(AccountService accountService, PersonService personService) {
         this.accountService = accountService;
-//        this.personService = personService;
+        this.personService = personService;
     }
 
     @Override
     public Person process(Account account) throws Exception {
-        Person person = new Person();
 
-        person.setName("joaozinho");
-        person.setAccount_id(account.getAccount_id());
+//        accountList.stream().forEach(account -> {
+            Person person = new Person();
 
-        String[] email = account.getEmail().split("@");
-        String aliasEmail = email[0];
-        String novoEmail = aliasEmail + "@outlook.com";
-        account.setEmail(novoEmail);
+            person.setName("joaozinho");
+            person.setAccount_id(account.getAccount_id());
+            person.setPerson_id(7L);
 
-        account = accountService.save(account);
-//        person = personService.save(person);
+            String[] email = account.getEmail().split("@");
+            String aliasEmail = email[0];
+            String novoEmail = aliasEmail + "@outlook.com";
+            account.setEmail(novoEmail);
 
-        System.out.println("Conta alterada" + account.toString());
+            account = accountService.save(account);
+            person = personService.save(person);
 
-        return person;
+            System.out.println("Updated Account: " + account.toString());
+
+            return person;
+//        });
+
     }
 }

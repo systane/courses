@@ -9,10 +9,8 @@ import org.springframework.batch.item.UnexpectedInputException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Objects;
-
 @Component
-public class AccountRepositoryItemReader implements ItemReader<Account>{
+public class AccountRepositoryItemReader implements ItemReader<Account> {
 
     private final AccountService accountService;
 
@@ -23,11 +21,7 @@ public class AccountRepositoryItemReader implements ItemReader<Account>{
 
     @Override
     public Account read() throws Exception, UnexpectedInputException, ParseException, NonTransientResourceException {
-        Account account = accountService.findByEmailisLike("%@hotmail.com");
-
-        if(Objects.nonNull(account)){
-            System.out.println(account.toString());
-        }
+        Account account = accountService.findByEmailIsLike("%@hotmail.com");
 
         return account;
     }
