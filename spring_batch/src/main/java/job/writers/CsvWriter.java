@@ -10,8 +10,6 @@ import org.springframework.core.env.Environment;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
 @Component
 public class CsvWriter extends FlatFileItemWriter<Person>{
 
@@ -27,11 +25,13 @@ public class CsvWriter extends FlatFileItemWriter<Person>{
         this.setResource(new FileSystemResource(this.environment.getProperty(CSV_FILE_PAHT)));
         this.setLineAggregator(lineAggregator);
     }
-
-    @Override
-    public void write(List<? extends Person> items) throws Exception {
-        super.write(items);
-    }
+//TODO: Colocar o número de linhas escritas no executionContext?
+//    @Override
+//    public void write(List<? extends Person> items) throws Exception {
+//        super.write(items);
+//
+//
+//    }
 
     /**
      * This method defines a {@link DelimitedLineAggregator} of an CSV file using

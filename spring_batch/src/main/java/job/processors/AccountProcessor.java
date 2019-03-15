@@ -27,7 +27,6 @@ public class AccountProcessor implements ItemProcessor<Account, Person> {
 
         person.setName("joaozinho");
         person.setAccount_id(account.getAccount_id());
-        person.setPerson_id(8L);
 
         String[] email = account.getEmail().split("@");
         String aliasEmail = email[0];

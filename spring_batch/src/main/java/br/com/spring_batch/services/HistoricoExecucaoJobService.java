@@ -15,11 +15,11 @@ public class HistoricoExecucaoJobService {
         this.historicoExecucaoJobRepository = historicoExecucaoJobRepository;
     }
 
-    private HistoricoExecucaoJob save(HistoricoExecucaoJob historicoExecucaoJob){
+    public HistoricoExecucaoJob save(HistoricoExecucaoJob historicoExecucaoJob){
         return historicoExecucaoJobRepository.save(historicoExecucaoJob);
     }
 
-    private HistoricoExecucaoJob findById(Long id){
+    public HistoricoExecucaoJob findById(Long id){
         return historicoExecucaoJobRepository.findById(id).orElse(null);
     }
 }

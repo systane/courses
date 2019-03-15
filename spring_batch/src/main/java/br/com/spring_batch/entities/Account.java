@@ -3,8 +3,7 @@ package br.com.spring_batch.entities;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * This entity represents the Account table.
@@ -13,6 +12,7 @@ import javax.persistence.Id;
 @Entity
 public class Account {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "account_account_id_seq")
     private Long account_id;
     private String username;
     private String password;
