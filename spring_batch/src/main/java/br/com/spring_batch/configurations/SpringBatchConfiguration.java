@@ -1,6 +1,5 @@
 package br.com.spring_batch.configurations;
 
-
 import br.com.spring_batch.JobRunner;
 import br.com.spring_batch.entities.Account;
 import br.com.spring_batch.entities.Person;
@@ -15,11 +14,10 @@ import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import javax.sql.DataSource;
 
 
 @Configuration
@@ -35,17 +33,6 @@ public class SpringBatchConfiguration {
     private final BaseJobListener baseJobListener;
     private final CsvItemWriterListener csvItemWriterListener;
 
-//    @Bean
-//    public JobParameters jobParameters(){
-//        return new JobParametersBuilder().toJobParameters();
-//    }
-
-//    @Bean
-//    public StepScope stepScope() {
-//        final StepScope stepScope = new StepScope();
-//        stepScope.setAutoProxy(true);
-//        return stepScope;
-//    }
 
     @Bean
     /**
@@ -54,7 +41,7 @@ public class SpringBatchConfiguration {
     protected Step step1(AccountRepositoryItemReader reader, AccountProcessor processor, CsvWriter writer,
                          CsvItemWriterListener writerListener){
         return stepFactory.get("step1")
-            .<Account, Person>chunk(1)
+            .<Account, Person>chunk(10)
                 .reader(reader)
                 .processor(processor)
                 .writer(writer)

@@ -8,7 +8,8 @@ import br.com.spring_batch.services.HistoricoExecucaoJobService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.ItemWriteListener;
-import org.springframework.batch.core.JobParameters;
+import org.springframework.batch.core.configuration.annotation.JobScope;
+import org.springframework.batch.item.ExecutionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -16,25 +17,19 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
+@JobScope
 public class CsvItemWriterListener implements ItemWriteListener<Person> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CsvItemWriterListener.class);
 
     private final HistoricoExecucaoJobService historicoExecucaoJobService;
 
-    @Value("#{jobParameters['idHistorico']}")
-    private JobParameters jobParameters;
-
-
-//    @BeforeStep
-//    public void beforeStep(final StepExecution stepExecution){
-//        jobParameters = stepExecution.getJobExecution().getJobParameters();
-//    }
+    @Value("#{jobExecution.executionContext}")
+    private ExecutionContext executionContext;
 
     @Autowired
     public CsvItemWriterListener(HistoricoExecucaoJobService historicoExecucaoJobService) {
         this.historicoExecucaoJobService = historicoExecucaoJobService;
-//        this.jobParameters = jobParameters;
     }
 
     @Override
@@ -47,8 +42,7 @@ public class CsvItemWriterListener implements ItemWriteListener<Person> {
         LOGGER.info("Passo 1 - Escrita realizada com sucesso");
         LOGGER.info("Passo 1 - Salvando histórico dos itens processados");
         try{
-
-            long idHistorico = jobParameters.getLong(JobRunner.PARAMETRO_ID_HISTORICO);
+            Long idHistorico = executionContext.getLong(JobRunner.PARAMETRO_ID_HISTORICO);
             HistoricoExecucaoJob historicoExecucaoJob = historicoExecucaoJobService.findById(idHistorico);
 
             items.forEach(account -> {

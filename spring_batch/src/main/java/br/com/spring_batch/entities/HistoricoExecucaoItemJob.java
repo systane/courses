@@ -20,4 +20,7 @@ public class HistoricoExecucaoItemJob {
 
     @Column(name = "erroexecucao")
     private String erroExecucao;
+
+    @Column(name = "cod_historico_execucao_id")
+    private Long codHistoricoExecucaoJob;
 }

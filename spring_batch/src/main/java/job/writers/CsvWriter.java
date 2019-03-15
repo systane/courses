@@ -26,12 +26,7 @@ public class CsvWriter extends FlatFileItemWriter<Person>{
         this.setLineAggregator(lineAggregator);
     }
 //TODO: Colocar o número de linhas escritas no executionContext?
-//    @Override
-//    public void write(List<? extends Person> items) throws Exception {
-//        super.write(items);
-//
-//
-//    }
+
 
     /**
      * This method defines a {@link DelimitedLineAggregator} of an CSV file using

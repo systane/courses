@@ -10,7 +10,6 @@ import org.springframework.batch.core.*;
 import org.springframework.batch.core.listener.StepListenerFailedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
@@ -21,14 +20,6 @@ public class BaseJobListener implements JobExecutionListener {
     private static final Logger LOGGER = LoggerFactory.getLogger(BaseJobListener.class);
 
     private final HistoricoExecucaoJobService historicoExecucaoJobService;
-
-//    @Value("#{jobParameters}")
-//    private JobParameters jobParameters;
-
-//    @BeforeStep
-//    public void beforeStep(final StepExecution stepExecution){
-//        jobParameters = stepExecution.getJobExecution().getJobParameters();
-//    }
 
     @Autowired
     public BaseJobListener(HistoricoExecucaoJobService historicoExecucaoJobService) {
@@ -47,9 +38,8 @@ public class BaseJobListener implements JobExecutionListener {
             historicoExecucaoJob.setDataInicioExecucao(startTimeLocalDateTime);
             historicoExecucaoJob = historicoExecucaoJobService.save(historicoExecucaoJob);
 
-            JobParameters jobParameters = jobExecution.getJobParameters();
-            JobParameter idHistoricoParameter = new JobParameter(historicoExecucaoJob.getHistorico_execucao_id());
-            jobParameters.getParameters().put(JobRunner.PARAMETRO_ID_HISTORICO, idHistoricoParameter);
+            jobExecution.getExecutionContext().put(JobRunner.PARAMETRO_ID_HISTORICO, historicoExecucaoJob
+                    .getHistorico_execucao_id());
         }
         catch (Exception e){
             LOGGER.error(e.getStackTrace().toString());
@@ -62,33 +52,10 @@ public class BaseJobListener implements JobExecutionListener {
         LOGGER.info("Finalizando o job...");
 
         try{
-            JobParameters jobParameters = jobExecution.getJobParameters();
-            Long idHistorico = jobParameters.getLong(JobRunner.PARAMETRO_ID_HISTORICO);
+            Long idHistorico = jobExecution.getExecutionContext().getLong(JobRunner.PARAMETRO_ID_HISTORICO);
 
             if(Objects.nonNull(idHistorico)){
-                HistoricoExecucaoJob historicoExecucaoJob = historicoExecucaoJobService.findById(idHistorico);
-                Date endTime = jobExecution.getEndTime();
-                LocalDateTime endTimeLocalDateTime = endTime.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-                historicoExecucaoJob.setDataFimExecucao(endTimeLocalDateTime);
-
-                if(!historicoExecucaoJob.isProcessamentoCompleto()) {
-                    String descricaoErro = jobExecution.getStepExecutions().stream()
-                            .filter(stepExecution ->
-                                    stepExecution.getExitStatus().getExitCode().equals(ExitStatus.FAILED.getExitCode())
-                            )
-                            .map(stepExecution ->
-                                    stepExecution.getExitStatus().getExitDescription()
-                            )
-                            .findFirst().orElse(StringUtils.EMPTY);
-
-                    if(descricaoErro.length() > 250){
-                        historicoExecucaoJob.setErroExecucao(descricaoErro.substring(0, 250));
-                    }
-                    else {
-                        historicoExecucaoJob.setErroExecucao(descricaoErro);
-                    }
-                }
-
+                HistoricoExecucaoJob historicoExecucaoJob = getHistoricoExecution(jobExecution, idHistorico);
                 historicoExecucaoJobService.save(historicoExecucaoJob);
             }
         }
@@ -97,7 +64,40 @@ public class BaseJobListener implements JobExecutionListener {
             jobExecution.setStatus(BatchStatus.FAILED);
             throw new StepListenerFailedException("Erro ao finalizar o job", e);
         }
+    }
 
 
+    /**
+     * This method is responsible to recovery a {@link HistoricoExecucaoJob} from database and updates the object
+     * with the finishing status from the job instance run.
+     * @param jobExecution {@link JobExecution} with the metadata from the job instance run.
+     * @param idHistorico {@link Long} representing the id from {@link HistoricoExecucaoJob}
+     * @return an entity with the updated finishing status from the job.
+     */
+    private HistoricoExecucaoJob getHistoricoExecution(JobExecution jobExecution, Long idHistorico) {
+        HistoricoExecucaoJob historicoExecucaoJob = historicoExecucaoJobService.findById(idHistorico);
+        Date endTime = jobExecution.getEndTime();
+        LocalDateTime endTimeLocalDateTime = endTime.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+        historicoExecucaoJob.setDataFimExecucao(endTimeLocalDateTime);
+
+        if(!historicoExecucaoJob.isProcessamentoCompleto()) {
+            String descricaoErro = jobExecution.getStepExecutions().stream()
+                    .filter(stepExecution ->
+                            stepExecution.getExitStatus().getExitCode().equals(ExitStatus.FAILED.getExitCode())
+                    )
+                    .map(stepExecution ->
+                            stepExecution.getExitStatus().getExitDescription()
+                    )
+                    .findFirst().orElse(StringUtils.EMPTY);
+
+            if(descricaoErro.length() > 250){
+                historicoExecucaoJob.setErroExecucao(descricaoErro.substring(0, 250));
+            }
+            else {
+                historicoExecucaoJob.setErroExecucao(descricaoErro);
+            }
+        }
+
+        return historicoExecucaoJob;
     }
 }
