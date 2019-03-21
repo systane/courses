@@ -1,0 +1,2 @@
+#Utilizado para realizar configurações de inicialização do parent, como o nome da aplicação no ecosistema do Spring Cloud
+#e a conexão com um Servidor de Configuração.
