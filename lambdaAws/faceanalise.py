@@ -1,4 +1,5 @@
 import boto3
+import json
 
 s3 = boto3.resource('s3')
 client = boto3.client('rekognition')
@@ -16,3 +17,7 @@ def detecta_faces():
         },
     )
 
+    return faces_detectadas
+
+faces_detectada = detecta_faces()
+print(json.dumps(faces_detectada, indent=4))
