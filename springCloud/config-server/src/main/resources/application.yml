@@ -8,4 +8,4 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/systane/courses/tree/master/springCloud/config-files
+          uri: https://github.com/systane/config-file.git
