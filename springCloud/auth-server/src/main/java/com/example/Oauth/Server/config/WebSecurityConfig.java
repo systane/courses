@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -33,14 +34,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailService).passwordEncoder(passwordEncoder);
     }
 
+    @Override
+    @Bean
+    public AuthenticationManager authenticationManager() throws Exception{
+        return super.authenticationManagerBean();
+    }
+
     /**
      * Método responsável por informar ao Spring Security para tornar o endpoint /oauth/register público
      * @return
      * @throws Exception
      */
     @Override
-    @Bean
-    public AuthenticationManager authenticationManager() throws Exception{
-        return super.authenticationManagerBean();
+    public void configure(WebSecurity webSecurity) throws Exception {
+        webSecurity.ignoring().antMatchers("/oauth/register");
     }
 }
