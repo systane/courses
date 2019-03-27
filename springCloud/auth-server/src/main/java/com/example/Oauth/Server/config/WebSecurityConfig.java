@@ -1,6 +1,6 @@
 package com.example.Oauth.Server.config;
 
-import com.example.Oauth.Server.service.UserDetailService;
+import com.example.Oauth.Server.service.UserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
@@ -19,7 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private UserDetailService userDetailService;
+    private UserDetailsService userDetailsService;
 
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -30,13 +30,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      * @throws Exception
      */
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception{
-        auth.userDetailsService(userDetailService).passwordEncoder(passwordEncoder);
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
     }
 
     @Override
     @Bean
-    public AuthenticationManager authenticationManager() throws Exception{
+    public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
 
@@ -46,7 +46,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      * @throws Exception
      */
     @Override
-    public void configure(WebSecurity webSecurity) throws Exception {
-        webSecurity.ignoring().antMatchers("/oauth/register");
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/oauth/register");
     }
 }

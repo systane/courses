@@ -30,16 +30,16 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     @Value("${security.oauth2.client.authorized-grant-types}")
     private String[] authorizedGrantTypes;
 
-    @Value("${secutiry.oauth2.client.resource-ids}")
+    @Value("${security.oauth2.client.resource-ids}")
     private String resourceIds;
 
-    @Value("${secutiry.oauth2.client.scope}")
+    @Value("${security.oauth2.client.scope}")
     private String [] scopes;
 
-    @Value("${secutiry.oauth2.client.client-secret}")
+    @Value("${security.oauth2.client.client-secret}")
     private String secret;
 
-    @Value("${secutiry.oauth2.client.access-token-validity-seconds}")
+    @Value("${security.oauth2.client.access-token-validity-seconds}")
     private Integer accessTokenValiditySeconds;
 
     @Autowired

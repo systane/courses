@@ -16,18 +16,18 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
     private String RESOURCE_ID;
 
     @Override
-    public void configure(ResourceServerSecurityConfigurer resources){
+    public void configure(ResourceServerSecurityConfigurer resources) {
         resources.resourceId(RESOURCE_ID);
     }
 
     /**
      * Esse método restringe as requests com base nos escopos disponíveis
-     * @param httpSecurity
+     * @param http
      * @throws Exception
      */
     @Override
-    public void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.requestMatchers()
+    public void configure(HttpSecurity http) throws Exception {
+        http.requestMatchers()
                 .antMatchers("/**")
                 .and()
                 .authorizeRequests()
