@@ -1,0 +1,42 @@
+version: '3'
+services:
+  config-server:
+    build:
+      dockerfile: ./config-server/Dockerfile
+      context: .
+    container_name: config_server_container
+    ports:
+      - "9090:9090"
+  
+  # eureka-server:
+  #   build:
+  #     dockerfile: ./eureka-server/Dockerfile
+  #     context: .
+  #   container_name: eureka_server_container
+  #   port:
+  #     - "9091:9091"
+  #   depends_on:
+  #     - "config-server"
+  
+  # auth-server:
+  #   build:
+  #     dockerfile: ./auth-server/Dockerfile
+  #     context: .
+  #   container_name: auth_server_container
+  #   port:
+  #     - "9092:9092"
+  #   depends_on:
+  #     - "config-server"
+  #     - "eureka-server"
+
+  # order-service:
+  #   build:
+  #     dockerfile: ./order-service/Dockerfile
+  #     context: .
+  #   container_name: order_server_container
+  #   port:
+  #     - "9093:9093"
+  #   depends_on:
+  #     - "config-server"
+  #     - "eureka-server"
+  #     - "auth-server"
