@@ -4,12 +4,14 @@ services:
     build:
       dockerfile: ./config-server/Dockerfile
       context: .
-    container_name: config_server_container
+    container_name: configServerContainer
     ports:
       - "9090:9090"
+    networks: 
+      - production-network
     healthcheck:
-      test: ./health.sh
-      interval: 60s
+      test: ./healthConfServerCheck.sh
+      interval: 30s
       timeout: 10s
       retries: 2
   
@@ -17,13 +19,50 @@ services:
     build:
       dockerfile: ./eureka-server/Dockerfile
       context: .
-    container_name: eureka_server_container
+    container_name: eurekaServerContainer
     ports:
       - "9091:9091"
+      - "9090"
+    networks: 
+      - production-network
     depends_on:
       config-server:
         condition: service_healthy
+  
+  auth-server:
+    build:
+      dockerfile: ./auth-server/Dockerfile
+      context: .
+    container_name: authServerContainer
+    ports:
+      - "9090"
+      - "9091"
+      - "9092:9092"
+    networks: 
+      - production-network
+    # depends_on:
+    #   config-server:
+    #     condition: service_healthy
 
+  order-service:
+    build:
+      dockerfile: ./order-service/Dockerfile
+      context: .
+    container_name: order_server_container
+    ports:
+      - "9090"
+      - "9091"
+      - "9092"
+      - "9093:9093"
+    networks: 
+      - production-network
+    # depends_on:
+    #   config-server:
+    #     condition: service_healthy
+        
+networks: 
+  production-network:
+    driver: bridge
 
 
 

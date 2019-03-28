@@ -8,8 +8,6 @@ RUN apk add --update \
 
 RUN apk update && apk add bash
 
-COPY config-server/health.sh /health.sh
-
-# RUN chmod +x /health.sh
+COPY config-server/healthCheck.sh /healthCheck.sh
 
 CMD ["java", "-jar", "/app/configServer-0.0.1-SNAPSHOT.jar"]
