@@ -1,4 +1,4 @@
-version: '3'
+version: '2.1'
 services:
   config-server:
     build:
@@ -7,23 +7,56 @@ services:
     container_name: config_server_container
     ports:
       - "9090:9090"
+    healthcheck:
+      test: ./health.sh
+      interval: 60s
+      timeout: 10s
+      retries: 2
   
-  # eureka-server:
-  #   build:
-  #     dockerfile: ./eureka-server/Dockerfile
-  #     context: .
-  #   container_name: eureka_server_container
-  #   port:
-  #     - "9091:9091"
-  #   depends_on:
-  #     - "config-server"
+  eureka-server:
+    build:
+      dockerfile: ./eureka-server/Dockerfile
+      context: .
+    container_name: eureka_server_container
+    ports:
+      - "9091:9091"
+    depends_on:
+      config-server:
+        condition: service_healthy
+
+
+
+
+
+# version: '2.3'
+# services:
+#   config-server:
+#     build:
+#       dockerfile: ./config-server/Dockerfile
+#       context: .
+#     container_name: config_server_container
+#     ports:
+#       - "9090:9090"
+  
+#   eureka-server:
+#     build:
+#       dockerfile: ./eureka-server/Dockerfile
+#       context: .
+#     container_name: eureka_server_container
+#     ports:
+#       - "9091:9091"
+#     restart: on-failure
+#     depends_on:
+#       config-serve:
+#         condition: service_healthy
+    
   
   # auth-server:
   #   build:
   #     dockerfile: ./auth-server/Dockerfile
   #     context: .
   #   container_name: auth_server_container
-  #   port:
+  #   ports:
   #     - "9092:9092"
   #   depends_on:
   #     - "config-server"
@@ -34,7 +67,7 @@ services:
   #     dockerfile: ./order-service/Dockerfile
   #     context: .
   #   container_name: order_server_container
-  #   port:
+  #   ports:
   #     - "9093:9093"
   #   depends_on:
   #     - "config-server"
