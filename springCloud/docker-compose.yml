@@ -7,11 +7,11 @@ services:
     container_name: configServerContainer
     ports:
       - "9090:9090"
-    healthcheck:
-      test: ./health.sh
-      interval: 60s
-      timeout: 10s
-      retries: 2
+    # healthcheck:
+    #   test: ./health.sh
+    #   interval: 60s
+    #   timeout: 10s
+    #   retries: 2
   
   eureka-server:
     build:
@@ -20,37 +20,41 @@ services:
     container_name: eurekaServerContainer
     ports:
       - "9091:9091"
-    depends_on:
-      config-server:
-        condition: service_healthy
+    # depends_on:
+    #   config-server:
+    #     condition: service_healthy
 
-
-
-
-
-# version: '2.3'
+# ======================= ORDER DOS CONTAINERS FUNCIONANDO ===============================
+# version: '2.1'
 # services:
 #   config-server:
 #     build:
 #       dockerfile: ./config-server/Dockerfile
 #       context: .
-#     container_name: config_server_container
+#     container_name: configServerContainer
 #     ports:
 #       - "9090:9090"
+#     healthcheck:
+#       test: ./health.sh
+#       interval: 60s
+#       timeout: 10s
+#       retries: 2
   
 #   eureka-server:
 #     build:
 #       dockerfile: ./eureka-server/Dockerfile
 #       context: .
-#     container_name: eureka_server_container
+#     container_name: eurekaServerContainer
 #     ports:
 #       - "9091:9091"
-#     restart: on-failure
 #     depends_on:
-#       config-serve:
+#       config-server:
 #         condition: service_healthy
-    
-  
+#======================================================================
+
+
+
+# ======================  COMPOSING OTHER CONTAINERS ============================
   # auth-server:
   #   build:
   #     dockerfile: ./auth-server/Dockerfile

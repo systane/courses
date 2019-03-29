@@ -3,4 +3,10 @@ spring:
       name: eureka-server
     cloud:
       config:
-        uri: http://configServerContainer:9090
+        uri: http://localhost:9090 #rodar em prod trocar por: configServerContainer
+        fail-fast: true
+        retry:
+          initial-interval: 20000
+          multiplier: 2
+          max-attempts: 5
+          max-interval: 160000
