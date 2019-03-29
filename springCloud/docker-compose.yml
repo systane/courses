@@ -4,7 +4,7 @@ services:
     build:
       dockerfile: ./config-server/Dockerfile
       context: .
-    container_name: config_server_container
+    container_name: configServerContainer
     ports:
       - "9090:9090"
     healthcheck:
@@ -17,7 +17,7 @@ services:
     build:
       dockerfile: ./eureka-server/Dockerfile
       context: .
-    container_name: eureka_server_container
+    container_name: eurekaServerContainer
     ports:
       - "9091:9091"
     depends_on:
