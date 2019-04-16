@@ -32,3 +32,16 @@ vai suportar tbm load balancing.
 @RibbonClient --> usado para customizar configurações and quando
 o Service Discovery está ausente. 
 
+==================================================================
+
+Hystrix é uma biblioteca que implemena o padrão circuit breaker.
+Por padrão ela encapsula as chamadas e fica monitorando as falhas
+e seus valores padrões são: 10 sec de janela, 20 requests, e uma
+taxa de erro >= 50%. Caso essa taxa seja atingida, o circuito
+ é aberto. O tempo de espera e tentativa para verificar
+a saúde do serviço é de 5 segundos. Essa biblioteca permite que
+os servidor consiga se recuperar após uma falha e que outros
+serviços que dependem dele não entrem em colapso pela quantidade
+de requests recebidas e não processadas devido a falha do primeiro
+serviço.
+
