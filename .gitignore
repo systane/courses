@@ -1,4 +1,10 @@
-springBoot/.idea/*
-spring_batch/target/*
-spring_batch/.idea/*
-spring_batch/target/classes/br/com/spring_batch/entities/Account.class
+Spring/springBatch/target/*
+Spring/springBatch/.idea/*
+Spring/springBatch/target/classes/br/com/spring_batch/entities/Account.class
+Spring/springCloud/*/\.idea/*
+Spring/springCloud/*/target/
+Spring/springCloud/*/*/\.idea/*
+Spring/springCloud/*/*/target/
+Spring/springBatch/*/\.idea/*
+Spring/springCloud/*/\.mvn/*
+

@@ -1,11 +1,11 @@
 # **Spring Framework: An Overview**
-Spring is a modular framework to web development,and it has many features that we'll be talking in this article. But first let's define the base concepts to understand how this awesome framewok works.
+Spring is a modular framework to web development, and it has many features that we'll be talking in this article. But first let's define the base concepts to understand how this awesome framewok works.
 
 **Ioc Containers:** The Spring container is the core of the Spring Framework. Containers will create, configure, wire and manage objects and their entire life cycle. With the DI (Dependency Inversion) spring can manage this objects (Spring Beans) easily.
 
 The container gets its instructions of what Beans to instantiate, configure and assemble by reading the configuration metadata provided. This configuration can be Java annotation, XML or Java code.
 
-There are two of types of Spring containers:
+There are two types of Spring containers:
 
 - *Spring BeanFactory Container:* 
   Is the simplest container in the Spring Framework and it still present just for the sake of backward compatibility with other frameworks that integrate with Spring.
@@ -91,3 +91,46 @@ The below image shows the basic architecture of batch processing and Spring has 
 - **JobLauncher:** Represents a simple interface for launching a Job with a given set of JobParameters.
 
 - **Listerners:** Listerners can be used to listen events that may happen in a job execution.For example, if an ItemWriter needs to be notified when the Step has been completed, to start writing itens at database, you can configure an listener.
+
+
+# *Spring Cloud*
+
+Spring Cloud is a set of tool (or libraries) for quick development of distributed systems following up common patterns like service discovery, circuit brakers and etc. Inside Spring Cloud is possible find many projects like:
+
+- **Spring Cloud Netflix:** It's a project that integrates various Netflix OSS components (Zuul, Eureka, Hystrix, etc.).
+
+- **Spring Cloud Config:** A project to centralize configuration management backed by a git repository in a network of microservice applications.
+
+- **Spring Cloud AWS:** It offers a convenient way to interact with AWS. You can develop your application without having to care about infrastructure or maintenance.
+
+And this list goes on...
+
+## **Spring Cloud Netflix**
+
+Spring Cloud Netflix provides Netflix OSS integrations for Spring Boot app through autoconfiguration and binding to the Spring Environment. It helps you easily configure and apply coomon patterns in your distributed systems with Netflix components. The patterns included in this pack are: Service Discovery with **Eureka**, Circuit Breaker provided by **Hystrix**, the Intelligent Routing system of **Zuul** and Client Side Load Balacing with **Ribbon**.
+
+Talking a little more about these provided services:
+
+- **Eureka:** Eureka provides an implementation of service discovery pattern. This patterns is an importante patterns commonly utilized in microservice-based architecture. How can we identify a service in a network with 20 or more hosts running? How can we know that if this particular service is online? If so, which IP and Port? If this IP address changes dynamically in the next seconds/minutes/hours? 
+
+  ![Eureka](https://docs.pivotal.io/spring-cloud-services/1-5/common/service-registry/images/Netflix-Eureka-d1.png)
+
+  Eureka comes to solve this problem. With Eureka each service that we put online can be configured to make a self register in the Eureka Server. This register includes provide hostname, port, health check, etc. After that, Eureka Server receives messages of heartbeat of each service ou instance that is running, so Eureka Service can determine which instance of which service is running in a give time. Each service registered also fetch connection and status information about other registered applications.
+  
+
+- **Hystrix:** Hystrix is a library that implements the circuit breaker pattern. By default this library encapsulates and monitores all the requests. Look at the image bellow and imagine that the payment service is offline because some fault that have occured. After this fault, the payment service is starting again responding requests with low capacity meanwhile the driver management is sending tons of requests to payment service. In this cenario, the payment service will fall again. 
+
+  Hystrix provides efficient mechanisms of resilience. Hystrix implements the circuit braker that with some metrics can give a change to payment service recovery from faults and prevent this kind of problem to occour. You can wrap your asynchronous requests and in case of failure give predefined responses. The algorithm can also open the circuit stoping the fallen server of receiving requests until it recovers.
+
+  ![](https://i.pinimg.com/originals/09/6e/3c/096e3cabb876856243faf4b5b201073d.png)
+
+
+- **Zuul:** Is the Gatekeeper of Gozer and got famoues after appear in the Ghostbusters movie of 1984.
+  ![](https://aa1a5178aef33568e9c4-a77ea51e8d8892c1eb8348eb6b3663f6.ssl.cf5.rackcdn.com/p/full/3c8c7df1-8d25-48b5-904d-9c055f790c0e.jpg)
+
+   All kidding aside, Zuul is a subproject of Spring Cloud Netflix that is commonly used as gateway in a microservice-based architecture. So it really take after with the Zuul from ghostbusters. As an edge service, Zuul is built to enable dynamic routing, monitoring, resiliency and security. Zuul can also provide routing requests across AWS regions in order to diversify the Load Balance usage.
+
+  ![](https://exampledriven.files.wordpress.com/2016/07/zuul-api-gateway.jpg)
+
+
+- **Ribbon:** Ribbon is a library inside of Zuul that is responsible to make all load balance of the requests. By default it's configured to use a simple Round Robin balacing between the online instances of each service. The load balancing done here is a client load balance, is load balance via software, which means that there is no host handling with the request and redirecting to the correct host. In client load balance each instance of the each service has a list with the address and status of other services, so that, the client can redirect the request to the correct host. As said, the default algorithm utilized is the Round Robin, but can be easily changed based of the health check of each instance, or other standard.
