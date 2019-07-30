@@ -25,6 +25,11 @@ To understand the basic architecture of Kubernets we first need to understand wh
 
 A microservice app is just a name that describes an application that is made of lots of small and independent services. Working together these microservices become a meaningful app.
 
+Think that a microservice app is like a team as we can see in the below picture. Each of them have a specific role in the team and can work independently but they need work together to achieve a bigger objective, i.e. win the match.
+
 ![plan](https://github.com/systane/courses/blob/master/kubernetes/plan.png)
+
+
+The orchestrator acts like a team manager. He is responsible to organize them into a unit with a clear plan as we can see in the next picture.
 
 ![plan2](https://github.com/systane/courses/blob/master/kubernetes/plan2.png)
