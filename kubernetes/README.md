@@ -37,3 +37,9 @@ The orchestrator acts like a team manager. He is responsible to organize them in
 Kubernetes and football have a lot of thing is common. In Kubernetes world we need first package each service of our app as a pod. Afeter this,Kubernetes can organize all these pods to work together, on the right sequence and node. This is what we call orchestrating.
 
 ![diagram](https://github.com/systane/courses/blob/master/kubernetes/diagram.png)
+
+Diving into details Kubernetes is compose by clusters, and each cluster has one or more Masters and a lot of nodes. The masters make decision about which node run. With this component you can also monitor the clusters, schedule the work, etc. Otherwise the nodes run the actual work,report for the Master and watch for changes.
+
+To make a deploy at a cluster Kubernetes it's pretty simples, you just need package up your app inside a container and create an manifest (YAML file) that defines what SO image, port, networe and how many replicas use. This YAML file describe a deployment object. After that, we just give the file to Kubernetes on the master and the master deploy our app in the nodes.
+
+![diagram2](https://github.com/systane/courses/blob/master/kubernetes/diagram2.png)
