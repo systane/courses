@@ -36,4 +36,4 @@ The orchestrator acts like a team manager. He is responsible to organize them in
 
 Kubernetes and football have a lot of thing is common. In Kubernetes world we need first package each service of our app as a pod. Afeter this,Kubernetes can organize all these pods to work together, on the right sequence and node. This is what we call orchestrating.
 
-![diagram](https://github.com/systane/courses/blob/master/kubernetes/diagram1.png)
+![diagram](https://github.com/systane/courses/blob/master/kubernetes/diagram.png)
