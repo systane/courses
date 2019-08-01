@@ -64,16 +64,16 @@ After all this, let's better understand what is a pod. As said before, a pod is 
 
 Pods are mortals, they can die (anytime) inside a node and a new one can comes to life inside another node with a different ip address. So you cannot trust in these ip address to communicate with pods in different nodes. This is where services come to play. We can imagine a service like a stable abstraction point for multiple pods, and they provide a load balance of the request. 
 
-![diagram4](https://github.com/systane/courses/blob/master/kubernetes/diagram4.png)
+![diagram3](https://github.com/systane/courses/blob/master/kubernetes/diagram3.png)
 
 
 This load balance is make by using **labels**. With labels, the service can identify all pods with the same labels and make de load balance works. A service is an object like a pod and we can define it with a YAML file using the apiserver. 
 
-![diagram5](https://github.com/systane/courses/blob/master/kubernetes/diagram5.png)
+![diagram4](https://github.com/systane/courses/blob/master/kubernetes/diagram4.png)
 
 To make a deploy at a cluster Kubernetes it's pretty simple, you just need to package up your app inside a container and create an manifest (YAML file) that defines what SO image, port, networe and how many replicas use. This YAML file describe a deployment object. After that, we just give the file to Kubernetes on the master and the master deploy our app in the nodes.
 
-![diagram3](https://github.com/systane/courses/blob/master/kubernetes/diagram2.png)
+![diagram5](https://github.com/systane/courses/blob/master/kubernetes/diagram5.png)
 
 
 
