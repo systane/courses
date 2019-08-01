@@ -41,7 +41,7 @@ Kubernetes and football have a lot of thing is common. In Kubernetes world we ne
 Diving into details Kubernetes is compose by clusters, and each cluster has one or more Masters with a lot of nodes. The masters make decision about which node run. With this component you can also monitor the clusters, schedule the work, etc. 
 Masters have four components: 
 
-![diagram2](https://www.google.com/imgres?imgurl=https%3A%2F%2Fmapr.com%2Fblog%2Fkubernetes-kafka-event-sourcing-architecture-patterns-and-use-case-examples%2Fassets%2Fclusters.png&imgrefurl=https%3A%2F%2Fmapr.com%2Fblog%2Fkubernetes-kafka-event-sourcing-architecture-patterns-and-use-case-examples%2F&docid=gcFZvPY86_XEtM&tbnid=5ExS3JaNRW9kcM%3A&vet=10ahUKEwjUodu1ouDjAhUrH7kGHRBbCiUQMwhNKAcwBw..i&w=899&h=504&bih=657&biw=1024&q=architecture%20cluster%20kubernetes&ved=0ahUKEwjUodu1ouDjAhUrH7kGHRBbCiUQMwhNKAcwBw&iact=mrc&uact=8)
+![diagram2](https://mapr.com/blog/kubernetes-kafka-event-sourcing-architecture-patterns-and-use-case-examples/assets/clusters.png)
 
 - **ApiServer:** It acts like an interface that exposes the API (REST) at port 443, and throught that we can send a manifest (similar to a dockerfile) and deploy our app on the cluster. It's the only component that we deal directly and we can use the kuberctl for that.
 
