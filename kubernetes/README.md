@@ -60,7 +60,12 @@ On the other hand, the nodes run the actual work, report for the Master and watc
 -**Kube-proxy:** It is responsible to make sure that every container in a pod share a single IP (one IP per pod). If there is necessity to address individual containers inside a pod, you can do this by using ports. The kube-proxy also does the load balance across all pods in a service (A way to hide multiple pods behind a single network address).
 
 
+After all this, let's better understand what is a pod. As said before, a pod is the atomic unit in Kubernetes. At Docker the container is the atomic unit. But remember: In Kubernetes, a pod has one or more containers running. You can imagine it like a sandbox to run containers and all these can share the same environment (same IP address, volume, etc). Pods are also the unit scale, which you can add or remove pods and not by adding/removing containers inside a pod. Another interesting thing is that a pod can't be partially online with just some containers on and others off. Or the all containers inside a pod are online, so then the pod is also avaliable, or there isn't a pod.
+
 To make a deploy at a cluster Kubernetes it's pretty simple, you just need to package up your app inside a container and create an manifest (YAML file) that defines what SO image, port, networe and how many replicas use. This YAML file describe a deployment object. After that, we just give the file to Kubernetes on the master and the master deploy our app in the nodes.
 
 ![diagram3](https://github.com/systane/courses/blob/master/kubernetes/diagram2.png)
+
+
+
 
