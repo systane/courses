@@ -79,51 +79,59 @@ To make a deploy at a cluster Kubernetes it's pretty simple, you just need to pa
 
 ## **Hands on**
 
-Let's starting this chapter creating with a little of code. We will create a pod, service and a deployment object into our Cluster. Before starting we need to install the command line interface of kubernetes kubectl and minikube a light version created to run locally.  We can easily install these two following the instructions from this link: https://kubernetes.io/docs/tasks/tools/install-minikube/
+- ### **Pods**
 
-After minikube and kubectl installed, let's start creating a POD based on the following YAML file (manifest):
+    Let's starting this chapter creating with a little of code. We will create a pod, service and a deployment object into our Cluster. Before starting we need to install the command line interface of kubernetes kubectl and minikube a light version created to run locally.  We can easily install these two following the instructions from this link: https://kubernetes.io/docs/tasks/tools/install-minikube/
 
-    apiVersion: v1
-    kind: Pod
-    metadata:
-        name: hello-pod
-        labels:
-            zone: prod
-            version: v1
-    spec:
-        containers:
-        - name: hello-ctr
-        image: nigelpoulton/pluralsight-docker-ci:latest
-        ports:
-        -  containerPort: 8080
+    After minikube and kubectl installed, let's start creating a POD based on the following YAML file (manifest):
 
-
-After you create the file, execute the following command to create a pod: `kubectl create -f pod.yml`. The `-f` flag sets the path to yaml file that we've just created. If everything gone right, you'll see this output on console `pod/hello-pod created`.
-
- To see all your running pods, just type `kubectl get pods`. If you wanna filter the list of running pods,you can type ** slash + name of your pod** like this: `kubectl get pods/hello-pod`. And if you want to see all running pods independently of namespace, just type `kubectl get pods --all-namespaces`. And you want to delete a specific pod, you can use `kubectl delete pods hello-pod`.
-
-To start scalling our pods we don't create more pods directly. We use another type of object to do this work for us, and this object is the ReplicationController. We can create this kind of object with the following yaml file:
-
-
-    apiVersion: v1
-    kind: ReplicationController
-    metadata:
-    name: hello-rc
-    spec:
-    replicas: 10
-    selector:
-        app: hello-world
-    template:
+        apiVersion: v1
+        kind: Pod
         metadata:
-        labels:
-            app: hello-world
+            name: hello-pod
+            labels:
+                zone: prod
+                version: v1
         spec:
-        containers:
-        - name: hello-pod
+            containers:
+            - name: hello-ctr
             image: nigelpoulton/pluralsight-docker-ci:latest
             ports:
             -  containerPort: 8080
 
-As you can see, in this file we want 10 replicas of our hello-pod, so the ReplicationController we'll create these pods for us and kubernetes will constantly watch if we have this **desired state** of 10 replicas of our hello-pod at port 8080.
 
-To create our replicationController object we can use the same command used before: `kubectl create -f rc.yml`
+    After you create the file, execute the following command to create a pod: `kubectl create -f pod.yml`. The `-f` flag sets the path to yaml file that we've just created. If everything gone right, you'll see this output on console `pod/hello-pod created`.
+
+    To see all your running pods, just type `kubectl get pods`. If you wanna filter the list of running pods,you can type ** slash + name of your pod** like this: `kubectl get pods/hello-pod`. And if you want to see all running pods independently of namespace, just type `kubectl get pods --all-namespaces`. And you want to delete a specific pod, you can use `kubectl delete pods hello-pod`.
+
+
+- ### **Replication Controller**
+
+    To start scalling our pods we usually don't create more pods directly. We use another type of object to do this work for us, and this object is the ReplicationController. We can create this kind of object with the following yaml file:
+
+
+        apiVersion: v1
+        kind: ReplicationController
+        metadata:
+        name: hello-rc
+        spec:
+        replicas: 10
+        selector:
+            app: hello-world
+        template:
+            metadata:
+            labels:
+                app: hello-world
+            spec:
+            containers:
+            - name: hello-pod
+                image: nigelpoulton/pluralsight-docker-ci:latest
+                ports:
+                -  containerPort: 8080
+
+    As you can see, in this file we want 10 replicas of our hello-pod, so the ReplicationController we'll create these pods for us and kubernetes will constantly watch if we have this **desired state** of 10 replicas of our hello-pod at port 8080.
+
+    To create our replicationController object we can use the same command used before: `kubectl create -f rc.yml`. If you execute `kubectl get rc` you'll se this a output showing the numbers of desired replicas and how many are running. You can edit the yaml file and use the command `kubectl apply -f rc.yml` to apply the changes in your current replicationController. To get a more detailed vision of your containers and replicationController, you can use `kubectl get rc -o wide`. If you want to delete this replicationController, you can use `kubectl delete rc hello-rc`.
+
+- ### **Services**
+With services our application can communicate with the outside world
