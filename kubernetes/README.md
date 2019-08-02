@@ -134,4 +134,28 @@ To make a deploy at a cluster Kubernetes it's pretty simple, you just need to pa
     To create our replicationController object we can use the same command used before: `kubectl create -f rc.yml`. If you execute `kubectl get rc` you'll se this a output showing the numbers of desired replicas and how many are running. You can edit the yaml file and use the command `kubectl apply -f rc.yml` to apply the changes in your current replicationController. To get a more detailed vision of your containers and replicationController, you can use `kubectl get rc -o wide`. If you want to delete this replicationController, you can use `kubectl delete rc hello-rc`.
 
 - ### **Services**
-With services our application can communicate with the outside world
+With services our application can communicate with the outside world (outside the cluster) and with other pods (inside the cluster). You can think a service like an interface with reliables IP, DNS and Port. This interface will be also responsible to make the load balancing of all requests.
+
+We can create a service using a yaml file too, something like this:
+
+    apiVersion: v1
+    kind: Service
+    metadata:
+        name: hello-svc
+        labels:
+            app: hello-world
+    spec:
+        type: NodePort
+        ports:
+        - port: 8080
+           
+            protocol: TCP
+        selector:
+            app: hello-world
+
+A point of attention in this yaml file is the type (ServiceType), we can configure three different type of services:
+- ClusterIP: Gives the service a stable internal cluster IP (Default option), in other words it only make the service avaliable to other nodes within the cluster.
+- NodePort: Exposes the app outside of the cluster by adding a cluster-wide port on top of ClusterIP.
+- LoadBalancer: Integrates NodePort with cloud-based load balancers.
+
+This time we are goingo to create a service of type NodePort, so we can use this command to create it `kubectl create - f svc.yml` and describe it with `kubectl describe svc hello-svc`. With this command we can se the output to 30001 and a list of endpoints. This list shows us all the endpoints of our apods that are running.
