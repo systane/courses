@@ -1,6 +1,6 @@
 # Kubernetes
 
-main topics:
+### **Main topics:**
 
 1. What is Kubernetes? and where it comes from?
 1. Why Kubernetes?
