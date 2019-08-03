@@ -171,4 +171,24 @@ Imagine the following scenario, we create a yaml file with a kind **Deployment**
 
 In the last scenario we had two Replication Controller, one for our version 1.0 of our app and another to our new version created to our rolling update. The first Replication Controller wasn't deleted. Kubernetes keeps it in a case we need to execute a rollback. So, if we need make a rollback, we just need to update our yaml file with the previous image of our app and throw it again to apiserver. Kubernetes will use the first Replication Controller to add one pod as it also removes one pod of the second Replication Controller. 
 
+After all this theory, let's take a look at a yaml file of kind Deployment:
+
+    apiVersion: v1
+    kind: ReplicationController
+    metadata:
+    name: hello-rc
+    spec:
+    replicas: 10
+    selector:
+        app: hello-world
+    template:
+        metadata:
+        labels:
+            app: hello-world
+        spec:
+        containers:
+        - name: hello-pod
+            image: nigelpoulton/pluralsight-docker-ci:latest
+            ports:
+            -  containerPort: 8080
 
