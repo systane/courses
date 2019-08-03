@@ -72,7 +72,7 @@ This load balance is make by using **labels**. With labels, the service can iden
 
 ![diagram4](https://github.com/systane/courses/blob/master/kubernetes/diagram4.png)
 
-To make a deploy at a cluster Kubernetes it's pretty simple, you just need to package up your app inside a container and create an manifest (YAML file) that defines what SO image, port, networe and how many replicas use. This YAML file describe a deployment object. After that, we just give the file to Kubernetes on the master and the master deploy our app in the nodes.
+To make a deploy at a cluster Kubernetes it's pretty simple, you just need to package up your app inside a container and create an manifest (YAML file) that defines what SO image, port, network and how many replicas use. This YAML file describe a deployment object. After that, we just give the file to Kubernetes on the master and the master deploy our app in the nodes.
 
 ![diagram5](https://github.com/systane/courses/blob/master/kubernetes/diagram5.png)
 
@@ -159,3 +159,16 @@ A point of attention in this yaml file is the type (ServiceType), we can configu
 - LoadBalancer: Integrates NodePort with cloud-based load balancers.
 
 This time we are goingo to create a service of type NodePort, so we can use this command to create it `kubectl create - f svc.yml` and describe it with `kubectl describe svc hello-svc`. With this command we can se the output to 30001 and a list of endpoints. This list shows us all the endpoints of our apods that are running.
+
+- ## Deployments**
+This kind of object is frequently used to make rollbacks and rolling updates. As we saw before, Replication Controller works like a wrapper for Pods, and it gives scalability, reliability and desired state. Deployments add one more layer at the top of this stack to make easy execute rolling updates and rollbacks.
+
+![diagram6](https://github.com/systane/courses/blob/master/kubernetes/diagram6.png)
+
+Imagine the following scenario, we create a yaml file with a kind **Deployment** of our app in version 1.0, and throw it to the apiserver. After the validation of our .yml, the kubernetes creates our Replication Controller with all pods required in the desired state and everything is work perfectly. Now imagine that our we need update the image of our app with some new features that were added. First of all, we need to update our yaml file with that image and push it apiserver. In the background Kubernetes will create another Replication Controller and as it adds one pod to this new Replication Controller, it also removes one pod in the old one and this repeats until our desired state is reached in the new Replication Controller.
+
+![diagram7](https://github.com/systane/courses/blob/master/kubernetes/diagram7.png)
+
+In the last scenario we had two Replication Controller, one for our version 1.0 of our app and another to our new version created to our rolling update. The first Replication Controller wasn't deleted. Kubernetes keeps it in a case we need to execute a rollback. So, if we need make a rollback, we just need to update our yaml file with the previous image of our app and throw it again to apiserver. Kubernetes will use the first Replication Controller to add one pod as it also removes one pod of the second Replication Controller. 
+
+
