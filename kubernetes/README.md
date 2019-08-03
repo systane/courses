@@ -2,15 +2,19 @@
 
 main topics:
 
-1. What is Kubernetes?
-1. Where it comes from?
+1. What is Kubernetes? and where it comes from?
 1. Why Kubernetes?
 1. What kind of problems it solve?
 1. Architecture
 1. Hands on
 
+## **What is Kubernetes? and where it comes from?**
 
+Kubernetes is greek word and it means "Helmsman" - A person who steers a ship. You can also see K8s instead of Kubernetes, and the number 8 represents the eight characters between K and the S.
 
+![logo](https://github.com/systane/courses/blob/master/kubernetes/logo.png)
+
+Kubernetes comes from Google in 2014, but before Google turn it open source the company used to deal with a lot of containers and for that reason they have build a manager container called Borg and the same software engineers who developed Borg also worked to build Kubernetes. There is a myth that before Google choose the name Kubernetes, it was called Seven of Nine in reference a character from Star Strek (A female version of Borg).
 
 ## **What kind of problems it solve?**
 
