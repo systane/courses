@@ -165,11 +165,11 @@ To make a deploy at a cluster Kubernetes it's pretty simple, you just need to pa
 
     ![diagram6](https://github.com/systane/courses/blob/master/kubernetes/diagram6.png)
 
-    Imagine the following scenario, we create a yaml file with a kind **Deployment** of our app in version 1.0, and throw it to the apiserver. After the validation of our .yml, the kubernetes creates our Replication Controller with all pods required in the desired state and everything is work perfectly. Now imagine that our we need update the image of our app with some new features that were added. First of all, we need to update our yaml file with that image and push it apiserver. In the background Kubernetes will create another Replication Controller and as it adds one pod to this new Replication Controller, it also removes one pod in the old one and this repeats until our desired state is reached in the new Replication Controller.
+    Imagine the following scenario, we create a yaml file with a kind **Deployment** of our app in version 1.0, and throw it to the apiserver. After the validation of our .yml, the kubernetes creates a Replica Set (NextGen of **Replication Controllers**) with all pods required in the desired state and everything is work perfectly. Now imagine that our we need update the image of our app with some new features that were added. First of all, we need to update our yaml file with that image and push it apiserver. In the background Kubernetes will create another Replica Set and as it adds one pod to this new Replica Set, it also removes one pod in the old one and this repeats until our desired state is reached in the new Replica Set.
 
     ![diagram7](https://github.com/systane/courses/blob/master/kubernetes/diagram7.png)
 
-    In the last scenario we had two Replication Controller, one for our version 1.0 of our app and another to our new version created to our rolling update. The first Replication Controller wasn't deleted. Kubernetes keeps it in a case we need to execute a rollback. So, if we need make a rollback, we just need to update our yaml file with the previous image of our app and throw it again to apiserver. Kubernetes will use the first Replication Controller to add one pod as it also removes one pod of the second Replication Controller. 
+    In the last scenario we had two Replica Set, one for our version 1.0 of our app and another to our new version created to our rolling update. The first Replica Set wasn't deleted. Kubernetes keeps it in a case we need to execute a rollback. So, if we need make a rollback, we just need to update our yaml file with the previous image of our app and throw it again to apiserver. Kubernetes will use the first Replica Set to add one pod as it also removes one pod of the second Replica Set. 
 
     After all this theory, let's take a look at a yaml file of kind Deployment:
 
@@ -192,4 +192,44 @@ To make a deploy at a cluster Kubernetes it's pretty simple, you just need to pa
                 ports:
                 -  containerPort: 8080
 
-    As we already know, we can use the same command to create this object `kubectl create -f deploy.yml`.
+    As we already know, we can use the same command to create this object `kubectl create -f deploy.yml`. If this, we can create our first Replica Set containing 10 pods with the first version of our app. Now, let's change a bit the same yaml file to this:
+
+        apiVersion: extensions/v1beta1
+        kind: Deployment
+        metadata:
+        name: hello-deploy
+        spec:
+        replicas: 10
+        minReadySeconds: 10
+        strategy:
+            type: RollingUpdate
+            rollingUpdate:
+                maxUnavailable: 1
+                maxSurge: 1
+        template:
+            metadata:
+            labels:
+                app: hello-world
+            spec:
+            containers:
+            - name: hello-pod
+                image: nigelpoulton/pluralsight-docker-ci:edge
+                ports:
+                - containerPort: 8080
+
+    Note that we add the strategy for our rolling update, in this case we define that one new pod well be create in our new fresh Replica Set as the same time one pod of our old Replica Set is removed. By the way, those values are default, I just specify them to show how they are defined and how you can change them.  Another thing that is defined is this yaml file the property `minReadySeconds`, this one is reponsible to define a minimum time to considere a pod avaliable.
+
+    To configure our rolling update, just execute `kubectl apply -f deploy.yml --record`, afther that we can execute our rollout with `kubectl rollout status deployment hello-deploy`. To see our history of rollout just execute: `kubectl rollout history deployment hello-deploy` and output like this should appear, a kind of audit of our deploy:
+
+        deployment.extensions/hello-deploy 
+        REVISION  CHANGE-CAUSE
+        1         <none>
+        2         kubectl apply --filename=files/deploy.yml --record=true
+    
+    The flag `--record` used in the apply command records all commands executed in our hello-deploy object. At this time, we may have two Replica Set, you can consult them with `kubectl get rs` and an output like this should appear:
+
+        NAME                      DESIRED   CURRENT   READY   AGE
+        hello-deploy-5768798ccb   10        10        10      18m
+        hello-deploy-778d47975d   0         0         0       75m
+    
+    If you wanna execute a rollback, we can easily to it by using the command `kubectl rollout undo deployment hello-deploy --to-revision=1`, where the flag --to-revision receives the number from the output shown in the command `kubectl rollout history deployment hello-deploy`. You can following the status rollout until it's done by typing `kubectl rollout status deployment hello-deploy`.
