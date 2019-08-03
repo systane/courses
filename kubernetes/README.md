@@ -134,61 +134,62 @@ To make a deploy at a cluster Kubernetes it's pretty simple, you just need to pa
     To create our replicationController object we can use the same command used before: `kubectl create -f rc.yml`. If you execute `kubectl get rc` you'll se this a output showing the numbers of desired replicas and how many are running. You can edit the yaml file and use the command `kubectl apply -f rc.yml` to apply the changes in your current replicationController. To get a more detailed vision of your containers and replicationController, you can use `kubectl get rc -o wide`. If you want to delete this replicationController, you can use `kubectl delete rc hello-rc`.
 
 - ### **Services**
-With services our application can communicate with the outside world (outside the cluster) and with other pods (inside the cluster). You can think a service like an interface with reliables IP, DNS and Port. This interface will be also responsible to make the load balancing of all requests.
+    With services our application can communicate with the outside world (outside the cluster) and with other pods (inside the cluster). You can think a service like an interface with reliables IP, DNS and Port. This interface will be also responsible to make the load balancing of all requests.
 
-We can create a service using a yaml file too, something like this:
+    We can create a service using a yaml file too, something like this:
 
-    apiVersion: v1
-    kind: Service
-    metadata:
+        apiVersion: v1
+        kind: Service
+        metadata:
         name: hello-svc
         labels:
             app: hello-world
-    spec:
+        spec:
         type: NodePort
         ports:
         - port: 8080
-           
+            nodePort: 30001
             protocol: TCP
         selector:
             app: hello-world
 
-A point of attention in this yaml file is the type (ServiceType), we can configure three different type of services:
-- ClusterIP: Gives the service a stable internal cluster IP (Default option), in other words it only make the service avaliable to other nodes within the cluster.
-- NodePort: Exposes the app outside of the cluster by adding a cluster-wide port on top of ClusterIP.
-- LoadBalancer: Integrates NodePort with cloud-based load balancers.
+    A point of attention in this yaml file is the type (ServiceType), we can configure three different type of services:
+    - ClusterIP: Gives the service a stable internal cluster IP (Default option), in other words it only make the service avaliable to other nodes within the cluster.
+    - NodePort: Exposes the app outside of the cluster by adding a cluster-wide port on top of ClusterIP.
+    - LoadBalancer: Integrates NodePort with cloud-based load balancers.
 
-This time we are goingo to create a service of type NodePort, so we can use this command to create it `kubectl create - f svc.yml` and describe it with `kubectl describe svc hello-svc`. With this command we can se the output to 30001 and a list of endpoints. This list shows us all the endpoints of our apods that are running.
+    This time we are goingo to create a service of type NodePort, so we can use this command to create it `kubectl create - f svc.yml` and describe it with `kubectl describe svc hello-svc`. With this command we can se the output to 30001 and a list of endpoints. This list shows us all the endpoints of our apods that are running.
 
-- ## Deployments**
-This kind of object is frequently used to make rollbacks and rolling updates. As we saw before, Replication Controller works like a wrapper for Pods, and it gives scalability, reliability and desired state. Deployments add one more layer at the top of this stack to make easy execute rolling updates and rollbacks.
+- ### **Deployments**
+    This kind of object is frequently used to make rollbacks and rolling updates. As we saw before, Replication Controller works like a wrapper for Pods, and it gives scalability, reliability and desired state. Deployments add one more layer at the top of this stack to make easy execute rolling updates and rollbacks.
 
-![diagram6](https://github.com/systane/courses/blob/master/kubernetes/diagram6.png)
+    ![diagram6](https://github.com/systane/courses/blob/master/kubernetes/diagram6.png)
 
-Imagine the following scenario, we create a yaml file with a kind **Deployment** of our app in version 1.0, and throw it to the apiserver. After the validation of our .yml, the kubernetes creates our Replication Controller with all pods required in the desired state and everything is work perfectly. Now imagine that our we need update the image of our app with some new features that were added. First of all, we need to update our yaml file with that image and push it apiserver. In the background Kubernetes will create another Replication Controller and as it adds one pod to this new Replication Controller, it also removes one pod in the old one and this repeats until our desired state is reached in the new Replication Controller.
+    Imagine the following scenario, we create a yaml file with a kind **Deployment** of our app in version 1.0, and throw it to the apiserver. After the validation of our .yml, the kubernetes creates our Replication Controller with all pods required in the desired state and everything is work perfectly. Now imagine that our we need update the image of our app with some new features that were added. First of all, we need to update our yaml file with that image and push it apiserver. In the background Kubernetes will create another Replication Controller and as it adds one pod to this new Replication Controller, it also removes one pod in the old one and this repeats until our desired state is reached in the new Replication Controller.
 
-![diagram7](https://github.com/systane/courses/blob/master/kubernetes/diagram7.png)
+    ![diagram7](https://github.com/systane/courses/blob/master/kubernetes/diagram7.png)
 
-In the last scenario we had two Replication Controller, one for our version 1.0 of our app and another to our new version created to our rolling update. The first Replication Controller wasn't deleted. Kubernetes keeps it in a case we need to execute a rollback. So, if we need make a rollback, we just need to update our yaml file with the previous image of our app and throw it again to apiserver. Kubernetes will use the first Replication Controller to add one pod as it also removes one pod of the second Replication Controller. 
+    In the last scenario we had two Replication Controller, one for our version 1.0 of our app and another to our new version created to our rolling update. The first Replication Controller wasn't deleted. Kubernetes keeps it in a case we need to execute a rollback. So, if we need make a rollback, we just need to update our yaml file with the previous image of our app and throw it again to apiserver. Kubernetes will use the first Replication Controller to add one pod as it also removes one pod of the second Replication Controller. 
 
-After all this theory, let's take a look at a yaml file of kind Deployment:
+    After all this theory, let's take a look at a yaml file of kind Deployment:
 
-    apiVersion: v1
-    kind: ReplicationController
-    metadata:
-    name: hello-rc
-    spec:
-    replicas: 10
-    selector:
-        app: hello-world
-    template:
+        apiVersion: v1
+        kind: ReplicationController
         metadata:
-        labels:
-            app: hello-world
+        name: hello-rc
         spec:
-        containers:
-        - name: hello-pod
-            image: nigelpoulton/pluralsight-docker-ci:latest
-            ports:
-            -  containerPort: 8080
+        replicas: 10
+        selector:
+            app: hello-world
+        template:
+            metadata:
+            labels:
+                app: hello-world
+            spec:
+            containers:
+            - name: hello-pod
+                image: nigelpoulton/pluralsight-docker-ci:latest
+                ports:
+                -  containerPort: 8080
 
+    As we already know, we can use the same command to create this object `kubectl create -f deploy.yml`.
