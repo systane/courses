@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: spring-boot
+spec:
+  replicas: 10
+  selector:
+    app: spring-boot
+  template:
+    metadata:
+      labels:
+        app: spring-boot
+    spec:
+      containers:
+      - name: spring-boot-pod
+        image: nigelpoulton/pluralsight-docker-ci:latest
+        ports:
+        -  containerPort: 8080
