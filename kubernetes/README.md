@@ -162,7 +162,7 @@ To make a deploy at a cluster Kubernetes it's pretty simple, you just need to pa
     - NodePort: Exposes the app outside of the cluster by adding a cluster-wide port on top of ClusterIP. To access your application use the following url: **PublicNodeIP**:**NodeServicePort**, where the PublicNodeIP you can find with `kubectl cluster-info`, and NodePort you can find describing you service with `kubectl describe svc service_name`.
     - LoadBalancer: Integrates NodePort with cloud-based load balancers.
 
-    This time we are goingo to create a service of type NodePort, so we can use this command to create it `kubectl create - f svc.yml` and describe it with `kubectl describe svc hello-svc`. With this command we can se the output to 30001 and a list of endpoints. This list shows us all the endpoints of our apods that are running.
+    This time we are going to create a service of type NodePort, so we can use this command to create it `kubectl create - f svc.yml` and describe it with `kubectl describe svc hello-svc`. With this command we can se the output to 30001 and a list of endpoints. This list shows us all the endpoints of our apods that are running.
     
     If you have deployed the replication controller shown before and has this service online, you can use `kubectl cluster-info` to see the IP address of your cluster node and together with the NodePort service you can access your application.
 
