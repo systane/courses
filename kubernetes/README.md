@@ -159,10 +159,12 @@ To make a deploy at a cluster Kubernetes it's pretty simple, you just need to pa
 
     A point of attention in this yaml file is the type (ServiceType), we can configure three different type of services:
     - ClusterIP: Gives the service a stable internal cluster IP (Default option), in other words it only make the service avaliable to other nodes within the cluster.
-    - NodePort: Exposes the app outside of the cluster by adding a cluster-wide port on top of ClusterIP.
+    - NodePort: Exposes the app outside of the cluster by adding a cluster-wide port on top of ClusterIP. To access your application use the following url: **<PublicNodeIP>**:**<NodeServicePort>**, where the PublicNodeIP you can find with `kubectl cluster-info`, and NodePort you can find describing you service with `kubectl describe svc service_name`.
     - LoadBalancer: Integrates NodePort with cloud-based load balancers.
 
     This time we are goingo to create a service of type NodePort, so we can use this command to create it `kubectl create - f svc.yml` and describe it with `kubectl describe svc hello-svc`. With this command we can se the output to 30001 and a list of endpoints. This list shows us all the endpoints of our apods that are running.
+    
+    If you have deployed the replication controller shown before and has this service online, you can use `kubectl cluster-info` to see the IP address of your cluster node and together with the NodePort service you can access your application.
 
 - ### **Deployments**
     This kind of object is frequently used to make rollbacks and rolling updates. As we saw before, Replication Controller works like a wrapper for Pods, and it gives scalability, reliability and desired state. Deployments add one more layer at the top of this stack to make easy execute rolling updates and rollbacks.

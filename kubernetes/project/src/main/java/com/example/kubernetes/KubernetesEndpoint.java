@@ -12,7 +12,7 @@ public class KubernetesEndpoint {
     private final Environment environment;
 
     @GetMapping(value = "/helloKubernetes")
-    public String helloKubernetes(){
+    public String helloKubernetes() {
         String port = environment.getProperty("local.server.port");
         return "Hello Kubernetes from port " + port + " :)";
     }
