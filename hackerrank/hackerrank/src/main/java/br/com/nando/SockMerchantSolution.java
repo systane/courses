@@ -10,37 +10,6 @@ import java.util.regex.*;
 
 public class SockMerchantSolution {
 
-    /**
-     * Solution using array
-     * @param n number os socks. n = 7 or 10.
-     * @param ar array of int representing the colors. ar = [1 2 1 2 1 3 2] or [1 1 3 1 2 1 3 3 3 3].
-     * @return numberOfPairs.
-     */
-    static int sockMerchant(int n, int[] ar) {
-        int [] frequencyColors = ar;
-
-        for (int i = 0; i < ar.length; i ++) {
-            int frequency = 1;
-            int colorToFindFrequency = ar[i];
-
-            if(frequencyColors[i] == 0){
-                for (int j = i + 1; j < ar.length; j++) {
-                    int color = ar[j];
-                    if (colorToFindFrequency == color) {
-                        frequency++;
-                    }
-                }
-                frequencyColors[i] = frequency;
-            }
-        }
-
-        int numberOfPairs = 0;
-        for(int frequency : frequencyColors){
-            numberOfPairs += (frequency/2);
-        }
-
-        return numberOfPairs;
-    }
 
     /**
      * Solution using List and Map
@@ -48,7 +17,7 @@ public class SockMerchantSolution {
      * @param ar array of int representing the colors. ar = [1 2 1 2 1 3 2] or [1 1 3 1 2 1 3 3 3 3].
      * @return numberOfPairs.
      */
-    static int sockMerchant2(int n, int[] ar){
+    static int sockMerchant(int n, int[] ar){
         List<Integer> colors = new ArrayList<>();
         Map<Integer, Integer> colorFrequency = new HashMap<>();
 
