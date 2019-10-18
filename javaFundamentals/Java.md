@@ -116,6 +116,7 @@ No primeiro exemplo, foi criado uma lambda para apenas printar os valores que fo
 Todo objeto pode ser comparavel, mas para isso a classe desse objeto precisa implementar a interface comparable ou utilizar algum comparator quando for realizar a ordenação dos elementos.
 
 No próximo exemplo, foi implementado a interface Comparable, assim como também o método compareTo. Assim para ordenar a list, basta utilizar o método sort da Collections. No primeiro trecho foi utilizado a interface consumer para definir uma lambda que realize esse processo de ordenação. 
+
 ![comparable](https://github.com/systane/courses/blob/master/javaFundamentals/comparable.png)
 
 
