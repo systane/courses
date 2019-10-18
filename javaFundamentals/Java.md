@@ -144,6 +144,9 @@ Nesse exemplo, todas as classes que extendem Number, podem ser aceitas como para
 
 - **Wildcard with a lower bound** É representado normalmente pela sintaxe `? super type`. Nesse caso, definimos que queremos quaisquer objetos que são uma superclasse do tipo especificado. Esse tipo de bound é raramente utilizado.
 
+![lowerBound](https://github.com/systane/courses/blob/master/javaFundamentals/lowerBound.png)
+
+Nesse exemplo o método add somente aceita os objetos das classes que tem como pai Cat (classes pai de Cat), que nesse exemplo é a classe Animal e a própria classe Cat.
 
 
 
