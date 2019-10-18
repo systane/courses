@@ -4,8 +4,8 @@
 
 **List** usamos quando queremos acessar os elementos dessa collection através do seu índice e quando queremos ter a possibilidade de ordena-los, permitindo ou não elementos repetidos.
 
-	 - **ArrayList**: Funciona como um array de tamanho dinamico. Você pode consultar elementos em tempo constante O(1) através do indíce, porém adicionar/remover é mais lento do que consultar.
-	 - **LinkdedList** É um mix de Array com Queue. Tem todos os métodos de uma List, além dos métodos adicionais para remover/adicionar do final e do começo de uma List (Que nesse caso funciona como uma Fila). A **vantagem** é que você pode remover/adicionar do começo/final da collection em O(1), **mas em troca** você tem um tempo linear O(n) para consultar outros indices.
+- **ArrayList**: Funciona como um array de tamanho dinamico. Você pode consultar elementos em tempo constante O(1) através do indíce, porém adicionar/remover é mais lento do que consultar.
+- **LinkdedList** É um mix de Array com Queue. Tem todos os métodos de uma List, além dos métodos adicionais para remover/adicionar do final e do começo de uma List (Que nesse caso funciona como uma Fila). A **vantagem** é que você pode remover/adicionar do começo/final da collection em O(1), **mas em troca** você tem um tempo linear O(n) para consultar outros indices.
 
 
 
@@ -13,8 +13,8 @@
 
 **Set** usamos quando não queremos ter elementos repetidos dentro de uma collection e também quando não nos importamos com a ordenação dos elementos.
 
-	- **HashSet** Armazena os elementos em uma tabela hash e para isso o `hashCode()` da classe. Adicionar/consultar elementos na collection tem um tempo O(1), porém vc acaba perdendo a possibilidade de ordenação.
-	- **TreeSet** Armarzena os elementos em uma arvore mantendo os elementos ordenados pela chave. O lado negativo é que adicionar/consultar leva um tempo de O(log n).
+- **HashSet** Armazena os elementos em uma tabela hash e para isso o `hashCode()` da classe. Adicionar/consultar elementos na collection tem um tempo O(1), porém vc acaba perdendo a possibilidade de ordenação.
+- **TreeSet** Armarzena os elementos em uma arvore mantendo os elementos ordenados pela chave. O lado negativo é que adicionar/consultar leva um tempo de O(log n).
 
 
 
@@ -50,7 +50,7 @@ A JVM tem um espaço de memória que é divido em várias regiões, sendo alguma
 
 
 
-![jvmMemory](/home/nando/Desktop/java/jvmMemory.png)
+![jvmMemory](https://github.com/systane/courses/blob/master/javaFundamentals/jvmMemory.png)
 
 **Method Area** e Heap são regiões compartilhadas. Na Method Area, são armazenadas informações a nível de classe como nome de classes, métodos, informações de variáveis, incluindo variáveis estáticas. Já o **Heap** armazena informações sobre todos os objetos e suas instancias de variavies e arrays correspondentes em tempo de execução da aplicação. Novos objetos são criados no heap, e referencias para estes objesto são armazenados na stack. o Heap usa o garbage collector para poder limpar sua memória. A **Stack** memory contém valores primitivos e referencias para objetos que estão no heap. Todos esses objetos na stack são referenciados a partir de métodos, então logo após o método finalizar, eles são removidos da memória automaticamente. Diferentemente do que acontece no Heap que tem um sistema que limpa a memória, o Stack realiza a limpeza de modo automático.
 
@@ -64,10 +64,10 @@ Apenas objetos, e não referencias, podem ser removidos do Heap. **Referencias**
 
 O GC (Garbage Collector) remove apenas objetos que são elígiveis, ou seja objetos que são inalcançaveis. Essa situação pode acontecer em dois casos:
 
-	- Objetos sem referencias (Por exemplo ao atribuir null a uma referencia ou apontando a referencia para um outro objeto, ou até mesmo criar um objeto anonimo - `new MeuObjeto("objeto anonimo")`).
-	- Todas as referencias de um objeto que saiu do escopo (Por exemplo os objetos criados dentro de um método que terminou sua execução. Todos eles serão eligiveis para o GC a menos que alguma referencia de um obj especifico seja retornada.).
+- Objetos sem referencias (Por exemplo ao atribuir null a uma referencia ou apontando a referencia para um outro objeto, ou até mesmo criar um objeto anonimo - `new MeuObjeto("objeto anonimo")`).
+- Todas as referencias de um objeto que saiu do escopo (Por exemplo os objetos criados dentro de um método que terminou sua execução. Todos eles serão eligiveis para o GC a menos que alguma referencia de um obj especifico seja retornada.).
 
-![objetoInalcancavel](/home/nando/Desktop/java/objetoInalcancavel.png)
+![objetoInalcancavel](https://github.com/systane/courses/blob/master/javaFundamentals/objetoInalcancavel.png)
 
 No exemplo acima, o **objeto 4 do tipo inteiro** tornou inalcançavel pois perdeu sua referencia.
 
@@ -97,13 +97,13 @@ Lambda functions adiciona ao java recursos do paradigma funcional de linguagens 
 
 Exemplos de uso lambdas como parametro de métodos:
 
-![lambdaAsParameter2](/home/nando/Desktop/java/lambdaAsParameter2.png)
+![lambdaAsParameter2](https://github.com/systane/courses/blob/master/javaFundamentals/lambdaAsParameter2.png)
 
 Nesse primeiro exemplo o método `printIfLambdaReturnsTrue` recebe como parametro um lambda function que vai printar os números da `list` que são pares. Para isso ser possível, primeiro foi necessário criar uma interface funcional `FunctionalInterfaceTeste` que tem uma função abstrata. Essa interface será utilizada como parametro para representar a lambda que será passada como parametro no método `printIfLambdaReturnsTrue`.
 
 
 
-![lambdaAsParameter1](/home/nando/Desktop/java/lambdaAsParameter1.png)	
+![lambdaAsParameter1](https://github.com/systane/courses/blob/master/javaFundamentals/lambdaAsParameter1.png)	
 
  Já nesse segundo exemplo foi utilizada a interface `Predicate<integer>` que vem no pacote `java.util.function` e serve como uma forma de generalização de interfaces funcionais.
 
@@ -113,9 +113,9 @@ Nesse primeiro exemplo o método `printIfLambdaReturnsTrue` recebe como parametr
 
 **Comparable** É uma interface que contém o método `compareTo()`, esse método é sobrescrito nas classes que assinam esse contrato, assim é possível definir como vamos ordenar objetos dessa classe. As classes de tipo de referencia implementam a interface Comparable, mas se quisermos implementar nosso próprio `compareTo()` temos que seguir as três seguintes regras de retorno para esse método:
 
-	- retornar 0: Quando o objeto atual é igual ao argumento recebido na função.
-	- retornar nº negativo < 0: Quando o objeto é menor do que o argumento recebido na função.
-	- retornar nº positivo > 0: Quando o objeto é maior do que o argumento recebido na função.
+- retornar 0: Quando o objeto atual é igual ao argumento recebido na função.
+- retornar nº negativo < 0: Quando o objeto é menor do que o argumento recebido na função.
+- retornar nº positivo > 0: Quando o objeto é maior do que o argumento recebido na função.
 
 **Comparator** É uma interface funcional (logo podemos usar as lambdas functions) que é utilizada quando não queremos assinar a interface Comparable ou quando queremos ordenar um objeto de uma outra maneira, sem ser a que foi definida pela função `compareTo()`.
 
@@ -129,7 +129,7 @@ Nesse primeiro exemplo o método `printIfLambdaReturnsTrue` recebe como parametr
 
 - **Unbounded wildcard** É representado normalmente pela sintaxe `?`. Nesse caso, a `?` representa qualquer tipo de objeto.
 
-![unboundedWildcard](/home/nando/Desktop/java/unboundedWildcard.png)
+![unboundedWildcard](https://github.com/systane/courses/blob/master/javaFundamentals/unboundedWildcard.png)
 
 ​	No exemplo, podemos receber uma List de qualquer tipo.
 
