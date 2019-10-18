@@ -1,7 +1,5 @@
 **List Implementations**
 
-
-
 **List** usamos quando queremos acessar os elementos dessa collection através do seu índice e quando queremos ter a possibilidade de ordena-los, permitindo ou não elementos repetidos.
 
 - **ArrayList**: Funciona como um array de tamanho dinamico. Você pode consultar elementos em tempo constante O(1) através do indíce, porém adicionar/remover é mais lento do que consultar.
@@ -20,8 +18,6 @@
 
 **Queue Implementations**
 
-
-
 **Queue** usamos fila quando os elementos são removidos/adicionados em uma ordem especifica. A ordenação dos elementos é mais importante que o processamento dos mesmos.
 
 - **LinkdedList** : É uma mistura de lista com Fila. Essa Fila é uma DEQUEUE (Double Endend Queue - Fila Duplamente Terminada) que permite a remoção/adição de elementos tanto da cabeça quanto da cauda.
@@ -33,8 +29,6 @@
 
 **MAP Implementation**
 
-
-
 **MAP** Usado quando se tem a necessidade de trabalhar com o par chave/valor.
 
 - **HashMap**: armazena as chaves em uma tabela hash. A vantagem é que para recuperar elementos tem tempo constante O(1) e a desvantagem é que não é possível manter a ordem de inserção.
@@ -44,11 +38,7 @@
 
 **JVM Memory Management**
 
-
-
 A JVM tem um espaço de memória que é divido em várias regiões, sendo algumas dessas regiões compartilhadas.  O esquema a seguir mostra como é  feita essa organização
-
-
 
 ![jvmMemory](https://github.com/systane/courses/blob/master/javaFundamentals/jvmMemory.png)
 
@@ -73,7 +63,9 @@ No exemplo acima, o **objeto 4 do tipo inteiro** tornou inalcançavel pois perde
 
 
 
-**String Pool** é um lugar dentro do HEAP que é responsável por armazenar todos os valores literais de Strings para que estes possam ser reutilizados na aplicação mais tarde. Quando criamos uma string, primeiro o java procura no pool de string de já existe esse literal, caso exista uma referencia para este espaço no heap é retornada. Senão, ele cria um literal no pool e retorna a referencia. Ao criar uma string usando a keyword `new` o Java cria uma nova String fora do pool mas ainda dentro do Heap, tornando o objeto suscetível de ser elegível pelo GC.
+**String Pool** 
+
+Pool de strings é um lugar dentro do HEAP que é responsável por armazenar todos os valores literais de Strings para que estes possam ser reutilizados na aplicação mais tarde. Quando criamos uma string, primeiro o java procura no pool de string de já existe esse literal, caso exista uma referencia para este espaço no heap é retornada. Senão, ele cria um literal no pool e retorna a referencia. Ao criar uma string usando a keyword `new` o Java cria uma nova String fora do pool mas ainda dentro do Heap, tornando o objeto suscetível de ser elegível pelo GC. O GC não consegue limpar os objetos criados dentro do pool de strings, somente os que foram criados fora dessa área (demais regiões do Heap).
 
 É necessário tomar cuidado ao criar/concatenar String usando o operador `+` pois sempre estaremos criando novos objetos no pool, diminuindo assim a performance da aplicação. Uma saída para esse problema é usar o **StringBuilder**, pois ao contrário da String, ele é mutável, o que permite assim que um objeto seja alterado sem que seja criado a cada `append()` uma nova String no pool. O StringBuilder consegue alterar seu próprio estado e retornar uma referencia para ele mesmo quando usando o `append()`.
 
@@ -93,14 +85,11 @@ Lambda functions adiciona ao java recursos do paradigma funcional de linguagens 
 
 **Interface funcionais** são interfaces com apenas um método abstrato e normalmente anotadas com `@FunctionalInterface`. Essa annotation não é obrigatória, porém é uma boa prática usa-lá, para deixar claro que essa interface é funcional e será utilizada em lambda functions, portanto só pode ter um método abstrato.
 
-
-
 Exemplos de uso lambdas como parametro de métodos:
 
 ![lambdaAsParameter2](https://github.com/systane/courses/blob/master/javaFundamentals/lambdaAsParameter2.png)
 
 Nesse primeiro exemplo o método `printIfLambdaReturnsTrue` recebe como parametro um lambda function que vai printar os números da `list` que são pares. Para isso ser possível, primeiro foi necessário criar uma interface funcional `FunctionalInterfaceTeste` que tem uma função abstrata. Essa interface será utilizada como parametro para representar a lambda que será passada como parametro no método `printIfLambdaReturnsTrue`.
-
 
 
 ![lambdaAsParameter1](https://github.com/systane/courses/blob/master/javaFundamentals/lambdaAsParameter1.png)	
@@ -124,8 +113,6 @@ Nesse primeiro exemplo o método `printIfLambdaReturnsTrue` recebe como parametr
 **Bounds with Generics**
 
 **Wildcard generic type**  é usado para representar um tipo generico desconhecido, e usamos um ponto de interrogação para isso ( `?` ). É através desse operador que conseguimos utilizar generic wildcards e impor limites ao Generics. Existem 3 tipos de limites que podemos setar no generics:
-
-
 
 - **Unbounded wildcard** É representado normalmente pela sintaxe `?`. Nesse caso, a `?` representa qualquer tipo de objeto.
 
