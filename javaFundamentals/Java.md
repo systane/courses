@@ -137,7 +137,12 @@ Nesse outro exemplo, a classe que define a variável Objeto não implementa a in
 ​	No exemplo, podemos receber uma List de qualquer tipo.
 
 - **Wildcard with an upper bound**  É representado normalmente pela sintaxe `? extends type`. Podemos definir um limite superior conforme a imagem abaixo.
-- **Wildcard with a lower bound** É representado normalmente pela sintaxe `? super type`.
+
+![upperBounds](https://github.com/systane/courses/blob/master/javaFundamentals/upperBound.png)
+
+Nesse exemplo, todas as classes que extendem Number, podem ser aceitas como parametro para o método definido. Internamente o java realiza o cast dos elementos dessa lista para Number. O retorno das duas chamadas do métodos será 3. O problema de usar unbounded upper bound wildcard é que os elementos da lista se tornam imutaveis.
+
+- **Wildcard with a lower bound** É representado normalmente pela sintaxe `? super type`. Nesse caso, definimos que queremos quaisquer objetos que são uma superclasse do tipo especificado. Esse tipo de bound é raramente utilizado.
 
 
 
