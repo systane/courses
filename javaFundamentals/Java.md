@@ -94,8 +94,13 @@ Nesse primeiro exemplo o método `printIfLambdaReturnsTrue` recebe como parametr
 
 ![lambdaAsParameter1](https://github.com/systane/courses/blob/master/javaFundamentals/lambdaAsParameter1.png)	
 
- Já nesse segundo exemplo foi utilizada a interface `Predicate<integer>` que vem no pacote `java.util.function` e serve como uma forma de generalização de interfaces funcionais.
+Já nesse segundo exemplo foi utilizada a interface `Predicate<integer>` que vem no pacote `java.util.function` e serve como uma forma de generalização de interfaces funcionais. Nesse caso o método abstrato da Predicate recebe como parametro objeto qualquer e retorna sempre um boolean.
 
+Assim como a Predicate, existem outras interfaces funcionais dentro do mesmo pacote como, Consumer e Supplier. A primeira tem um método abstrato void e recebe qualquer objeto como parametro, já a última tem um método que não tem parametro, mas retorna um objeto de qualquer tipo.
+
+![consumer](https://github.com/systane/courses/blob/master/javaFundamentals/consumerInterface.png)
+
+No primeiro exemplo, foi criado uma lambda para apenas printar os valores que forem passados no método abstrato. Já o segundo no segundo exemplo, foi criada uma lambda para multiplicar por 2 cada elemento da lista que o método accept receber.
 
 
 **Comprator & Comparable**
@@ -107,6 +112,16 @@ Nesse primeiro exemplo o método `printIfLambdaReturnsTrue` recebe como parametr
 - retornar nº positivo > 0: Quando o objeto é maior do que o argumento recebido na função.
 
 **Comparator** É uma interface funcional (logo podemos usar as lambdas functions) que é utilizada quando não queremos assinar a interface Comparable ou quando queremos ordenar um objeto de uma outra maneira, sem ser a que foi definida pela função `compareTo()`.
+
+Todo objeto pode ser comparavel, mas para isso a classe desse objeto precisa implementar a interface comparable ou utilizar algum comparator quando for realizar a ordenação dos elementos.
+
+No próximo exemplo, foi implementado a interface Comparable, assim como também o método compareTo. Assim para ordenar a list, basta utilizar o método sort da Collections. No primeiro trecho foi utilizado a interface consumer para definir uma lambda que realize esse processo de ordenação. 
+![comparable](https://github.com/systane/courses/blob/master/javaFundamentals/comparable.png)
+
+
+Nesse outro exemplo, a classe que define a variável Objeto não implementa a interface Comparable, então para ordenar os elementos dessa lista, foi preciso definir um comparator.
+
+![comparator](https://github.com/systane/courses/blob/master/javaFundamentals/comparator.png)
 
 
 
