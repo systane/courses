@@ -9,6 +9,16 @@ Creational class patterns delegate part of the object creation to subclasses. Wh
 **Concepts**
 Before diving into patterns, we must know some definions to improve our bases and consequently understand better the patterns.
 
-**request** we can define a request as a message sent from a client objeto that makes another object performs an operation (call a method). Requests are the way that objects communicate, while  xugu operations are the only way to change an internal status from an object.
+**request** we can define a request as a message sent from a client objeto that makes another object performs an operation (call a method). Requests are the way that objects communicate, while operations are the only way to change an internal status from an object.
 
 **Type** is a name used to denote a particular interface. We speak of an object as having the type "Window" if it accepts all operations defined in the interface named "Window". An object can have multiple types and different objects can have one same type.
+
+**Delegation** is the ability to delegate an operation to the its delegate. For example instead of making class Window a subclass of Rectangle (because windows used to be a rectangular shape), the windows class might reuse the behavior of Rectangle by keeping a Rectangule instance variable and delegating any specific rectangule operation to it. Window can forward requests to its Rectangule instance, instead of inheriting those operations.
+
+In the bellow example, we need to calculate the area of a Window, so then we created an Rectangule instance and delegate to it this particular operation. If we have choose to extends Windows classe as Rectangle, our implementation would be more static and if the Window class becomes circular, it would be harder to change it at the run time.
+
+![delegationExample](https://github.com/systane/courses/blob/master/designPatterns/delegation.png)
+
+This implementation give flexibility, because we can easily change our Window to circular instead of rectangular just changing the instance to Circular whereas Rectangular. The trade off is our implementation also becomes more dynamic and so then harder to understand than static software. Delegation is a good design to choose when it simplifies more than it complicates.
+
+Delegation shows us the concept of **composition**, we can compose a classe with instance from another. Moreover, delegation also shows that we can always replace inheritance with composition to reuse code.
