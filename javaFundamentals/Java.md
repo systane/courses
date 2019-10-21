@@ -160,7 +160,6 @@ Nesse exemplo o método add somente aceita os objetos das classes que tem como p
 Tópicos para rever:
 
 - NOSQL Databases;
-- Limite no generics (OCP2 - cap 3);
 - Design Patterns (OCP2 - cap 2);
 - SOLID;
 
