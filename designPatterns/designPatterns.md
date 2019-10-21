@@ -22,3 +22,22 @@ In the bellow example, we need to calculate the area of a Window, so then we cre
 This implementation give flexibility, because we can easily change our Window to circular instead of rectangular just changing the instance to Circular whereas Rectangular. The trade off is our implementation also becomes more dynamic and so then harder to understand than static software. Delegation is a good design to choose when it simplifies more than it complicates.
 
 Delegation shows us the concept of **composition**, we can compose a classe with instance from another. Moreover, delegation also shows that we can always replace inheritance with composition to reuse code.
+
+
+## **Patterns**
+
+**Composite** Is a pattern that compose objects into tree strucuture to represent part-whole hierarchies (GoF - Design Patterns: Elements of Reusable Object-Oriented Software, 1994). The client can treat individual objects and compositions of objects in the same way.
+
+We can break this pattern into:
+- **component** This is the base interface (can also be an abstract class) that will hold the abstract methods that are common to all child components.
+- **leaf** This class implements the behavior of the base components and doesn't have any reference to the other objects.
+- **composite**  This class contains the leaf elements, and it also implements the base component methods and define child-related operations.
+- **client** Can manipulate objects in the composition through the Component interface.
+
+![compositeStructure](https://github.com/systane/courses/blob/master/designPatterns/compositeStructure.png)
+
+This pattern is used in situations when you want clients treat all objects in the same way. This objects can be a composition of objects or individual objects.
+
+Following the structure shown in the last picture, we have the Component that might be an abstract class or an interface. This class must be implemented by the Leaf and Composite classes. Leaf will only define the specific methods for an individual object. Composite class implements both Leaf and Composite methods.This class also has an aggregation relationship with Component to allow an composite object create a tree children like the one shown in the bellow picture.
+
+![compositeTree](https://github.com/systane/courses/blob/master/designPatterns/compositeTree.png)
