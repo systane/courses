@@ -11,6 +11,11 @@ public class CompositeSolution {
     //Component interface
     public interface IPainter{//This is the solution. An interface can hide from client the difference between a Painter and a Collection of Painters
         double estimateDaysToPaint(int housesQnt); //Common method. Everyone (Leaf and Composite objects) that assigns this contract must implement this method
+        //OBS: I Could have been used an abstract class instead of an interface.
+
+        default IPainter getComposite(){return null;} //OPTIONAL-->default method to give safety to our pattern. With this method,
+        // the client can identify if the object is a leaf or a composite and only use management operation when
+        //the object is a composite.
     }
 
     @AllArgsConstructor
@@ -40,6 +45,13 @@ public class CompositeSolution {
 
         private double getVelocity(IPainter painter) {
             return painter.estimateDaysToPaint(1);
+        }
+
+        @Override
+        public IPainter getComposite() {
+            return this;//OPTIONAL-->default method to give safety to our pattern. With this method,
+            // the client can identify if the object is a leaf or a composite and only use management operation when
+            //the object is a composite.
         }
     }
 
