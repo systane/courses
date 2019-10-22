@@ -3,6 +3,7 @@ package com.designpatterns.composite;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -45,7 +46,7 @@ public class CompositeSolution {
     @AllArgsConstructor
     @Data// Client Class
     private static class LandOwner {
-        private IPainter painter; //Client class only interact with the interface (Component Class)
+        private IPainter painter; //Client class only interacts with the interface (Component Class)
         private int housesCount;
 
         private void ManageHouses(){
@@ -60,8 +61,10 @@ public class CompositeSolution {
         IPainter painter2 = new Painter(10.0);
         IPainter painter3 = new Painter(5.0);
 
-        PaintingCompany painterCompany1 = new PaintingCompany(Arrays.asList(painter1));
-        PaintingCompany painterCompany2 = new PaintingCompany(Arrays.asList(painter2, painter3));
+        IPainter painterCompany1 = new PaintingCompany(Arrays.asList(painter1));
+        IPainter painterCompany2 = new PaintingCompany(Arrays.asList(painter2, painter3));
+
+        IPainter paintingCompanyOutsourcing = new PaintingCompany(Arrays.asList(painterCompany1, painterCompany2));
 
         LandOwner landOwner1 = new LandOwner(painterCompany1, 3);
         landOwner1.ManageHouses();
@@ -71,5 +74,8 @@ public class CompositeSolution {
 
         LandOwner landOwner3 = new LandOwner(painter1, 3);
         landOwner3.ManageHouses();
+
+        LandOwner landOwner4 = new LandOwner(paintingCompanyOutsourcing, 3);
+        landOwner4.ManageHouses();
     }
 }

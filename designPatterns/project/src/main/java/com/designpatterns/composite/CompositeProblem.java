@@ -3,6 +3,8 @@ package com.designpatterns.composite;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.awt.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -52,7 +54,7 @@ public class CompositeProblem {
       Problem: What would happen if the client contract a company of painters? How would our client (LandOwner) calculate
       the quantity of days necessary to paint all the houses? Now our client has the necessity of receiving a single
       painter and a company as parameter in the constructor method. By the way, this company can have many painters
-      working for them.
+      working for them or even they can have another company with more painters (outsourcing of painters).
      */
     }
 }
