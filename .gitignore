@@ -7,4 +7,6 @@ Spring/springCloud/*/*/\.idea/*
 Spring/springCloud/*/*/target/
 Spring/springBatch/*/\.idea/*
 Spring/springCloud/*/\.mvn/*
+designPatterns/project/.idea/*
+designPatterns/project/target/*
 
