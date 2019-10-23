@@ -61,3 +61,5 @@ This pattern has 3 main participants:
 This pattern can be used many cases, like for example when you hide a complex algorithm implementation from client. You can also apply this pattern in a bunch of multiple conditional statements. Instead of multiple conditional, you move the conditional related code to a ConcreteStrategy class. Another case that you can apply this pattern is when you have different algorithms variants and you need to trade off between them easily. Strategy can be used when these algorithms are implemented as class hierarchy of algorithms in other words, you can have the same behavior with different implementations.
 
 A drawback from this pattern is that the client must know how the algorithms differ from each other before the client decide to select one.
+
+**Decorator**
