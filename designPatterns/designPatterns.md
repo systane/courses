@@ -36,7 +36,7 @@ We can break this pattern into:
 
 ![compositeStructure](https://github.com/systane/courses/blob/master/designPatterns/compositeStructure.png)
 
-This pattern is used in situations when you want clients treat all objects (different objects) in the same way. This objects can be a composition of objects or individual objects.
+This pattern is used in situations when you want clients treat all objects (different objects) in the same way. This objects can be a composition of objects or individual objects and they form a tree hierarchical relationship.
 
 Following the structure shown in the last picture, we have the Component that might be an abstract class or an interface. This class must be implemented by the Leaf and Composite classes. Leaf will only define the specific methods for an individual object. Composite class implements both Leaf and Composite methods.This class also has an aggregation relationship with Component to allow an composite object create a tree children like the one shown in the bellow picture.
 
@@ -49,4 +49,15 @@ One approach to overcomes the problem of safety when choosing the transparency i
 http://www.codinghelmet.com/articles/reduce-cyclomatic-complexity-composite-design-pattern
 
 
-**Strategy** 
+**Strategy** this pattern encapsulate every algorithm from a set of different algorithms and make them interchangeable. This patterns allow the client change algorithms easily. This logic behind this pattern is split the set of algorithm implementations from the context that they are required. You can have your Context class separated from the Strategy class that will hold all implementation details from those algorithms.
+
+This pattern has 3 main participants:
+    - Strategy: The first is the Strategy (Compositor) class. This interface must be common to all algorithm concrete classes (ConcreteStrategy), and it will through this interface that Context (Composition) class would access the different algorithm implements.
+    - ConcreteStrategy: Represent all concrete classes that assign the Strategy class. In these classes go all the specific implementations about the algorithms.
+    - Context: The last participant is the Context (Composition) class. This class in responsible to forward all the requests from the client to the Strategy class. The client often decide to change the algorithm and the context class is responsible to configure the right ConcreteStrategy. This class can also mantain an interface, so then the Strategy class access its data.  
+
+![strategyStructure](https://github.com/systane/courses/blob/master/designPatterns/strategyStructure.png)
+
+This pattern can be used many cases, like for example when you hide a complex algorithm implementation from client. You can also apply this pattern in a bunch of multiple conditional statements. Instead of multiple conditional, you move the conditional related code to a ConcreteStrategy class. Another case that you can apply this pattern is when you have different algorithms variants and you need to trade off between them easily. Strategy can be used when these algorithms are implemented as class hierarchy of algorithms in other words, you can have the same behavior with different implementations.
+
+A drawback from this pattern is that the client must know how the different algorithms differ from each other before the client decide to select one.
