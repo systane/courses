@@ -17,7 +17,7 @@ Before diving into patterns, we must know some definions to improve our bases an
 
 In the bellow example, we need to calculate the area of a Window, so then we created an Rectangule instance and delegate to it this particular operation. If we have choose to extends Windows classe as Rectangle, our implementation would be more static and if the Window class becomes circular, it would be harder to change it at the run time.
 
-![delegationExample](https://github.com/systane/courses/blob/master/designPatterns/delegation.png)
+![delegationExample](https://github.com/systane/courses/blob/master/designPatterns/img/delegation.png)
 
 This implementation give flexibility, because we can easily change our Window to circular instead of rectangular just changing the instance to Circular whereas Rectangular. The trade off is our implementation also becomes more dynamic and so then harder to understand than static software. Delegation is a good design to choose when it simplifies more than it complicates.
 
@@ -35,13 +35,13 @@ We can break this pattern into:
 - **composite**  This class contains the leaf elements, and it also implements the base component methods and define child-related operations.
 - **client** Can manipulate objects in the composition through the Component interface.
 
-![compositeStructure](https://github.com/systane/courses/blob/master/designPatterns/compositeStructure.png)
+![compositeStructure](https://github.com/systane/courses/blob/master/designPatterns/img/compositeStructure.png)
 
 This pattern is used in situations when you want clients treat all objects (different objects) in the same way. This objects can be a composition of objects or individual objects and they form a tree hierarchical relationship.
 
 Following the structure shown in the last picture, we have the Component that might be an abstract class or an interface. This class must be implemented by the Leaf and Composite classes. Leaf will only define the specific methods for an individual object. Composite class implements both Leaf and Composite methods.This class also has an aggregation relationship with Component to allow an composite object create a tree children like the one shown in the bellow picture.
 
-![compositeTree](https://github.com/systane/courses/blob/master/designPatterns/compositeTree.png)
+![compositeTree](https://github.com/systane/courses/blob/master/designPatterns/img/compositeTree.png)
 
 **trade-off** The composite pattern has an issue, you must choose where declare the child management operations (like add/remove methods). Declare the child menagement methods at the root of the class hierarchy gives you transparency, because the client can treat every object (composite or leaf) in a uniformly way. But there is a risky of a client call these methods from leaves. Another option is defining the child management operations in the Composite class, this gives you safety (you'll only call methods from composite object), but you lose transparency, because leaf and composite objects have different interfaces.
 
@@ -58,7 +58,7 @@ This pattern has 3 main participants:
 - **ConcreteStrategy**: Represent all concrete classes that assign the Strategy class. In these classes go all the specific implementations about the algorithms.
 - **Context**: The last participant is the Context (Composition) class. This class in responsible to forward all the requests from the client to the Strategy class. The client often decide to change the algorithm and the context class is responsible to configure the right ConcreteStrategy. This class can also mantain an interface, so then the Strategy class access its data.  
 
-![strategyStructure](https://github.com/systane/courses/blob/master/designPatterns/strategyStructure.png)
+![strategyStructure](https://github.com/systane/courses/blob/master/designPatterns/img/strategyStructure.png)
 
 This pattern can be used many cases, like for example when you hide a complex algorithm implementation from client. You can also apply this pattern in a bunch of multiple conditional statements. Instead of multiple conditional, you move the conditional related code to a ConcreteStrategy class. Another case that you can apply this pattern is when you have different algorithms variants and you need to trade off between them easily. Strategy can be used when these algorithms are implemented as class hierarchy of algorithms in other words, you can have the same behavior with different implementations.
 
@@ -67,7 +67,7 @@ A drawback from this pattern is that the client must know how the algorithms dif
 # **Decorator** 
 This pattern is useful when there is necessity to add new funcionalities to an object dynamically. Decorator is a flexible alternative to inheritances that creates a lot of specifics subclasses. This happens because the Decorator class can may or may not add responsabilities (enclose Decorator objects to the Component object) before or after forwarding the requests to the Component Object. This process to add/remove funcionalities is **transparency** because this pattern has a Decorator class that conforms to the Component's interface, so that, its presence is invisible to client. The bellow diagram shows the decorator structure.
 
-![decoratorStructure](https://github.com/systane/courses/blob/master/designPatterns/DecoratorStructure.png)
+![decoratorStructure](https://github.com/systane/courses/blob/master/designPatterns/img/DecoratorStructure.png)
 
 In sume, the decorator has four participants:
 - **Component**: This class define an interface for all the objects that will have responsabilities add to them dynamically.
@@ -86,7 +86,7 @@ Some objects from java.io API are examples of decorators, you can use a LineNumb
 
 Abstract factory is design pattern that provides an interface for creating families of objects that are dependents ou related, without specifying their concrete classes. This pattern is commonly used when you have a family of objects that must be used together, and you need to enforce this constraint. Another case to apply the abstract factory is when a system should be independent of how its products are creaed, composed and represented.
 
-![abstractFactoryStructure](https://github.com/systane/courses/blob/master/designPatterns/abstractFactoryStructure.png)
+![abstractFactoryStructure](https://github.com/systane/courses/blob/master/designPatterns/img/abstractFactoryStructure.png)
 
 The above picture shows how is the structure of the Abstract Factory. It's is composed of 5 members:
 - **AbstractFactory**: An interface class with methods to create abstract product objects.
