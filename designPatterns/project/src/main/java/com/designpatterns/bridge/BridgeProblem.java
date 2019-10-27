@@ -47,6 +47,7 @@ public class BridgeProblem {
         Message emailMessageSender = new EmailMessageSender();
         emailMessageSender.sendMMessage();
 
-        //PROBLEM: If we need to give the change to
+        //PROBLEM: If we need to give the change to one of the abstract classes? We also would have to change the
+        //concrete class.
     }
 }
