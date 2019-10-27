@@ -97,7 +97,9 @@ The above picture shows how is the structure of the Abstract Factory. It's is co
 
 The main disavantage of this pattern is that supporting new products is difficult. If you need to create a new kind of product, you'll need to change the AbstractFactory class and all of its subclasses and this process can be painful. A workaround to this problem can be creating a parameter to operations that create objects. This flag com be an integer for example and it will identify the kind of product.
 
-# **Bridge**
+ **Bridge**
+This pattern decouple an interface from its implementations. The main purpose to do this, is that these two classes can vary independently. When you create an interface an use it as a way to inheritance and create subclasses you bind all the operations in the interface with the implementations from these operations in the concrete classes. But if you need to modify, extend and reuse abstractions and implementations independently? This pattern comes in hand to help you make this decouples real.
+
 
 
 
