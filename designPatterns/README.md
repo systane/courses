@@ -39,3 +39,5 @@ All of these patterns described are listed in the book [Design Pattern, Elements
 - [AbstractFactoryPattern](https://github.com/systane/courses/blob/master/designPatterns/AbstractFactoryPattern.md)
 
 - [BridgePattern](https://github.com/systane/courses/blob/master/designPatterns/BridgePattern.md)
+
+- [CommandPattern](https://github.com/systane/courses/blob/master/designPatterns/CommandPattern.md)

@@ -9,3 +9,4 @@ The above figure showns the structure and the relatioship between the classes fr
 - **Implementor**: This class defines the interface for implementation classes. This class doesn't have to match exactly with the Abstraction's interface. Generally, this class defines primitive operations and the Abstraction provides higher-level operations based on these primitives.
 - **ConcreteImplementor**: These classes assign the Implementor's interface and implement all operations declared.
 
+The Bridge pattern is usually applied before the system is designed to let abstraction and implementations vary independently. The Adapter pattern can be very similar, but it's used after the system is designed.
