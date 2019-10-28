@@ -26,12 +26,16 @@ Delegation shows us the concept of **composition**, we can compose a classe with
 
 # **Patterns**
 
-- CompositePattern ![CompositePattern](https://github.com/systane/courses/blob/master/designPatterns/CompositePattern.md)
+Each pattern described bellow has an implementation in the project folder. I Added some commentaries to explain the problem which this pattern can solve, and I also named all the classes with the correspondenting name convention used in the diagrams to describe the strucuture of these patterns. 
 
-- StrategyPattern ![StrategyPattern](https://github.com/systane/courses/blob/master/designPatterns/StrategyPattern.md)
+All of these patterns described are listed in the book [Design Pattern, Elements of Reusable Object-Oriented Software](https://www.amazon.com.br/Design-Patterns-Elements-Reusable-Object-Oriented/dp/0201633612).
 
-- DecoratorPattern ![DecoratorPattern](https://github.com/systane/courses/blob/master/designPatterns/DecoratorPattern.md)
+- [CompositePattern](https://github.com/systane/courses/blob/master/designPatterns/CompositePattern.md)
 
-- AbstractFactoryPattern ![AbstractFactoryPattern](https://github.com/systane/courses/blob/master/designPatterns/AbstractFactoryPattern.md)
+- [StrategyPattern](https://github.com/systane/courses/blob/master/designPatterns/StrategyPattern.md)
 
-- BridgePattern![BridgePattern](https://github.com/systane/courses/blob/master/designPatterns/BridgePattern.md)
+- [DecoratorPattern](https://github.com/systane/courses/blob/master/designPatterns/DecoratorPattern.md)
+
+- [AbstractFactoryPattern](https://github.com/systane/courses/blob/master/designPatterns/AbstractFactoryPattern.md)
+
+- [BridgePattern](https://github.com/systane/courses/blob/master/designPatterns/BridgePattern.md)
