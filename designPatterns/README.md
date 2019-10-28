@@ -26,8 +26,12 @@ Delegation shows us the concept of **composition**, we can compose a classe with
 
 # **Patterns**
 
-![CompositePattern]()
-![StrategyPattern]()
-![DecoratorPattern]()
-![AbstractFactoryPattern]()
-![BridgePattern]()
+- CompositePattern ![CompositePattern](https://github.com/systane/courses/blob/master/designPatterns/CompositePattern.md)
+
+- StrategyPattern ![StrategyPattern](https://github.com/systane/courses/blob/master/designPatterns/StrategyPattern.md)
+
+- DecoratorPattern ![DecoratorPattern](https://github.com/systane/courses/blob/master/designPatterns/DecoratorPattern.md)
+
+- AbstractFactoryPattern ![AbstractFactoryPattern](https://github.com/systane/courses/blob/master/designPatterns/AbstractFactoryPattern.md)
+
+- BridgePattern![BridgePattern](https://github.com/systane/courses/blob/master/designPatterns/BridgePattern.md)
