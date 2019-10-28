@@ -8,3 +8,4 @@ The above figure showns the structure and the relatioship between the classes fr
 - **RefinedAbstraction**: Are classes that implement or extend the Abstraction class.
 - **Implementor**: This class defines the interface for implementation classes. This class doesn't have to match exactly with the Abstraction's interface. Generally, this class defines primitive operations and the Abstraction provides higher-level operations based on these primitives.
 - **ConcreteImplementor**: These classes assign the Implementor's interface and implement all operations declared.
+

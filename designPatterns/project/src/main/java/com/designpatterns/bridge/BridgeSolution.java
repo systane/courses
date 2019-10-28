@@ -4,17 +4,19 @@ import lombok.AllArgsConstructor;
 
 public class BridgeSolution {
 
+    //Implementor - abstraction to define the interface for the commom methods that represents the implementation that was
+    //separated with the BridgePattern
+    private interface MessageSender {
+        void sendMMessage();
+    }
+
     //Abstraction class
     @AllArgsConstructor
     private static abstract class Message {
-        MessageSender messageSender;
+        MessageSender messageSender;//reference to Implementor interface. This reference can be used in the
+        //specialization Classes (RefinedAbstraction) to call the implementation of the methods.
 
         abstract public void sender();
-    }
-
-    //Implementor - abstraction to define the interface for the commom methods
-    private interface MessageSender {
-        void sendMMessage();
     }
 
     //RefinedAbstraction A
@@ -24,18 +26,20 @@ public class BridgeSolution {
         }
 
         public void sender() {
-            messageSender.sendMMessage();
+            System.out.println("RefinedAbstractionA: TextMessage");
+            messageSender.sendMMessage();//call method from implementation class
         }
     }
 
     //RefinedAbstraction B
     private static class EmailMessage extends Message {
-        public EmailMessage(MessageSender messageSender){
+        private EmailMessage(MessageSender messageSender){
             super(messageSender);
         }
 
         public void sender() {
-            messageSender.sendMMessage();
+            System.out.println("RefinedAbstractionB: EmailMessage");
+            messageSender.sendMMessage();//call method from implementation class
         }
     }
 
@@ -63,5 +67,8 @@ public class BridgeSolution {
         MessageSender emailMessageSender = new EmailMessageSender();
         Message emailMessage = new EmailMessage(emailMessageSender);
         emailMessage.sender();
+
+        //SOLUtION: Because we have separated the abstraction from implementation, we can evolute these two classes
+        //independently
     }
 }
