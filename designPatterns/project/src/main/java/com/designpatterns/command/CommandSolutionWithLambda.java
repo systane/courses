@@ -5,35 +5,13 @@ import lombok.AllArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CommandSolution {
+public class CommandSolutionWithLambda {
 
     @FunctionalInterface
     //Command - Encapsulate all the information required for opening and saving a text file, including the receiver
     // object, the methods to call, and the arguments
     private interface TextFileOperation {
         String execute();
-    }
-
-    //ConcreteCommand A
-    @AllArgsConstructor
-    private static class OpenTextFileOperation implements TextFileOperation {
-        private TextFile textFile;
-
-        @Override
-        public String execute() {
-            return textFile.open();
-        }
-    }
-
-    //ConcreteCommand B
-    @AllArgsConstructor
-    private static class SaveTextFileOperation implements TextFileOperation {
-        private TextFile textFile;
-
-        @Override
-        public String execute() {
-            return textFile.save();
-        }
     }
 
     //Receiver - This class knows how to perform the operations associated with carrying out a request. Any class may serve as a Receiver
@@ -64,9 +42,9 @@ public class CommandSolution {
     public static void main(String[] args) {
         TextFileOperationExecutor textFileOperationExecutor = new TextFileOperationExecutor();
 
-        System.out.println(textFileOperationExecutor.executeOperation(new OpenTextFileOperation(new TextFile("file1.txt"))));
-        System.out.println(textFileOperationExecutor.executeOperation(new SaveTextFileOperation(new TextFile("file2.txt"))));
+        //Because we have created a funcional interface, we can use lambda functions on our clients to achieve the same result
+        System.out.println(textFileOperationExecutor.executeOperation(() -> "Opening file file1.txt"));
+        System.out.println(textFileOperationExecutor.executeOperation(() -> "Saving file file2.txt"));
 
-        //We separate the object how knows how to carry out the request from the one who invokes the operation.
     }
 }

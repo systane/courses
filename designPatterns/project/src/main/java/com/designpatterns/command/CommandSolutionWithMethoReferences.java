@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CommandSolution {
+public class CommandSolutionWithMethoReferences {
 
     @FunctionalInterface
     //Command - Encapsulate all the information required for opening and saving a text file, including the receiver
@@ -64,8 +64,11 @@ public class CommandSolution {
     public static void main(String[] args) {
         TextFileOperationExecutor textFileOperationExecutor = new TextFileOperationExecutor();
 
-        System.out.println(textFileOperationExecutor.executeOperation(new OpenTextFileOperation(new TextFile("file1.txt"))));
-        System.out.println(textFileOperationExecutor.executeOperation(new SaveTextFileOperation(new TextFile("file2.txt"))));
+        TextFile textFile1 = new TextFile("file1.txt");
+        TextFile textFile2 = new TextFile("file2.txt");
+
+        System.out.println(textFileOperationExecutor.executeOperation(textFile1::open));
+        System.out.println(textFileOperationExecutor.executeOperation(textFile2::save));
 
         //We separate the object how knows how to carry out the request from the one who invokes the operation.
     }
