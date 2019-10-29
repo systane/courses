@@ -41,3 +41,6 @@ All of these patterns described are listed in the book [Design Pattern, Elements
 - [BridgePattern](https://github.com/systane/courses/blob/master/designPatterns/BridgePattern.md)
 
 - [CommandPattern](https://github.com/systane/courses/blob/master/designPatterns/CommandPattern.md)
+
+- [IteratorPattern](https://github.com/systane/courses/blob/master/designPatterns/IteratorPattern.md)
+
