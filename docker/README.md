@@ -1,0 +1,25 @@
+# **What is Docker?**
+
+Docker is a containerization technology that enables you package your application and also all its dependencies together. This package is better known as **docker container** or just **container**. This kind of technology is very useful because with that, you can standardize that you application will work uniformly in any environment. You don't need to concern if your application runs on specific OS, because the container can always run it.
+
+Container is the atomic unit of Docker technology, and you can create container with any application or enviroment you want (Ubuntu container with maven and Java 8, CentOs with your app installed, or just a linux distribution, etc). To create a container, you just have to write a Dockerfile specifying the OS, your application and its dependencies. Containers run right above the layer of the Host OS.
+
+![dockerStrucuturexVm](https://github.com/systane/courses/blob/master/docker/DockerxVm.jpg)
+
+This diagram above shows how the strucuture of Virtual Machines (VM) and Docker works. I Think that is difficult not compare these two different technologies when talking about Docker. The first structure shown is the VM. Vms run right above the Hypervisor layer, that is responsible to run a vm or to make the communication between the Host Operating System and the vm. There are 2 kinds of hypervisor technologies but I will not cover this topic here, because it's out of the scope. All layers above the hypervisor (Guest OS, Bins and App) they together form the vm strucuture. To run this strucuture you need to separate resources like hard disc space, memory allocation and also CPU processing. The main advantage of this is that you have separated environment for each vm that you configure and create, but the side effect is waste of resources. For example, in the most part of the time you might a vm allocated with 3GB ram that just use 1.5GB in 90% of the time in a normal day. How can we overcome this problem? The answer is Docker.
+
+Docker has a better resource manager because of its structure. Depending where you're running docker (Non-linux OS) you don't need the Hypervisor layer, the Docker Daemon layer can communicate directly with the container running your app. But this a particular design of the docker structure. The advantage of use Docker is that each container can share resources with the Host machine and allocate them dinamically on the fly - This process is also known as **Vertical scaling**, you increase the amount of memory and CPU required to ensure to your application high availability.
+
+With Dockerfiles you can build images of containers, and these images can run on Cloud plataforms that offer IaaS (Infrastructure  as a Service) like for example Amazon EC2. With these kind of service, you can configure instances of hosts that can run docker images, and besides of having the vertical scaling inside the cloud invironment with Docker, we can also have the **Horizontal scaling** where you can configure rules to stretch dynamically your power of processing creating new instances with the same docker image. You can also distribute all the incoming request among all instances avaliables.
+
+Container are the core business of Docker, but to build container we need blocks, and those blocks are docker images. An image is defined by a Dockerfile and each command defined inside this Dockerfile represents a layer. In other words, Dockerfile is a set of commands and each command define an layer. Layers can be reutilized between different images and this increase the speed building of the docker images.
+
+# **Side Effects**
+Docker has some side effects, and the most common problem appears when you have do manage and orchestrate containers. Maybe you will need to group containers to ensure security, network, etc. This is when orchestration programs, like Kubernetes, comes to play. With Kubernetes you can define a group of containers and start a pod containing just when all these containers become avaliable (online to receive requests).
+
+Another known problem with Docker is the security of the containers. Docker Deamon is the layer where you can interact and execute docker commands, but this module need root priviligies, so you need to restrict which person will have access to this process and where it'll be runing.
+
+
+
+
+# **Vulnerabilities**
