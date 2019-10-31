@@ -18,8 +18,3 @@ Container are the core business of Docker, but to build container we need blocks
 Docker has some side effects, and the most common problem appears when you have do manage and orchestrate containers. Maybe you will need to group containers to ensure security, network, etc. This is when orchestration programs, like Kubernetes, comes to play. With Kubernetes you can define a group of containers and start a pod containing just when all these containers become avaliable (online to receive requests).
 
 Another known problem with Docker is the security of the containers. Docker Deamon is the layer where you can interact and execute docker commands, but this module need root priviligies, so you need to restrict which person will have access to this process and where it'll be runing.
-
-
-
-
-# **Vulnerabilities**
