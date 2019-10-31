@@ -62,3 +62,4 @@ Differences apart, let's focus on what is important, what the fuck is SOLID? SOL
 
 **[D]**[ependency Inversion Principle](https://github.com/systane/courses/blob/master/designPatterns/designPrinciples/D_DependencyInversionPrinciple.md)
 
+These principles are very abstract, so is difficult imagine that they only are applied in classes and functions (code). We can also apply the SOLID principle in a bigger context like an app or features from a system.
