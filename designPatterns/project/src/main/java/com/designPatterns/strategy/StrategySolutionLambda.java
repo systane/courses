@@ -1,4 +1,4 @@
-package com.designpatterns.strategy;
+package com.designPatterns.strategy;
 
 import lombok.AllArgsConstructor;
 

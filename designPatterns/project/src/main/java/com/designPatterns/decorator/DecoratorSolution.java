@@ -1,4 +1,4 @@
-package com.designpatterns.decorator;
+package com.designPatterns.decorator;
 
 import lombok.AllArgsConstructor;
 

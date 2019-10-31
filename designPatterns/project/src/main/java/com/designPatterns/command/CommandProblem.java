@@ -1,8 +1,6 @@
-package com.designpatterns.command;
+package com.designPatterns.command;
 
 import lombok.AllArgsConstructor;
-
-import java.util.ArrayList;
 
 public class CommandProblem {
     //Receiver

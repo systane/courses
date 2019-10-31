@@ -27,7 +27,7 @@ This implementation give flexibility, because we can easily change our Window to
 Delegation shows us the concept of **composition**, we can compose a classe with instance from another. Moreover, delegation also shows that we can always replace inheritance with composition to reuse code.
 
 
-# **Patterns**
+# **Design Patterns**
 
 Each pattern described bellow has an implementation in the project folder. I Added some commentaries to explain the problem which this pattern can solve, and I also named all the classes with the correspondenting name convention used in the diagrams to describe the strucuture of these patterns. 
 

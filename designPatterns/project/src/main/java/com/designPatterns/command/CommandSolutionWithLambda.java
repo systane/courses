@@ -1,39 +1,17 @@
-package com.designpatterns.command;
+package com.designPatterns.command;
 
 import lombok.AllArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CommandSolutionWithMethoReferences {
+public class CommandSolutionWithLambda {
 
     @FunctionalInterface
     //Command - Encapsulate all the information required for opening and saving a text file, including the receiver
     // object, the methods to call, and the arguments
     private interface TextFileOperation {
         String execute();
-    }
-
-    //ConcreteCommand A
-    @AllArgsConstructor
-    private static class OpenTextFileOperation implements TextFileOperation {
-        private TextFile textFile;
-
-        @Override
-        public String execute() {
-            return textFile.open();
-        }
-    }
-
-    //ConcreteCommand B
-    @AllArgsConstructor
-    private static class SaveTextFileOperation implements TextFileOperation {
-        private TextFile textFile;
-
-        @Override
-        public String execute() {
-            return textFile.save();
-        }
     }
 
     //Receiver - This class knows how to perform the operations associated with carrying out a request. Any class may serve as a Receiver
@@ -64,12 +42,9 @@ public class CommandSolutionWithMethoReferences {
     public static void main(String[] args) {
         TextFileOperationExecutor textFileOperationExecutor = new TextFileOperationExecutor();
 
-        TextFile textFile1 = new TextFile("file1.txt");
-        TextFile textFile2 = new TextFile("file2.txt");
+        //Because we have created a funcional interface, we can use lambda functions on our clients to achieve the same result
+        System.out.println(textFileOperationExecutor.executeOperation(() -> "Opening file file1.txt"));
+        System.out.println(textFileOperationExecutor.executeOperation(() -> "Saving file file2.txt"));
 
-        System.out.println(textFileOperationExecutor.executeOperation(textFile1::open));
-        System.out.println(textFileOperationExecutor.executeOperation(textFile2::save));
-
-        //We separate the object how knows how to carry out the request from the one who invokes the operation.
     }
 }

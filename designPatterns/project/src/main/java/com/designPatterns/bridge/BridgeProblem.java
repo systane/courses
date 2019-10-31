@@ -1,4 +1,4 @@
-package com.designpatterns.bridge;
+package com.designPatterns.bridge;
 
 public class BridgeProblem {
 

@@ -1,4 +1,4 @@
-package com.designpatterns.iterator;
+package com.designPatterns.iterator;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

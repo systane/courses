@@ -1,4 +1,4 @@
-package com.designpatterns.decorator;
+package com.designPatterns.decorator;
 
 public class DecoratorProblem {
 

@@ -1,4 +1,4 @@
-package com.designpatterns.abstractFactory;
+package com.designPatterns.abstractFactory;
 
 public class AbstractFactoryProblem {
     private interface GeometricShape {
