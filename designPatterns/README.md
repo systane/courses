@@ -53,8 +53,12 @@ When you talk about OO there are a bunch of acronyms that appear trying to guide
 Differences apart, let's focus on what is important, what the fuck is SOLID? SOLID is an acronym created by Robert C. Martin (Uncle Bob) and it means:
 
 **[S]**[ingle Responsibility Principle](https://github.com/systane/courses/blob/master/designPatterns/designPrinciples/S_SingleResponsability.md)
+
 **[O]**[pen/Closed Principle](https://github.com/systane/courses/blob/master/designPatterns/designPrinciples/O_OpenClosedPrinciple.md)
+
 **[L]**[iskov Substitution Principle](https://github.com/systane/courses/blob/master/designPatterns/designPrinciples/L_LiskovSubstitutionPrinciple.md)
+
 **[I]**[nterface Segregation Principle](https://github.com/systane/courses/blob/master/designPatterns/designPrinciples/I_InterfaceSegregationPrinciple.md)
+
 **[D]**[ependency Inversion Principle](https://github.com/systane/courses/blob/master/designPatterns/designPrinciples/D_DependencyInversionPrinciple.md)
 
