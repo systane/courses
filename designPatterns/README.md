@@ -6,6 +6,9 @@ We can classificate design patterns by two criteria. The first is **purpose**, a
 
 Creational class patterns delegate part of the object creation to subclasses. While Creational object patterns delegate it to another object. Structural class patterns use inheritance to compose classes, the Structural object patterns describe join objects. Behavioral class patterns use inheritance to describe algorithms and flow of control, whereas Behavioral object patterns describe how a group of objects cooperate to perform a task that only one object cannot do.
 
+# **Why I must know Design Patterns? Arey they used in nowadays projects?**
+Design patterns are used in many projects nowadays. I think that is almost impossible don't see at the least one of the patterns described here in an expressive project. You might use a Facade to organize better your services ou to isolate some complex layer of your project. You might use a
+
 # **Concepts**
 Before diving into patterns, we must know some definions to improve our bases and consequently understand better the patterns.
 
@@ -43,4 +46,15 @@ All of these patterns described are listed in the book [Design Pattern, Elements
 - [CommandPattern](https://github.com/systane/courses/blob/master/designPatterns/CommandPattern.md)
 
 - [IteratorPattern](https://github.com/systane/courses/blob/master/designPatterns/IteratorPattern.md)
+
+# **Design Principles**
+When you talk about OO there are a bunch of acronyms that appear trying to guide you to use the best design principles, if you have never heard about KISS, DRY, YAGNI, etc. You may think that I'm talking about a soup of letters, but unfortunately these are well known design principles. Wait, why unfortunately? Because all them in a certain way represents parts of well known principle, SOLID. I think that knowing SOLID and applying it also follow another principles by default. Look, I'm not trying to say that you just need to know SOLID, it is OK read about other principles, because all they together converge to the object: Improve your code legibility and maintenance. I just think that our community have been creating so many acronyms that could be sometimes explained with SOLID.
+
+Differences apart, let's focus on what is important, what the fuck is SOLID? SOLID is an acronym created by Robert C. Martin (Uncle Bob) and it means:
+
+**[S]**[ingle Responsibility Principle](https://github.com/systane/courses/blob/master/designPatterns/designPrinciples/S_SingleResponsability.md)
+**[O]**[pen/Closed Principle](https://github.com/systane/courses/blob/master/designPatterns/designPrinciples/O_OpenClosedPrinciple.md)
+**[L]**[iskov Substitution Principle](https://github.com/systane/courses/blob/master/designPatterns/designPrinciples/L_LiskovSubstitutionPrinciple.md)
+**[I]**[nterface Segregation Principle](https://github.com/systane/courses/blob/master/designPatterns/designPrinciples/I_InterfaceSegregationPrinciple.md)
+**[D]**[ependency Inversion Principle](https://github.com/systane/courses/blob/master/designPatterns/designPrinciples/D_DependencyInversionPrinciple.md)
 
