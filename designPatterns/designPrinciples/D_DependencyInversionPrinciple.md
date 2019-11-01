@@ -9,7 +9,7 @@ The above snippet shows us an example of violation of DIP, we have explicitly co
 This snippet shows the refactoried classes, now we decoupled our two classes that before were tightly coupled.
 ![SOLUTION_DIP](https://github.com/systane/courses/blob/master/designPatterns/img/DIP/SOLUTION_DIP.png)
 
-You may remember that I also used DI (implicitly) when I was talking about [OCP Principle](https://github.com/systane/courses/blob/master/designPatterns/designPrinciples/O_OpenClosedPrinciple.md).Last remember the snippet where I applied this pattern:
+You may remember that I also used DI (implicitly) when I was talking about [OCP Principle](https://github.com/systane/courses/blob/master/designPatterns/designPrinciples/O_OpenClosedPrinciple.md).Let's remember the snippet where I applied this pattern:
 
 ![DI_EXAMPLE](https://github.com/systane/courses/blob/master/designPatterns/img/OCP/authenticateLogin_OCP.png)
 
