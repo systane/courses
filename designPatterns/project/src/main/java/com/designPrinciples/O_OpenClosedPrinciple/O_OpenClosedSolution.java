@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-public class O_OpenClosedPrincipleSolution {
+public class O_OpenClosedSolution {
 
     @Getter
     @Setter

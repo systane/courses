@@ -1,4 +1,4 @@
-package com.designPrinciples.S_SingleResponsability;
+package com.designPrinciples.S_SingleResponsabilityPrinciple;
 
 import lombok.Getter;
 import lombok.Setter;

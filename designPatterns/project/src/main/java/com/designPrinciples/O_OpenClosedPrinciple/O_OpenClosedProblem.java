@@ -3,7 +3,7 @@ package com.designPrinciples.O_OpenClosedPrinciple;
 import lombok.Getter;
 import lombok.Setter;
 
-public class O_OpenClosedPrincipleProblem {
+public class O_OpenClosedProblem {
 
     @Getter
     @Setter
