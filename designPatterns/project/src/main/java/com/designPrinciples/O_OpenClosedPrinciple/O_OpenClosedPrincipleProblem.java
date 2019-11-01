@@ -12,7 +12,7 @@ public class O_OpenClosedPrincipleProblem {
         private String password;
     }
 
-    private static class Authentication{
+    private static class AuthenticateLogin{
         private boolean login(ClientDTO client, String provider){
             if(provider.equalsIgnoreCase("Google")){
                 //authenticate the login with OAuth
