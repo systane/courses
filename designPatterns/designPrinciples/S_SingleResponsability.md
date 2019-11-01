@@ -21,3 +21,5 @@ Our ENUM and interface to calculate the salary
 
 At the last our Employee entity, as you can see its becomes clearer than before:
 ![SRP_EMPLOYEE](https://github.com/systane/courses/blob/master/designPatterns/img/SRP/employeeEntity_SRP.png)
+
+With this separations of responsabilities each class has only one reason to change, and all elements/components used within each class have a high cohesion with the other elements in the same class.
