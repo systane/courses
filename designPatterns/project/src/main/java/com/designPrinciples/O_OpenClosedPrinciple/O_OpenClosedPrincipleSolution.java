@@ -17,7 +17,7 @@ public class O_OpenClosedPrincipleSolution {
     private static class AuthenticateLogin {
         private Authentication authentication;
 
-        private boolean login(ClientDTO client){
+        public boolean login(ClientDTO client){
             return authentication.login(client);
         }
     }

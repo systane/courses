@@ -13,7 +13,7 @@ public class O_OpenClosedPrincipleProblem {
     }
 
     private static class AuthenticateLogin{
-        private boolean login(ClientDTO client, String provider){
+        public boolean login(ClientDTO client, String provider){
             if(provider.equalsIgnoreCase("Google")){
                 //authenticate the login with OAuth
                 //If the information is correct return true, else false
