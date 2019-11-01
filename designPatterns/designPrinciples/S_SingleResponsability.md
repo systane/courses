@@ -19,5 +19,5 @@ Our DAO class with just the responsability to save a new employee.
 Our ENUM and interface to calculate the salary
 ![SRP_ENUM](https://github.com/systane/courses/blob/master/designPatterns/img/SRP/SRP_ENUM.png)
 
-At the last our Employee entity:
+At the last our Employee entity, as you can see its becomes clearer than before:
 ![SRP_EMPLOYEE](https://github.com/systane/courses/blob/master/designPatterns/img/SRP/employeeEntity_SRP.png)
