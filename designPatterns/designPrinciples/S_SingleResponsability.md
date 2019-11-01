@@ -16,10 +16,10 @@ For example, our class to connect with DB can be like the above. What is the res
 Our DAO class with just the responsability to save a new employee.
 ![SRP_DAO](https://github.com/systane/courses/blob/master/designPatterns/img/SRP/employeeDao.png)
 
-Our ENUM 
+Our ENUM that only will define the positions
 ![SRP_ENUM](https://github.com/systane/courses/blob/master/designPatterns/img/SRP/enum_SPR.png)
 
-Interface to calculate the salary
+Interface to calculate the salary of different positions. These classes calculate the salary including the taxes discounts of each position.
 ![SRP_INTERFACE](https://github.com/systane/courses/blob/master/designPatterns/img/SRP/interface_SRP.png)
 
 At the last our Employee entity:
