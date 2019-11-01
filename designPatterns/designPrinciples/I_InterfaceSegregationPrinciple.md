@@ -6,6 +6,6 @@ Let's look a simple snippet that breaks this principle. In this example, our cli
 ![PROBLEM_ISP](https://github.com/systane/courses/blob/master/designPatterns/img/ISP/PROBLEM_ISP.png)
 
 We can refactory our code to looks like the bellow snippet. It was created a new interface `AdvancedCellPhone` just to support the funcionality of taking photos, so our `NormalCellPhone` interface becomes more grained and specific.
-![SOLUTION_ISP](https://github.com/systane/courses/blob/master/designPatterns/img/LSP/SOLUTION_ISP.png)
+![SOLUTION_ISP](https://github.com/systane/courses/blob/master/designPatterns/img/ISP/SOLUTION_ISP.png)
 
 Be carefull when applying this principle! Don't make overengineering and start to make a "boom" of interfaces in your project.
