@@ -13,12 +13,13 @@ The solution is apply the SRP. We can create a class to make the connection with
 For example, our class to connect with DB can be like the above. What is the responsability of this class? Simple to answer: Just connect with Database. That's it.
 ![SRP_DB_CONNECTION](https://github.com/systane/courses/blob/master/designPatterns/img/SRP/dbConnection_SRP.png)
 
-
 Our DAO class with just the responsability to save a new employee.
 ![SRP_DAO](https://github.com/systane/courses/blob/master/designPatterns/img/SRP/employeeDao.png)
 
-Our ENUM and interface to calculate the salary
+Our ENUM 
 ![SRP_ENUM](https://github.com/systane/courses/blob/master/designPatterns/img/SRP/enum_SPR.png)
+
+Interface to calculate the salary
 ![SRP_INTERFACE](https://github.com/systane/courses/blob/master/designPatterns/img/SRP/interface_SRP.png)
 
 At the last our Employee entity:
