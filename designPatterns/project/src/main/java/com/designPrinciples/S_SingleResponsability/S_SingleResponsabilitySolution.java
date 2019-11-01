@@ -50,7 +50,7 @@ public class S_SingleResponsabilitySolution {
 
     private static class EmployeeDAO {
 
-        public void save(Employee funcionario) throws SQLException {
+        public void save(Employee employee) throws SQLException {
             ConnectionDAO connectionDAO = new ConnectionDAO("root", "");
             connectionDAO.setDbms("mysql");
             connectionDAO.setServerName("localhost");
@@ -60,43 +60,43 @@ public class S_SingleResponsabilitySolution {
             try (Connection connection = connectionDAO.createConnection();
                  Statement stmt = connection.createStatement()) {
 
-                String sql = "insert into employee (id, name, salary) values (" + funcionario.getId() + "," +
-                        funcionario.getName() + "," + funcionario.getSalary() + ")";
+                String sql = "insert into employee (id, name, salary) values (" + employee.getId() + "," +
+                        employee.getName() + "," + employee.getSalary() + ")";
                 int rs = stmt.executeUpdate(sql);
 
                 if (rs == 1) {
                     System.out.println("Employee saved with success.");
                 }
             } catch (SQLException e) {
-                System.err.println("one employee saved." + e);
+                System.err.println("None employee saved." + e);
             }
         }
     }
 
     @Getter
     private enum Role {
-        DEVELOPER_SENIOR(new RegraVinteDoisEMeioPorcento()),
-        DEVELOPER_JUNIOR(new RegraOnzePorcento());
+        DEVELOPER_SENIOR(new SeniorTaxRule()),
+        DEVELOPER_JUNIOR(new JuniorTaxRule());
 
-        private RegraDeCalculo rule;
+        private TaxRules rule;
 
-        Role(RegraDeCalculo rule){
+        Role(TaxRules rule){
             this.rule = rule;
         }
     }
 
-    private interface RegraDeCalculo {
+    private interface TaxRules {
         double calculate (Employee employee);
     }
 
-    private static class RegraVinteDoisEMeioPorcento implements RegraDeCalculo{
+    private static class SeniorTaxRule implements TaxRules{
         @Override
         public double calculate(Employee employee) {
             return employee.getSalary() - (employee.getSalary() * 0.225);
         }
     }
 
-    private static class RegraOnzePorcento implements RegraDeCalculo{
+    private static class JuniorTaxRule implements TaxRules{
         @Override
         public double calculate(Employee employee) {
             return employee.getSalary() - (employee.getSalary() * 0.11);

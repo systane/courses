@@ -15,21 +15,21 @@ public class S_SingleResponsabilityProblem {
     @Setter
     private static class Employee{
         private Integer id;
-        private String nome;
-        private Double salario;
+        private String name;
+        private Double salary;
         private Connection connection;
 
-        public Double calculaSalario() {
-            return this.salario - (this.salario * 0.225);
+        public Double calculateSalary() {
+            return this.salary - (this.salary * 0.225);
         }
 
-        public void salva() throws SQLException {
-            String url = "jdbc:mysql://localhost:3306/empresa?useSSL=false";
+        public void save() throws SQLException {
+            String url = "jdbc:mysql://localhost:3306/company?useSSL=false";
 
             this.connection = DriverManager.getConnection(url, "root", "");
             Statement stmt = this.connection.createStatement();
-            String sql = "insert into funcionario (id, nome, salario) values (" + this.id + "," +
-                    this.nome + "," + this.salario + ")";
+            String sql = "insert into employee (id, name, salary) values (" + this.id + "," +
+                    this.name + "," + this.salary + ")";
             int rs = stmt.executeUpdate(sql);
 
             if (rs == 1){
