@@ -21,6 +21,7 @@ The above snippet shows us the main function with a little "problem". To use the
 Let's look an example of how achieve DI with IoC.
 
 ![Example1_OIC](https://github.com/systane/courses/blob/master/designPatterns/img/DIP/Example1_IoC.png)
+
 In the above code, I created LoginService class and annotated it with `@Service`, this annotation tells to Spring that this class will be managed by the Spring Container, in other worlds I'm configuring Spring to make the IoC of this class. I also implemented a method that must validade the email and password from an incoming request made by a client.
 
 ![Example2_OIC](https://github.com/systane/courses/blob/master/designPatterns/img/DIP/Example2_IoC.png)
