@@ -28,6 +28,6 @@ In the above code, I created LoginService class and annotated it with `@Service`
 
 In my controller class, I declared a private attribute and annotated it with `@Autowired`. This annotation tells to spring that this attribute must be created by IoC and injected in this class, then the developer don't need to manager all dependencies alone. 
 
-As you can observe, DI and IoC are not DIP, Dependency Injection is just a pattern/technique that we can use to follow the DIP principle (Decouple our code), and IoC is a another pattern to help you achieve DI.
+As you can observe, DI and IoC are not DIP, Dependency Injection is just a pattern/technique that we can use to follow the DIP principle (Decouple our code), and IoC is a another pattern to help you achieve DI easiler.
 
 **OBS**: I'm not using DIP in the last example, because my controller class is depending directly on an implementation instead of abstraction.
