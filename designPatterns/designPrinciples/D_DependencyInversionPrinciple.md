@@ -24,6 +24,7 @@ Let's look an example of how achieve DI with IoC.
 In the above code, I created LoginService class and annotated it with `@Service`, this annotation tells to Spring that this class will be managed by the Spring Container, in other worlds I'm configuring Spring to make the IoC of this class. I also implemented a method that must validade the email and password from an incoming request made by a client.
 
 ![Example2_OIC](https://github.com/systane/courses/blob/master/designPatterns/img/DIP/Example2_IoC.png)
+
 In my controller class, I declared a private attribute and annotated it with `@Autowired`. This annotation tells to spring that this attribute must be created by IoC and injected in this class, then the developer don't need to manager all dependencies alone. 
 
 As you can observe, DI and IoC are not DIP, Dependency Injection is just a pattern/technique that we can use to follow the DIP principle (Decouple our code), and IoC is a another pattern to help you achieve DI.
