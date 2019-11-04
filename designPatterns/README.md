@@ -6,7 +6,7 @@ We can classificate design patterns by two criteria. The first is **purpose**, a
 
 Creational class patterns delegate part of the object creation to subclasses. While Creational object patterns delegate it to another object. Structural class patterns use inheritance to compose classes, the Structural object patterns describe join objects. Behavioral class patterns use inheritance to describe algorithms and flow of control, whereas Behavioral object patterns describe how a group of objects cooperate to perform a task that only one object cannot do.
 
-# **Why I must know Design Patterns? Arey they used in nowadays projects?**
+# **Why I must know Design Patterns? Are they used in nowadays projects?**
 Design patterns are used in many projects nowadays. I think that is almost impossible don't see at the least one of the patterns described here in an expressive project. You might use a Facade to organize better your services ou to isolate some complex layer of your project. Or maybe you just use these patterns to understand better a documentation or resource from a language (Iterators and Adapters from Java).
 
 # **Concepts**

@@ -30,4 +30,4 @@ In my controller class, I declared a private attribute and annotated it with `@A
 
 As you can observe, DI and IoC are not DIP, Dependency Injection is just a pattern/technique that we can use to follow the DIP principle (Decouple our code), and IoC is a another pattern to help you achieve DI easiler.
 
-**OBS**: I'm not using DIP in the last example, because my controller class is depending directly on an implementation instead of abstraction.
+**OBS**: I'm not using DIP in the last example (Login snippet), because my controller class is depending directly on an implementation instead of abstraction.
