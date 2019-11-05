@@ -1,6 +1,6 @@
 Spring/springBatch/target/*
 Spring/springBatch/.idea/*
-Spring/springBatch/target/classes/br/com/spring_batch/entities/Account.class
+Spring/springBatch/target/classes/br/com/spring_batch/entities/*.class
 Spring/springCloud/*/\.idea/*
 Spring/springCloud/*/target/
 Spring/springCloud/*/*/\.idea/*
@@ -9,4 +9,4 @@ Spring/springBatch/*/\.idea/*
 Spring/springCloud/*/\.mvn/*
 designPatterns/project/.idea/*
 designPatterns/project/target/*
-
+*.class
