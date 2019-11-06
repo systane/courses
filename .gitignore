@@ -10,5 +10,4 @@ Spring/springCloud/*/\.mvn/*
 designPatterns/project/.idea/*
 designPatterns/project/target/*
 *.class
-
 hackerrank/hackerrank/.idea/
