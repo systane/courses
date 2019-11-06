@@ -13,15 +13,17 @@ public class JumpingOnTheClouds {
         int currentCloudIndex = 0;
         int minimumNumberOfJumps = 0;
 
-        while (currentCloudIndex < c.length) {
-            if (isNextCloudThunderheads(currentCloudIndex, c)) { //proxima nuvem é thunderhead, logo preciso saltar 2 indíces no path.
+        while (currentCloudIndex < c.length-1) {
+            if (isNextCloudThunderheads(currentCloudIndex, c) || isNextOfTheNextCloudCumulus(currentCloudIndex, c)) { //proxima nuvem é thunderhead, logo preciso saltar 2 indíces no path.
                 minimumNumberOfJumps++;
-                currentCloudIndex+=2;
-            } else if (isNextOfTheNextCloudThunderheads(currentCloudIndex, c)){//a proxima da proxima nuvem é thunderhead, logo preciso saltar 1 indíce no path.
+                currentCloudIndex += 2;
+            } else if (isNextOfTheNextCloudThunderheads(currentCloudIndex, c)) {//a proxima da proxima nuvem é thunderhead, logo preciso saltar 1 indíce no path.
+                minimumNumberOfJumps++;
+                currentCloudIndex++;
+            } else {
                 minimumNumberOfJumps++;
                 currentCloudIndex++;
             }
-            else currentCloudIndex++;
         }
         return minimumNumberOfJumps;
     }
@@ -32,10 +34,18 @@ public class JumpingOnTheClouds {
         return nextCloudIndex + 1 < c.length && isNextCloudThunderheads(nextCloudIndex, c);
     }
 
+    private static boolean isNextOfTheNextCloudCumulus(int currentCloudIndex, int[] c) {
+        return !isNextOfTheNextCloudThunderheads(currentCloudIndex, c);
+    }
+
     private static boolean isNextCloudThunderheads(int cloudIndex, int[] c) {
         int thunderheads = 1;
 
-        return cloudIndex+1 < c.length && c[cloudIndex+1] == thunderheads;
+        return cloudIndex + 1 < c.length && c[cloudIndex + 1] == thunderheads;
+    }
+
+    private static boolean isNextCloudCumulus(int cloudIndex, int[] c) {
+        return !isNextCloudThunderheads(cloudIndex, c);
     }
 
     private static final Scanner scanner = new Scanner(System.in);
