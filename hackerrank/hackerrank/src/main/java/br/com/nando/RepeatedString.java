@@ -15,33 +15,28 @@ public class RepeatedString {
     //10
     //this method should return 7
     static long repeatedString(String s, long n) {
-        int quantityOfLetterA = 0;
-
-        String multipliedString = createLetterSequence(s, n);
-
-        for(int i = 0; i < multipliedString.length(); i++){
-            if(multipliedString.charAt(i)  == 'a'){
-                quantityOfLetterA++;
-            }
-        }
+        Long quantityOfLetterA = createLetterSequence(s, n);
 
         return quantityOfLetterA;
     }
 
     //abaabaaba
-    private static String createLetterSequence(String s, long n) {
+    private static Long createLetterSequence(String s, long n) {
         Long multiplier = n/s.length();
-        Long quantityLetterToComplete = n % s.length();
+        int quantityLetterToComplete = (int) n % s.length();
+        Long count = 0L;
 
-        StringBuilder multipliedString = new StringBuilder();
-        for(Long i = 0L; i < multiplier; i++){multipliedString.append(s);}
+        for(char c : s.toCharArray()){
+            if(c == 'a') count++;
+        }
 
-        for(Long i = 0L; i < quantityLetterToComplete; i++) {multipliedString.append((s.charAt(i.intValue())));}
+        count = count * multiplier;
 
-        System.out.println("Infinity string: " + s);
-        System.out.println("MultipliedString string: " + multipliedString.toString());
+        for(int i = 0; i < quantityLetterToComplete; i++) {
+            if(s.charAt(i) == 'a') count++;
+        }
 
-        return multipliedString.toString();
+        return count;
     }
 
     private static final Scanner scanner = new Scanner(System.in);
