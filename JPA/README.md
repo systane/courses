@@ -14,7 +14,9 @@ Hibernate is the implementation of the set specifications definied in JPA.  It p
 
 **Common performance problems**
 
-With Hibernate you can map a relational table to a class, but is impossible to represent perfectly a relational table in the Object Oriented World. The **N+1 problem** is an example of this flaw. 
+With Hibernate you can map a relational table to a class, but is impossible to represent perfectly a relational table in the Object Oriented World. The **N+1 problem** is an example of this flaw. This problem happens in the following situation:
+
+
 
 
 # **Spring Data**
