@@ -10,29 +10,46 @@ import java.util.regex.*;
 
 public class RepeatedString {
 
-    // Complete the repeatedString function below.
-    //aba
-    //10
-    //this method should return 7
-    static long repeatedString(String s, long n) {
-        Long quantityOfLetterA = createLetterSequence(s, n);
+    /**
+     *
+     * @param s - String with lowercase English letters that can be repeated many times
+     * @param n - integer number that represents the quantity of times that s will be repreated.
+     * @return the number of occurrences of 'a' in the string.
+     */
 
-        return quantityOfLetterA;
+    //abaac --> length = 5
+    //n = 2
+    //multiplier = 2/5 = 0.2 = 0.
+    //quantityLetterToComplete = 0
+    //abaac|abaac --> 6a
+
+    //abaac --> length = 5
+    //n = 10
+    // multiplier = 10/5 = 2
+    //quantityLetterToComplete = 0
+    //abaac|abaac --> 6a
+
+    //aba --> length = 3
+    //10
+    //multiplier = 10/3 = 3.33 = 3.
+    //quantityLetterToComplete = 1
+    //aba|aba|aba|a --> 7a
+    static long repeatedString(String s, long n) {
+        if(!s.contains("a")) return 0;
+
+        long multiplier = n/s.length();
+        int quantityLetterToComplete = (int) n % s.length();
+
+        if(n >= s.length())
+            return ((countA(s, s.length()) * multiplier) + countA(s, quantityLetterToComplete));
+        else
+            return countA(s, s.length()) * n;
     }
 
-    //abaabaaba
-    private static Long createLetterSequence(String s, long n) {
-        Long multiplier = n/s.length();
-        int quantityLetterToComplete = (int) n % s.length();
-        Long count = 0L;
+    private static int countA (String s, int length){
+        int count = 0;
 
-        for(char c : s.toCharArray()){
-            if(c == 'a') count++;
-        }
-
-        count = count * multiplier;
-
-        for(int i = 0; i < quantityLetterToComplete; i++) {
+        for(int i = 0; i < length; i++){
             if(s.charAt(i) == 'a') count++;
         }
 

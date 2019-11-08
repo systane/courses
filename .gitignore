@@ -11,3 +11,4 @@ designPatterns/project/.idea/*
 designPatterns/project/target/*
 *.class
 hackerrank/hackerrank/.idea/
+*/.idea/*
