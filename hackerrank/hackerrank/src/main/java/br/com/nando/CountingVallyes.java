@@ -18,8 +18,17 @@ public class CountingVallyes {
     //This method must return the number of vallyes, in this example 1 valley
     static int countingValleys(int n, String s) {
         int numberOfValleys = 0;
-            
+        int altitude = 0;
 
+        for(char step : s.toCharArray()){
+            if(step == 'D')
+                altitude--;
+            else
+                altitude++;
+
+            if(altitude == 0 && step == 'U')
+                numberOfValleys++;
+        }
         return numberOfValleys;
     }
 
