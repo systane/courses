@@ -38,19 +38,18 @@ public class RepeatedString {
         if(!s.contains("a")) return 0;
 
         long multiplier = n/s.length();
-        int quantityLetterToComplete = (int) n % s.length();
+        long quantityLetterToComplete = n % s.length();
 
-        if(n >= s.length())
-            return ((countA(s, s.length()) * multiplier) + countA(s, quantityLetterToComplete));
-        else
-            return countA(s, s.length()) * n;
+        return ((countA(s, s.length()) * multiplier) + countA(s, quantityLetterToComplete));
     }
 
-    private static int countA (String s, int length){
+    private static int countA (String s, long length){
         int count = 0;
+        int i = 0;
 
-        for(int i = 0; i < length; i++){
+        while(i < length){
             if(s.charAt(i) == 'a') count++;
+            i++;
         }
 
         return count;
