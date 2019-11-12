@@ -1,10 +1,7 @@
-package br.com.nando;
+package br.com.nando.problemSolving;
 
 import java.io.*;
-import java.math.*;
-import java.text.*;
 import java.util.*;
-import java.util.regex.*;
 
 public class SimpleArraySum {
 

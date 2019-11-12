@@ -1,4 +1,4 @@
-package br.com.nando;
+package br.com.nando.warmUpChallenges;
 
 
 import java.io.*;

@@ -1,4 +1,4 @@
-package br.com.nando;
+package br.com.nando.warmUpChallenges;
 
 import java.io.*;
 import java.math.*;
@@ -14,7 +14,7 @@ public class RepeatedString {
      *
      * @param s - String with lowercase English letters that can be repeated many times
      * @param n - integer number that represents the quantity of times that s will be repreated.
-     * @return the number of occurrences of 'a' in the string.
+     * @return the number of occurrences of 'a' in the arrays.
      */
 
     //abaac --> length = 5

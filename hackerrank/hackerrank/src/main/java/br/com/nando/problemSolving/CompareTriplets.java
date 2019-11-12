@@ -1,4 +1,4 @@
-package br.com.nando;
+package br.com.nando.problemSolving;
 
 import java.io.*;
 import java.util.ArrayList;
