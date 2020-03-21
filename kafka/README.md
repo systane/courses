@@ -18,13 +18,16 @@ Before start to code an application using Kafka, we need first learn the core co
 
 
 - **Producers** They are responsible to write data in the topics. The producers can choose one of the 3 acknowledgment of data:
-    -acks=0: Producers won't wait for acknowledgment (possible data loss)
-    -acks=1: Producers will wait for acknowledgment of the Leader partition (limited data loss)
-    -acks=2: Producers will wait for acknowledgment of the Leader partition + replicas (no data loss)
+    - acks=0: Producers won't wait for acknowledgment (possible data loss)
+    - acks=1: Producers will wait for acknowledgment of the Leader partition (limited data loss)
+    - acks=2: Producers will wait for acknowledgment of the Leader partition + replicas (no data loss)
 
 - **Consumers** They read the data from topics in order, for example. Let's imagine that we have a topic with offset 0,1,2,3,4,5 the consumer are going to read this topics starting from offset 0 to 5. If this consumer is configured to read two or more topics, there is no guarantee that the messages between these topics are going to be read in order. The only guarantee is that the data is read in order by one topic at time, not by multiple topics. We can have a group of consumers that can read data from different topics, if we have more consumers than partition, some consumers will be inactive.
 
 ![brokers](https://github.com/systane/courses/blob/master/kafka/img/consumers_group.png)
 
 
-- **Consumer Offsets**
+- **Consumer Offsets** Kafka stores the offsets at which a consumer group has been reading (like a bookmark or a checking point). The offsets reads are commited in a topic name __consumer__offsets. This mechanism was created as fall tolerance resouce. Imagine that your consumers dies just after read the the offset 5 from a topic, when the consumer go online again, it will be able to read back from where it left off thanks to the committed consumer offset. By the way, the consumers can choose when to commit offsets and these are the 3 delivery semantics:
+    - At most once: Offsets are committed as soon as the message is received. If the processing goes wrong, the message will be lost (it won't be read again).
+    - At least once: Offset are commited after the message is processed. If the processing goes wrong, the message will be read again. This can result in duplicate processing of messages, make sure that this will not  impact in your system.
+    - Exaclty once: Can be achieved for Kafka to Kafka workflows using Kafka Streams API. You can also have an idempotent consumer to consume message from kafka only once, for example, maybe you have a Database system where duplicate messages is not allowed, so you need an idempotent consumer.
