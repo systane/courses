@@ -34,3 +34,5 @@ Before start to code an application using Kafka, we need first learn the core co
 
 
 - **Kafka Broker Discovery** Each Kafka Broker is a "Boostrap server" and what that means is when you connect to broker, you'll be connected to all Kafka cluster, because behind the scenes, when you connect to the broker 101 for example, the broker returns to the client a list of all brokers contaning metadata about the partitions, topics and brokers inside this Kafka cluster, so once the client has access to this list, it can connect directly to the broker who holds the topic and partition that the client need to send the message. This mechanism is called Broker Discovery, and you don't need to implement it, because it is something that Kafka takes care for you.
+
+- **Zookeeper** is the component who hold the brokers together. (keps a list of them) and also choose the Leader partition. Zookeeper is also responsible to send notifications to Kafka when a new Topics, Broker, is created or if they are deleted) Withou Zookeeper, Kafka can't work. It is designed to operates with odd number of server (3, 5, 7, etc)
