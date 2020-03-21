@@ -12,4 +12,6 @@ Before start to code an application using Kafka, we need first learn the core co
 ![brokers](https://github.com/systane/courses/blob/master/kafka/img/brokers.png)
 
 
+- **Topic Replication Factory**  This mechanism allows Kafka to replicate our topics, so if the things go wrong and some brokers go down, our topics will still be able to receive/provide data from writers/consumers. Look that the bellow picture, and imagine that our broker 102 has gone down. If the topics replication factory configured, Kafka would have created a copy of the partition 0 in broker 101 and 102, and the partition 1, would have created in broker 102 and 103, so if the 102 goes down, our system can still work.
 
+![brokers](https://github.com/systane/courses/blob/master/kafka/img/topics_replication_factory.png)
