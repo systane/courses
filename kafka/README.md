@@ -38,7 +38,7 @@ Before start to code an application using Kafka, we need first learn the core co
 - **Zookeeper** is the component who hold the brokers together. (keps a list of them) and also choose the Leader partition. Zookeeper is also responsible to send notifications to Kafka when a new Topics, Broker, is created or if they are deleted) Withou Zookeeper, Kafka can't work. It is designed to operates with odd number of server (3, 5, 7, etc)
 
 
-## Configuring and Starting Kafka
+## Configure and Start Kafka
 
 ### Windows
 To Configure Kafka, you need first install jdk 1.8 and download the binaries from kafka in the apache website. After that, edit the PATH environment variable to `C:KAFKA_HOME/bin/windows` to be able to access the .bat commands from anywhere in your pc. After that, create a new folder in the kafka directory of instalation (KAFKA_HOME) called data. Inside it, create more two new folders, the first is zookeeper and the second one is kafka. The next step is to configure the zookeeper.properties file (`KAFKA_HOME/config`) and edit the `dataDir` variable with the path of the zookeeper folder just created: `KAFKA_HOME/data/zookeeper`. The final step is to configure the kafka server, and to do it, we need to edit the file server.properties (`KAFKA_HOME/config`) and edit the `log.dirs` variable with the path of the kafka folder created: `KAFKA_HOME/data/kafka`.
