@@ -36,3 +36,11 @@ Before start to code an application using Kafka, we need first learn the core co
 - **Kafka Broker Discovery** Each Kafka Broker is a "Boostrap server" and what that means is when you connect to broker, you'll be connected to all Kafka cluster, because behind the scenes, when you connect to the broker 101 for example, the broker returns to the client a list of all brokers contaning metadata about the partitions, topics and brokers inside this Kafka cluster, so once the client has access to this list, it can connect directly to the broker who holds the topic and partition that the client need to send the message. This mechanism is called Broker Discovery, and you don't need to implement it, because it is something that Kafka takes care for you.
 
 - **Zookeeper** is the component who hold the brokers together. (keps a list of them) and also choose the Leader partition. Zookeeper is also responsible to send notifications to Kafka when a new Topics, Broker, is created or if they are deleted) Withou Zookeeper, Kafka can't work. It is designed to operates with odd number of server (3, 5, 7, etc)
+
+
+## Configuring and Starting Kafka
+
+### Windows
+To Configure Kafka, you need first install jdk 1.8 and download the binaries from kafka in the apache website. After that, edit the PATH environment variable to `C:KAFKA_HOME/bin/windows` to be able to access the .bat commands from anywhere in your pc. After that, create a new folder in the kafka directory of instalation (KAFKA_HOME) called data. Inside it, create more two new folders, the first is zookeeper and the second one is kafka. The next step is to configure the zookeeper.properties file (`KAFKA_HOME/config`) and edit the `dataDir` variable with the path of the zookeeper folder just created: `KAFKA_HOME/data/zookeeper`. The final step is to configure the kafka server, and to do it, we need to edit the file server.properties (`KAFKA_HOME/config`) and edit the `log.dirs` variable with the path of the kafka folder created: `KAFKA_HOME/data/kafka`.
+
+To start kafka, you first need to iniciate zookeeper: `zookeeper-server-start.bat config/zookeeper.properties` and after kafka ``kafka-server-start.bat config/server.properties`. To execute all of these two commands, you need to be in the KAFKA_HOME directory.
