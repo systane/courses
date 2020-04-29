@@ -46,11 +46,11 @@ To Configure Kafka, you need first install jdk 1.8 and download the binaries fro
 To start kafka, you first need to iniciate zookeeper: `zookeeper-server-start.bat config/zookeeper.properties` and after kafka `kafka-server-start.bat config/server.properties`. To execute all of these two commands, you need to be in the KAFKA_HOME directory.
 
 
-## CLI
+## Kafka CLI
 You can use Kafka cli to create topics, consumers, producers and so on. 
 
 - To create a topic you can type: `kafka-topics --zookeeper 127.0.0.1:2181 --topic first_topic --create --partitions 3 --replication-factor 1`, this command are going to create a topics with the name **first_topic**, and replication-factor of 1. The replication-factor of 1 is correlated with the number of brokers avaliable, so if you have just one broken running, you can only have replication-factor of 1. You can also list all the topics: `kafka-topics --zookeeper 127.0.0.1:2181 --list` and describe on this topics with: `kafka-topics --zookeeper 127.0.0.1:2181 --topic first_topic --describe`. To delete a topic just type: `kafka-topics --zookeeper 127.0.0.1:2181 --topic first_topic --delete`
 
 - Producer console: You can enter in the producer console (to produce mensages in your topics) by typing: `kafka-console-producer --broker-list 127.0.0.1:9092 --topic first_topic` the broker-list argument is the address of your kafka instance. If everything was good, you are going to see a console, where you can type messages to be put in the partitions of the topic.
 
-- Consumer console: There is a consumer console, and you can access it by typing: `kafka-console-consumer --bootstrap-server 127.0.0.1:9092 --topic first_topic` where the bootstrap-server parameter is the address of your kafka instance. This console will intercept every message that will be sent to this topic. If you want to read the all the messages in a topic, you can run: `kafka-console-consumer --bootstrap-server 127.0.0.1:9092 --topic first_topic --from-beginning`
+- Consumer console: There is a consumer console, and you can access it by typing: `kafka-console-consumer --bootstrap-server 127.0.0.1:9092 --topic first_topic` where the bootstrap-server parameter is the address of your kafka instance. This console will intercept every message that will be sent to this topic. If you want to read the all the messages in a topic, you can run: `kafka-console-consumer --bootstrap-server 127.0.0.1:9092 --topic first_topic --from-beginning`.
