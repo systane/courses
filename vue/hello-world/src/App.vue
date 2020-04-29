@@ -6,6 +6,9 @@
       me clica
     </button>
     <HelloWorld :msg=msg :number=year />
+    <ul>
+      <li v-for="day in dayOfMonth" :key=day>{{day}}</li>
+    </ul>
   </div>
 </template>
 
@@ -19,7 +22,8 @@ export default {
   },
   data: () => ({
     year: 2020,
-    msg: "Welcome to Your Vue.js App"
+    msg: "Welcome to Your Vue.js App",
+    dayOfMonth: [1, 2, 3]
   }),
   methods: {
     incrementYear() {
