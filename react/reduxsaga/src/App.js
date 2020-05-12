@@ -1,11 +1,20 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { Provider } from 'react-redux';
+import store from './store'
 
-function App() {
-  return (
-    <div className="App">
-     <p>React with Redux-Saga</p>
-    </div>
-  );
+import TodoList from './Todolist'
+
+class App extends Component {
+  render(){
+    return (
+      <Provider store={store}>
+        <div className="App">
+         <p>React with Redux-Saga</p>
+         <TodoList/>
+      </div>
+      </Provider>
+    );
+  }
 }
 
 export default App;
