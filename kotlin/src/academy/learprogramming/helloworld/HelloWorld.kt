@@ -1,5 +1,10 @@
 package academy.learprogramming.helloworld
 
+
+//typealias is just an alias for Types, we can create an alias for a Set of Employee
+typealias EmployeeSet = Set<Employee>
+
+
 //top level function are every function that are created without a class, so this main function is a top level function
 fun main(args: Array<String>) {
     println("Hello World")
@@ -24,6 +29,15 @@ fun main(args: Array<String>) {
     }else{
         employee2 = Employee("Luis Carlos", 200)
     }
+
+    //typealias example
+    val employees: EmployeeSet
+
+    val names = arrayListOf("Luis", "Cristiana", "Luis Carlos");
+    print(names[1]) //is the same as names.get(1)
+
+    //All exception in Kotlin are unchecked, so you don't need to throw it at the method signature
+    //Ternary operator doesn't exist in Kotlin.
 
 }
 
