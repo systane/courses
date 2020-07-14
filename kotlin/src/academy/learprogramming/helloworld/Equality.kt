@@ -42,6 +42,20 @@ fun main(args: Array<String>) {
     println("the value of $numerator divided by $denominator is ${numerator/denominator}")
     println("the name of the student4 is ${student4.name}")
 
+    //Raw Strings or Triple Quoted String doesn't need to scape any character
+    val filePath = """C:\somedir\somedir2"""
+
+    val replaceString = "TESTE"
+    val bigString = """This is a big text $replaceString
+            I can break line easily with $replaceString Raw Strings
+    just simple like that $replaceString"""
+    println(bigString)
+
+    val bigStringWithMargin = """This is a big text
+        |I can break line easily with Raw Strings
+        |just simple like that""".trimMargin()
+    println(bigStringWithMargin)
+
 }
 
 class Student(var name: String, val id: Int){
