@@ -1,18 +1,39 @@
 package academy.learprogramming.oo
 
 fun main() {
-    val student = Student("Cris")
+    println("============ STUDENT ===============")
+    val student = Student("Cris", true, "thirdProperty")
     println(student.firstName)
     println(student.fullTime)
 
-    val student2 = Student("João", false)
+    println("============ STUDENT 2 ===============")
+    val student2 = Student("João", false, "thirdProperty")
     println(student2.firstName)
     println(student2.fullTime)
+    println(student2.thirdProperty)
+
+    student2.thirdProperty = "another value for the thirdProperty"
+    println(student2.thirdProperty)
 }
 
-//we can create constructors we default value parameters.
-private class Student (val firstName: String, var fullTime: Boolean = true) {
+//we can create constructors with default value parameters.
+private class Student (val firstName: String, var fullTime: Boolean = true, thirdProperty: String) {
 
+    //under the covers, Kotlin generate getters and setters for public class properties
+    //we can create our own custom getter/setter, but for that, we need to explicit create this property, like this:
+    var thirdProperty = thirdProperty
+    get() {//we MUST create a getter just after we declare our property
+        println("Running custom get")
+
+        //our customer accessor (getter/setter) can't return or modify our property directly, to access the value of our
+        //property, we need to use a backing field (identified by the work 'field')
+        return field
+    }
+
+    set(value) {
+        println("Running customer set")
+        field = value
+    }
 }
 
 
