@@ -6,5 +6,7 @@
 /*/\target/*
 /*/*/*/\target/*
 *.iml
+kotlin/lib/*
+kotlin/out/*
 
 *.lock
