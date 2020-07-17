@@ -24,4 +24,22 @@ fun main() {
     val str2 = strNull ?: "this is a default value"
     println(str2.toUpperCase())
 
+    //We can tell the compiler that a variable will never be null. We use the non null assertion operator: !!
+    val str3: String ? =  "this is a default value"
+    val str4 = str3!!.toUpperCase()
+    println(str4)
+
+
+    //let function: We create a function (printText) that receives a string and prints it. The problem is that our
+    //variable (str5) can be null (? operator), so calling printText(str5) won't be possible.
+    val str5: String? = "this isn't null"
+    //printText(str5) -- impossible, the compiler will not allow this operation, because str5 can be null
+    //solution: create a let function: a Let function executes a block of code, but first it tests if the argument is null
+    str5?.let { printText(it) }
+
+
+}
+
+fun printText(text: String){
+    println(text)
 }
