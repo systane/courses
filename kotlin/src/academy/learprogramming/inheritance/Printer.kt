@@ -12,6 +12,7 @@ abstract class Printer(val modelName: String) {
 }
 
 class LaserPrinter(modelName: String): Printer(modelName) {
+    //OBS: overriding a function also make it open, so you can continue to override this function
     override fun printModel() = println("The model of this LaserPrinter is $modelName")
 
     override fun bestSellingPrice(): Double = 1291.99
