@@ -1,0 +1,38 @@
+micronaut:
+  application:
+    name: helloWorldCliMaven
+
+#Configura o datasource
+datasources:
+  default:
+    url: jdbc:postgresql://localhost:5432/db
+    driverClassName: org.postgresql.Driver
+    username: postgres
+    password: postgres
+
+#Configura microunaut p/ scanear os pacotes corretos e também p/ criar as tabelas do banco
+jpa:
+  default:
+    entity-scan:
+      packages: 'hello.world.cli.maven'
+    properties:
+      hibernate:
+        hbm2ddl:
+          auto: update
+        show_sql: true
+
+#HealthCheck
+endpoints:
+  health:
+    enabled: true
+    sensitive: false
+  caches:
+    enabled: true
+    sensitive: false
+
+#Redis
+redis:
+  uri: redis://micronaut123@localhost:6379
+  caches:
+    cachezinha:
+      maximumSize: 20
