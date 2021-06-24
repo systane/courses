@@ -13,6 +13,9 @@ There are 3 cloud computing deployment models:
 1. Private Cloud (On premises): It's a private network (usually owned by companies) that supplies services to a limited number of people.
 1. Hybrid Cloud:  This model is a combination of the private and public cloud, for example you could have a database hosted on a private cloud for security reasons and a web app hosted on a public cloud acessible over the internet.
 
+# **Aws Cloud Fundamentals**
 
+## Regions and Availability Zones
+Region is a geographic location around the world and must contain at the least 2 Availability zone (AZs). You can select your region to reduce the latency and costs on AWS. Regions are isolated and independent, and resources are not automatically replicated across them, if you need cross resources betweern regions, you need to set it up. Availability Zones are isolated location within a region and it is a physical data center. So failure in one AZ does not impact another AZ. There is also the `Èdge Location` that is a mini datacenter used for cache large data files closer to user's location, like a CDN.
 
 
