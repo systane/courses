@@ -34,6 +34,10 @@ Virtual Private Cloud or VPC allows you to create your own private network in th
 
 
 ### Lambda
-AWS Lambda provides you computing power without you worry about managing server. You pay only when and for how long your code executes. Lambda is event-driven, so you can run your code based on certain events happening like a file upload in S3 or a new record being inserted in a database like DynamoDB 
+AWS Lambda provides you computing power without you worry about managing server. You pay only when and for how long your code executes. Lambda is event-driven, so you can run your code based on certain events happening like a file upload in S3 or a new record being inserted in a database like DynamoDB.
+
+### Elastic Beanstalk
+Is an orchestration service that allows you to deploy a web application at the touch of a button. You can launch EC2 instances, VPN, S3 Bucket, Database, coomon server (Apache, Tomcat and etc) and so on. Elastic Beanstalk can also setup autoscalling and elastic load balance.
+
 
 
