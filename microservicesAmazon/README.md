@@ -29,4 +29,11 @@ There are 3 different options of price:
 
 EC2 has a set o minor services like EBS, a storage solution for EC2. You can attach a pyshical SSD or HD to your EC2 instance and they're automatically replicated within its AZ, and you can also persist data after the instance is terminated.
 
+### VPC
+Virtual Private Cloud or VPC allows you to create your own private network in the cloud. A VPC is avaliable across all the AZ in the region and you can launch services inside it like an EC2. You can manage your vitual networking with IP address ranges, subnets, and so on. In A VPC we can define subnets and for this subnets we can define an ACL (Access Control List) which we can control the incoming/outgoing traffic to/from a given subnet with rules.
+
+
+### Lambda
+AWS Lambda provides you computing power without you worry about managing server. You pay only when and for how long your code executes. Lambda is event-driven, so you can run your code based on certain events happening like a file upload in S3 or a new record being inserted in a database like DynamoDB 
+
 
