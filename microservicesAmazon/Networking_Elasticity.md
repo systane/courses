@@ -22,5 +22,6 @@ There are 3 kind of Load Balancer:
 - Application Load Balancer (ALB): Assume you're running microservices-architecture based application, you can use ALB to host the different API endpoints of your application on
  different servers. The load balancer then redirects the incoming HTTP traffic to the suitable server based on the rules you specify in the configuration.
 - Network Load Balancer (NLB): Helps to balance the load on each individual server. Having an NLB becomes essential when you application requires handling millions of request per
-second securely while maintainin ultra-low latencies.
+second securely while maintainin ultra-low latencies. You can think in NLB like a single point of contract for clients and it automaticallt distributes the incoming traffic
+uniformly across multiple targets.
 - Classic Load Balancer (CLB): It is a previous generation option. You can choose a CLB when you have an existing application running in the EC2-Classic network.
