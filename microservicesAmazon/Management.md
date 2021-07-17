@@ -26,3 +26,7 @@ setx AWS_SECRET_ACCESS_KEY wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
 setx AWS_DEFAULT_REGION us-west-2
 ```
 5. test if everything if working as it should `aws iam list-users --profile <profile-name>` this command should returns the user created in the first step 
+
+
+### Useful commands:
+- Upload entire folder to s3 `aws s3 cp <path-directory> s3://<bucket-name> --recursive --profile <profile-name>`
