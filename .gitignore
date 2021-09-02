@@ -8,5 +8,6 @@
 *.iml
 kotlin/lib/*
 kotlin/out/*
+microservicesAmazon/udacity_serverless/node_modules/*
 
 *.lock
