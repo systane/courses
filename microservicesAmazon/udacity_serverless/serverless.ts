@@ -12,8 +12,17 @@ const serverlessConfiguration: AWS = {
       webpackConfig: './webpack.config.js',
       includeModules: true,
     },
+    documentation: {
+      api: {
+        info: {
+          version: 'v1.0.0',
+          title: 'Udagram API',
+          description: 'Serverless application for images sharing'
+        }
+      }
+    }
   },
-  plugins: ['serverless-webpack'],
+  plugins: ['serverless-webpack', 'serverless-reqvalidator-plugin', 'serverless-aws-documentation'],
   provider: {
     name: 'aws',
     runtime: 'nodejs14.x',
