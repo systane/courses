@@ -6,6 +6,7 @@ import createGroups from '@functions/createGroup';
 import getImages from '@functions/getImages';
 import getimageById from '@functions/getImageById';
 import createImages from '@functions/createImage';
+import sendNotifications from '@functions/sendNotifications';
 
 const serverlessConfiguration: AWS = {
   service: 'serverless-udagram-app',
@@ -93,7 +94,7 @@ const serverlessConfiguration: AWS = {
     ]
   },
   // import the function via paths
-  functions: { getGroups, createGroups, getImages, getimageById, createImages },
+  functions: { getGroups, createGroups, getImages, getimageById, createImages, sendNotifications },
   resources: {
     Resources: {
       GroupsDynamoDBTable: {
