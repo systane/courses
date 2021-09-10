@@ -12,6 +12,9 @@
   "dependencies": {
     "@middy/core": "^1.5.2",
     "@middy/http-json-body-parser": "^1.5.2",
+    "@types/elasticsearch": "^5.0.38",
+    "elasticsearch": "^16.7.2",
+    "http-aws-es": "^6.0.0",
     "source-map-support": "^0.5.19",
     "uuid": "^8.3.2"
   },
