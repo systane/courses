@@ -10,6 +10,7 @@ import sendNotifications from '@functions/sendNotifications';
 import connect from '@functions/connect';
 import disconnect from '@functions/disconnect';
 import elasticSearchSync from '@functions/elasticSearchSync';
+import resizeImage from '@functions/resizeFile';
 
 const serverlessConfiguration: AWS = {
   service: 'serverless-udagram-app',
@@ -19,6 +20,7 @@ const serverlessConfiguration: AWS = {
       webpackConfig: './webpack.config.js',
       includeModules: true,
     },
+    topicName: 'imagesTopic-${self:provider.stage}',
     documentation: {
       api: {
         info: {
@@ -45,6 +47,7 @@ const serverlessConfiguration: AWS = {
       IMAGE_ID_INDEX: 'ImageIdIndex',
       IMAGES_S3_BUCKET: 'serverless-udagram-image-${self:provider.stage}',
       SIGNED_URL_EXPIRATION: '300',
+      THUMBNAILS_S3_BUCKET: 'serverless-udagram-thumbnail-${self:provider.stage}',
     },
     lambdaHashingVersion: '20201221',
     iamRoleStatements: [
@@ -95,18 +98,13 @@ const serverlessConfiguration: AWS = {
         Resource: [
           {"Fn::GetAtt": [ 'ConnectionsDynamoDBTable', 'Arn' ]}
         ]
+      },
+      {
+        Effect: 'Allow',
+        Action: [
+          's3:PutObject'        ],
+        Resource: 'arn:aws:s3:::${self:provider.environment.THUMBNAILS_S3_BUCKET}/*'
       }
-      // {
-      //   Effect: 'Allow',
-      //   Action: [
-      //     'dynamodb:Scan',
-      //     'dynamodb:PutItem',
-      //     'dynamodb:DeleteItem'
-      //   ],
-      //   Resource: [
-      //     {"Fn::GetAtt": [ 'ConnectionsDynamoDBTable', 'Arn' ]}
-      //   ]
-      // },
     ]
   },
   // import the function via paths
@@ -120,6 +118,7 @@ const serverlessConfiguration: AWS = {
     connect,
     disconnect,
     elasticSearchSync,
+    resizeImage,
   },
   resources: {
     Resources: {
@@ -181,8 +180,15 @@ const serverlessConfiguration: AWS = {
       },
       AttachmentsBucket: {
         Type: 'AWS::S3::Bucket',
+        DependsOn: ['SNSTopicPolicy'],
         Properties: {
           BucketName: '${self:provider.environment.IMAGES_S3_BUCKET}',
+          NotificationConfiguration: {
+            TopicConfigurations:[{
+              Event: 's3:ObjectCreated:*',
+              Topic: { Ref: 'ImagesTopic' }
+            }]
+          },
           CorsConfiguration: {
             CorsRules: [
               {
@@ -212,6 +218,41 @@ const serverlessConfiguration: AWS = {
             ]
           },
           Bucket: '${self:provider.environment.IMAGES_S3_BUCKET}'
+        }
+      },
+      ThumbnailsBucket: {
+        Type: 'AWS::S3::Bucket',
+        Properties: {
+          BucketName: '${self:provider.environment.THUMBNAILS_S3_BUCKET}',
+          CorsConfiguration:{
+            CorsRules: [
+              {
+                  AllowedOrigins: ['*'],
+                  AllowedHeaders: ['*'],
+                  AllowedMethods: ['GET', 'PUT', 'POST', 'DELETE', 'HEAD'],
+                  MaxAge: 3000,
+              },
+            ],
+          }
+        }
+      },
+      ThumbnailsBucketPolicy: {
+        Type: 'AWS::S3::BucketPolicy',
+        Properties: {
+          PolicyDocument:{
+            Id: 'ThumbnailsPolicy',
+            Version: '2012-10-17',
+            Statement: [
+              {
+                Sid: 'PublicReadForGetBucketObjects',
+                Effect: 'Allow',
+                Principal: '*',
+                Action: 's3:GetObject',
+                Resource: 'arn:aws:s3:::${self:provider.environment.THUMBNAILS_S3_BUCKET}/*'
+              }
+            ]
+          },
+          Bucket: '${self:provider.environment.THUMBNAILS_S3_BUCKET}'
         }
       },
       ImagesSearch: {
@@ -246,20 +287,38 @@ const serverlessConfiguration: AWS = {
             }]
           }
         }
+      },
+      ImagesTopic: {
+        Type: 'AWS::SNS::Topic',
+        Properties: {
+          DisplayName: 'Image bucket topic',
+          TopicName: '${self:custom.topicName}'
+        }
+      },
+      SNSTopicPolicy: {
+        Type: 'AWS::SNS::TopicPolicy',
+        Properties: {
+          PolicyDocument:{
+            Version: '2012-10-17',
+            Statement: [
+              {
+                Effect: 'Allow',
+                Principal: {
+                  AWS: '*'
+                },
+                Action: 'sns:Publish',
+                Resource: { Ref: 'ImagesTopic' },
+                Condition:{
+                  ArnLike:{
+                    'AWS:SourceArn':'arn:aws:s3:::${self:provider.environment.IMAGES_S3_BUCKET}'
+                  }
+                }
+              }
+            ]
+          },
+          Topics: [{ Ref: 'ImagesTopic' }]
+        }
       }
-      // ConnectionsDynamoDBTable: {
-      //   Type: 'AWS::DynamoDB::Table',
-      //   Properties: {
-      //       TableName: '${self:provider.environment.CONNECTIONS_TABLE}',
-      //       AttributeDefinitions: [
-      //           { AttributeName: 'id', AttributeType: 'S' }
-      //       ],
-      //       KeySchema: [
-      //           { AttributeName: 'id', KeyType: 'HASH' }
-      //       ],
-      //       BillingMode: 'PAY_PER_REQUEST'
-      //   }
-      // },
     }
   }
 };
