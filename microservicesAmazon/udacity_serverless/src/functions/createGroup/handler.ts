@@ -1,30 +1,19 @@
 import 'source-map-support/register';
 
 import { middyfy } from '@libs/lambda';
-import * as AWS from 'aws-sdk'
 import { APIGatewayProxyEventV2, APIGatewayProxyHandlerV2, APIGatewayProxyResultV2 } from 'aws-lambda';
-import * as uuid from 'uuid';
-
-const docClient = new AWS.DynamoDB.DocumentClient()
-const groupsTable = process.env.GROUPS_TABLE
+import { CreateGroupRequest } from 'src/requests/CreateGroupRequest';
+import { createGroup } from 'src/businessLogic/groups';
 
 const createGroups: APIGatewayProxyHandlerV2 = async (event: APIGatewayProxyEventV2): Promise<APIGatewayProxyResultV2> => {
   console.log('Processing event: ', event)
-  const id = uuid.v4()
 
   const stringfiedBody = JSON.stringify(event.body)
-  const parsedBody = JSON.parse(stringfiedBody);
+  const newGroup: CreateGroupRequest = JSON.parse(stringfiedBody);
+  const authorization = event.headers.Authorization;
+  const jwtToken = authorization.split(' ')[1];
 
-  const newItem = {
-    id,
-    ...parsedBody
-  }
- 
-  await docClient.put({
-    TableName: groupsTable,
-    Item: newItem
-  }).promise()
-
+  const newItem = await createGroup(newGroup, jwtToken);
 
   return {
     statusCode: 201,

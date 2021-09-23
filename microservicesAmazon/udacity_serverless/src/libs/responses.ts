@@ -5,9 +5,6 @@ export const notFoundResponse = (errorMessageResponse: string) => {
 const genericMessageResponse = (statusCode: number, objectResponse: any) => {
     return {
       statusCode,
-      headers: {
-        'Access-Control-Allow-Origin': '*'
-      },
       body: JSON.stringify(objectResponse)
     }
 }

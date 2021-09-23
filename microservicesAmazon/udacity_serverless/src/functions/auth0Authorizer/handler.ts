@@ -1,24 +1,37 @@
 import 'source-map-support/register';
 
 import { middyfy } from '@libs/lambda';
-import * as AWS from 'aws-sdk'
-import { CustomAuthorizerEvent, CustomAuthorizerHandler, CustomAuthorizerResult } from 'aws-lambda';
+import { CustomAuthorizerEvent, CustomAuthorizerResult } from 'aws-lambda';
 import {verify} from 'jsonwebtoken';
 import { JwtToken } from 'src/auth/JwtToken';
-import * as middy from 'middy';
-import {secretsManager} from 'middy/middlewares';
+// import { secretsManager } from 'middy/middlewares';
 
-const secretId = process.env.AUTH_0_SECRET_ID;
-const secretField = process.env.AUTH_0_SECRET_FIELD;
+// const secretId = process.env.AUTH_0_SECRET_ID;
+// const secretField = process.env.AUTH_0_SECRET_FIELD;
 
-const client = new AWS.SecretsManager();
+const cert = `-----BEGIN CERTIFICATE-----
+MIIDDTCCAfWgAwIBAgIJPe4cAGTrVifqMA0GCSqGSIb3DQEBCwUAMCQxIjAgBgNV
+BAMTGWRldi1zN2p0ZmY5Ny51cy5hdXRoMC5jb20wHhcNMjEwOTE1MDAwMzM3WhcN
+MzUwNTI1MDAwMzM3WjAkMSIwIAYDVQQDExlkZXYtczdqdGZmOTcudXMuYXV0aDAu
+Y29tMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA1/2AxA10wl452Pl9
+x6RFTH1UzesoCHCgjF4KQJzJHwBp+I3qgzUHc8OZvFbFGOwJBe9GTFac8s0l11MQ
+uFbIa7t07Qff/5OrHi2VD/CaSl/oPn4k++3RB03X7v3qL+MuM7Wk5LbyFCnQFfMn
+R3lXdj7ZhBnWCHzhw0HO+MGlj3VIuVUrOlNGS9m1jvDlCcIs63pTMOS7iDaWQoNX
+1O4S97wxiU9XjS33Qf/CJ4CVuccPS9tmtQ9F9wwFaYA2LejlxTrkYai4qmD5ka5V
++naZO6/PDeHAbj/ez05TdDZtiDVLreWBNzH4BzcDDrA0T5vvycDP0QIFgu2x5Rwt
+mJs32QIDAQABo0IwQDAPBgNVHRMBAf8EBTADAQH/MB0GA1UdDgQWBBTGUxnCnw6P
+CXNWxicX9jyvjhUlfjAOBgNVHQ8BAf8EBAMCAoQwDQYJKoZIhvcNAQELBQADggEB
+AEjMeiC59XUIXsIDsrvpJ6fHLBxFp5k0R1Tfth0HnIVc1cn8MXu4MCgJKifnpuln
+UrTbMHfKzNubqRcb3yT7Dhaj9o1A7ucmlFMAnvBkptU/9KO8I+gI4WgaXcJEdAuA
+ACBFFklGqvulPLagqqiR1RUvn0th/CE6KOSJ0Pgw26cV9hkO0YZKM8+hfSn0ePYM
+nu1hvX6OM3fG3qIuJh9lJ94EXUjaUyTD8t0WNSWJd1tgXfC3WIMrit6YKyDVDD4k
+ovdc8trRTWyICJo0TVUcBAqi/B6/ThUz2uaTtGo+cAiBIInDxWq2dsqzoBvnfaVs
+kPIx1fLpdFhfrg3cb1HkIuY=
+-----END CERTIFICATE-----`;
 
-//Cache secret if a lambda instance is reused
-let cachedSecret: string
-
-const auth0Authorizer:CustomAuthorizerHandler = async (event: CustomAuthorizerEvent): Promise<CustomAuthorizerResult> => {
+const auth0Authorizer = async (event: CustomAuthorizerEvent): Promise<CustomAuthorizerResult> => {
     try{
-        const decodedToken = await verifyToken(event.authorizationToken);
+        const decodedToken = verifyToken(event.authorizationToken);
         console.log('User was authorized');
 
         return {
@@ -53,7 +66,7 @@ const auth0Authorizer:CustomAuthorizerHandler = async (event: CustomAuthorizerEv
     }
 }
 
-const verifyToken = async (authHeader: string): Promise<JwtToken> => {
+const verifyToken = (authHeader: string): JwtToken => {
     if(!authHeader) {
         throw new Error('No authorization header');
     }
@@ -64,22 +77,16 @@ const verifyToken = async (authHeader: string): Promise<JwtToken> => {
 
     const token = authHeader.split(' ')[1];
 
-    const secretObject: any = await getSecret();
-    const secret = secretObject[secretField]
-
-   return verify(token, secret) as JwtToken
-}
-
-const getSecret = async() => {
-    if(cachedSecret) return cachedSecret;
-
-    const data = await client.getSecretValue({
-        SecretId: secretId
-    }).promise();
-
-    cachedSecret = data.SecretString;
-
-    return JSON.parse(cachedSecret);
+   return verify(token, cert, {algorithms: ['RS256']}) as JwtToken
 }
 
 export const main = middyfy(auth0Authorizer);
+
+// export const main = middyfy(auth0Authorizer).use(secretsManager({
+//     cache: true,
+//     cacheExpiryInMillis: 60000,
+//     throwOnFailedCall: true,
+//     secrets: {
+//         AUTH0_SECRET: secretId
+//     }
+// }));

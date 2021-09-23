@@ -1,18 +1,12 @@
 import 'source-map-support/register';
 
 import { middyfy } from '@libs/lambda';
-import * as AWS from 'aws-sdk'
-
-const docClient = new AWS.DynamoDB.DocumentClient()
-const groupsTable = process.env.GROUPS_TABLE
+import { getAllGroups } from 'src/businessLogic/groups';
 
 const getGroups = async (event) => {
+  console.log('Processing event: ', event)
 
-  const result = await docClient.scan({
-    TableName: groupsTable
-  }).promise()
-
-  const items = result.Items
+  const groups = await getAllGroups();
 
   return {
     statusCode: 200,
@@ -20,7 +14,7 @@ const getGroups = async (event) => {
       'Access-Control-Allow-Origin': '*'
     },
     body: JSON.stringify({
-      items
+      items: groups
     })
   }
 }

@@ -21,6 +21,17 @@ const serverlessConfiguration: AWS = {
       webpackConfig: './webpack.config.js',
       includeModules: true,
     },
+    'serverless-offline': {
+      httpPort: 3003
+    },
+    dynamodb: {
+      stages: ['dev'], 
+      start: {
+        port: 8000,
+        inMemory: true,
+        migrate: true,
+      },
+    },
     topicName: 'imagesTopic-${self:provider.stage}',
     documentation: {
       api: {
@@ -30,12 +41,23 @@ const serverlessConfiguration: AWS = {
           description: 'Serverless application for images sharing'
         }
       }
-    }
+    },
   },
-  plugins: ['serverless-webpack', 'serverless-reqvalidator-plugin', 'serverless-aws-documentation'],
+  plugins: [
+    'serverless-webpack',
+     'serverless-reqvalidator-plugin',
+     'serverless-aws-documentation',
+     'serverless-offline',
+     'serverless-dynamodb-local',
+     'serverless-plugin-canary-deployments',
+  ],
   provider: {
     name: 'aws',
     runtime: 'nodejs14.x',
+    tracing: {
+      lambda: true,
+      apiGateway: true
+    },
     apiGateway: {
       minimumCompressionSize: 1024,
       shouldStartNameWithService: true,
@@ -48,12 +70,19 @@ const serverlessConfiguration: AWS = {
       IMAGE_ID_INDEX: 'ImageIdIndex',
       IMAGES_S3_BUCKET: 'serverless-udagram-image-${self:provider.stage}',
       SIGNED_URL_EXPIRATION: '300',
-      THUMBNAILS_S3_BUCKET: 'serverless-udagram-thumbnail-${self:provider.stage}',
+      THUMBNAILS_S3_BUCKET: 'serverless-udagram-thumbnails-${self:provider.stage}',
       AUTH_0_SECRET_ID: 'Auth0Secret-${self:provider.stage}',
       AUTH_0_SECRET_FIELD: 'auth0Secret'
     },
     lambdaHashingVersion: '20201221',
     iamRoleStatements: [
+      {
+        Effect: 'Allow',
+        Action: [
+          'codedeploy:*'
+        ],
+        Resource: '*'
+      },
       {
         Effect: 'Allow',
         Action: [

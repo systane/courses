@@ -5,6 +5,7 @@ import { notFoundResponse } from '@libs/responses';
 import { APIGatewayProxyEventV2, APIGatewayProxyHandlerV2, APIGatewayProxyResultV2 } from 'aws-lambda';
 import * as AWS from 'aws-sdk'
 import * as uuid from 'uuid';
+import { cors } from 'middy/middlewares';
 
 const docClient = new AWS.DynamoDB.DocumentClient();
 const s3 = new AWS.S3({signatureVersion: 'v4'});
@@ -72,9 +73,6 @@ const createImages: APIGatewayProxyHandlerV2 = async (event: APIGatewayProxyEven
 
   return {
     statusCode: 201,
-    headers: {
-      'Access-Control-Allow-Origin': '*'
-    },
     body: JSON.stringify({
       newItem: newItem,
       uploadUrl: url
@@ -83,4 +81,6 @@ const createImages: APIGatewayProxyHandlerV2 = async (event: APIGatewayProxyEven
   
 }
 
-export const main = middyfy(createImages);
+export const main = middyfy(createImages).use(cors({
+  credentials: true
+}));
