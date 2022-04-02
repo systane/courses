@@ -7,7 +7,7 @@ import org.springframework.web.socket.WebSocketHandler
 import org.springframework.web.socket.config.annotation.*
 
 @Configuration
-@EnableWebSocket//habilita websocket por meio de um message broker em memória
+@EnableWebSocket//habilita websocket (raw) por meio de um message broker em memória
 class WebSocketConfiguration : WebSocketConfigurer {
 
 
