@@ -26,6 +26,12 @@ allprojects {
 			exclude("junit", module = "junit")
 		}
 	}
+
+	dependencies {
+		implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.2")
+		implementation("org.jetbrains.kotlin:kotlin-reflect")
+		implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+	}
 }
 
 subprojects {
@@ -44,10 +50,4 @@ subprojects {
 		useJUnitPlatform()
 	}
 
-}
-
-dependencies {
-	implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.2")
-	implementation("org.jetbrains.kotlin:kotlin-reflect")
-	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 }
