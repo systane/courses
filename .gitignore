@@ -11,3 +11,4 @@ kotlin/out/*
 microservicesAmazon/udacity_serverless/node_modules/*
 
 *.lock
+*.csv
