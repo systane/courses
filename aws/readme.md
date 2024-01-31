@@ -78,6 +78,46 @@ Podemos também retringir os acessos em certas contas que são membros de uma AW
 
 ![Alt text](exemplo_IAM_conditions_5.png)
 
+#### IAM Roles vs Resouce-Based Policies
+Quando você assume uma role (usuário, aplicação ou serviço), você perde as suas permissões originais and toma possa das permissões garantidas pela role. Por outro lado, quando você usa uma política baseada em recurso (resource-based policy), você não perde suas permissões.
+
+**Exemplo:** Suponha que um usuário da conta A (conta aws), precisa ler os dados de uma tabela do dynamodb que se encontra também na conta A e depois transferi-los para um bucket do S3 de backup que se encontra em uma conta B.
+Caso o usuário da conta A assuma uma role da conta B para conseguir transferir os dados para o bucket de backup da conta B, ele vai perder as permissões de leitura da tabela do dynamodb (que se encontra na conta A). Neste cenário, o ideal é utilizar uma resource-based policies para que o usuário não perca as permissões de leitura do dynamodb em detrimento de ganhar o acesso ao bucket de backup do S3 na conta B.
+
+Alguns serviços da AWS já permitem o "resource-based policy" como por exemplo: SNS, SQS, CloudWatch Logs, API Gateway e etc. Por outro lado, alguns serviços como Kinesis stream, ECS task, System Manager Run Commands e etc ainda não permitem essa opção, sendo assim, é necessário criar iam roles para acessar esses serviços;
+
+**Exemplo:** Suponha que você tenha configurado o EventBrigde para executar algum tipo de regra em algum recurso. Você vai precisar saber se o recurso alvo (s3, sns, kineses e etc) aceita ou não resource based policy, pois isso vai decidir se o EventBridge vai precisar assumir uma role ou se ele vai apenas utilizar resouce based policy para executar a regra no recurso alvo.
+
+#### IAM Permission Boundaries (Limite de permissões do IAM)
+ Com essa funcionalidade você consegue impor limites de permissões para users ou roles do IAM.
+
+ ** Exemplo:** Vamos supor que um usuário de uma conta AWS está com permissão de admin, porém foi configurado para ele um limite de permissão (permission boundary) dando acesso apenas ao S3 (através de uma policy). Esse usuário, só vai conseguir acessar o S3, pois suas permissões foram limitadas.
+
+Você pode utilizar o IAM Permission boundaries junto com a SCP (Service Control Policies) do AWS Organizations.
+
+![Alt text](exemplo_IAM_permission_boundaries_scp.png)
+
+Alguns casos de uso:
+
+- Permitir que developers consigam liberar e gerenciar suas próprias permissões, ao mesmo tempo que garanta que eles não vão conseguir escalar suas próprias permissões (se tornarem admin);
+- Restringir um usuário especifico ao invés de aplicar essa restrição para toda uma conta através do uso do SCP;
+- Delegar responsabilidades para usuários comuns (sem permissão de admin) dentro do limite de suas permissões, por exemplo criar novos usuários IAM;
+
+Abaixo temos um diagrama que mostra a lógica de liberação de acesso do IAM Policy
+![Alt text](exemplo_IAM_evalution_logic.png)
+
+**Exemplo:**
+O que essa policy faz? 
+![Alt text](exemplo_IAM_policy_3.png)
+1 - É possível executar a criação de um tópico sqs (sqs:CreateQueue)? 
+R: Não, pois temos uma negativa explicita para qqlr ação do sqs (sqs:*)
+2 - É possível fazer uma deleção de tópico (sqs:DeleteQueue)?
+R: Apesar do conflito do allow e do deny, não seria possível deletar um tópico um tópico. Segundo a imagem que mostra a lógica de liberação de acesso do IAM Policy, sempre que tiver um deny explicito, o acesso será bloqueado;
+3 - É possível ver as instâncias do ec2 (ec2:DescribeInstances)?
+R: Segunda a lógica do IAM Policy, por não ter uma permissão explicita de acesso, não é possível executar essa ação, pois implicitamente, essa ação já negada por padrão (principio do menor acesso)
+
+
+
 ## AWS Organizations
 Serviço global que permite vc gerenciar multiplas contas AWS, sendo que a conta principal é conhecida como "conta de gerenciamento" (managemente account), enquanto que as outras contas, são conhecimentos "contas membros (member accounts). As member accounts podem pertecer apenas a um organização.
 O AWS Organizations considera a cobrança de todas as contas com apenas um método de pagamento, além disso, é possível conseguir descontos nas cobranças dos serviços, devido a alta utilização nas members accounts (EC2, S3, e etc). Vc também pode ter compartilhamento de instancias reservadas e descontos através de multiplas contas com "Saving Plans". Além disso, com o AWS Organization, vc pode ter APIs para automatizar o processo de criação de contas AWS
