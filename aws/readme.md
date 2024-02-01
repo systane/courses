@@ -14,7 +14,27 @@ Vai depender de vários fatores, sendo alguns deles:
 - Preços: Varia de acordo com a região;
 
 
-## IAM & AWS CLI
+## AWS Organizations
+Serviço global que permite vc gerenciar multiplas contas AWS, sendo que a conta principal é conhecida como "conta de gerenciamento" (managemente account), enquanto que as outras contas, são conhecimentos "contas membros (member accounts). As member accounts podem pertecer apenas a um organização.
+O AWS Organizations considera a cobrança de todas as contas com apenas um método de pagamento, além disso, é possível conseguir descontos nas cobranças dos serviços, devido a alta utilização nas members accounts (EC2, S3, e etc). Vc também pode ter compartilhamento de instancias reservadas e descontos através de multiplas contas com "Saving Plans". Além disso, com o AWS Organization, vc pode ter APIs para automatizar o processo de criação de contas AWS
+Com o AWS Organizations, vc pode ter "Unidades Organizacionais" (Organizational Units - OU) para organizar melhor suas contas AWS. E essa divisão pode ser feita de várias maneiras (divisão por negócio, ambiente ou projetos), conforme a imagem abaixo:
+![Alt text](exemplo_OU.png)
+
+#### Vantagens do AWS Organizations:
+- Maior segurança e organização, pois multiplas contas separadas são mais seguras e mais fáceis de gerenciar do que uma única conta com múltiplas VPC;
+- Facilidade no gerenciamentos de logs: Vc pode habilitar "CloudTrail" em todas as contas, envio de logs para um conta central de logging com S3 e cloudwatch;
+- Habilitar iam roles compartilhadas entre contas para melhor administração das contas;
+- Service Control Policies (SCP): Políticas do IAM aplicadas em OU ou Contas AWS (exceto a management account) para restringir Users e Roles do IAM. Essas políticas por default não liberam nenhum acesso, e precisam ser explicitadas. Abaixo tem um exemplo de cenário de uso para SCP:
+![Alt text](SCP.png)
+Nesse caso, temos 4 OUs (Root, Prod, HR e Finance) e 4 accounts (Management, A, B e C). A Root OU tem uma SCP que concede acesso de admin completo, e a management account está dentro dessa OU porém, com uma SCP que bloqueia o acesso ao Athena. Nesse caso, a management account vai ter total acesso aos serviços da AWS, inclusive ao Athena, pois a SCP da OU é mais prioritária, garantindo total acesso. Para a account A, vamos ter um acesso total ao serviços da AWS (herdou da Root OU), porém não teremos acesso ao RedShift, pois a OU Prod tem uma SCP negando esse acesso e mesmo a account A permitindo com uma SCP o acesso ao RedShift, o acesso será negado, pois a negativa do SCP é mais prioritária.
+Para a account B, vms ter total acesso aos serviços da AWS (herdou da Root OU), não teremos acesso ao RedShif (herdou da OU Prod), e também não teremos acesso à Lambda (herdou da OU HR). E por fim, para Account C, vamos ter total acesso aos serviços da AWS (herdou da Root OU) e bloqueio ao RedShift (herdou da OU Prod); 
+
+Abaixo temos dois exemplos diferentes de SCPs:
+![Alt text](exemplo_SCP.png)
+Na imagem mais à esquerda, temos um cenário no qual apenas o dynamodb será bloqueado nessa conta ou OU, e os demais serviços serão liberados. Já na imagem mais à direita, apenas o ec2 e cloudwatch serão liberados, os demais serviços serão bloqueados, pois a SCPs trabalha com permissões explicitas.
+
+
+## IAM (Identity and Access Management)
 
 IAM (Identity and Access Management) é um serviço global que permite vc criar usuário e grupos para gerenciar esses usuários.
 Os grupos podem conter apenas usuários, porém um usuário pode pertencer à zero ou mais grupos;
@@ -116,23 +136,49 @@ R: Apesar do conflito do allow e do deny, não seria possível deletar um tópic
 3 - É possível ver as instâncias do ec2 (ec2:DescribeInstances)?
 R: Segunda a lógica do IAM Policy, por não ter uma permissão explicita de acesso, não é possível executar essa ação, pois implicitamente, essa ação já negada por padrão (principio do menor acesso)
 
+#### AWS IAM Identity Center
+Ele é o sucessor do AWS Single Sign-On, e com ele você consegue ter apenas um login para todas as suas contas AWS que ficam dentro de uma AWS Organization. Além disso, é possível conectar com outras cloud applications (salesforce, box, microsoft 365, e etc) ou até mesmo em qqlr outra aplicação, desde que seja realizada uma integração através do SAML2.0. Além disso, é possível também acessar instancias EC2 Windows;
 
+O IAM Identity Center também permite que você escolha qual provedor de identidade (identity provider) será utilizado. Esse identity provider serve para determinar na onde ficará salvo os dados do usuário para o login. Uma opção viável seria utilizar uma funçao do próprio IAM Identity Center chamada identity store. Além dela, é possível utilizar outros identity providers como por exemplo: Active Directory (AD), OneLogin, Okta e etc.
 
-## AWS Organizations
-Serviço global que permite vc gerenciar multiplas contas AWS, sendo que a conta principal é conhecida como "conta de gerenciamento" (managemente account), enquanto que as outras contas, são conhecimentos "contas membros (member accounts). As member accounts podem pertecer apenas a um organização.
-O AWS Organizations considera a cobrança de todas as contas com apenas um método de pagamento, além disso, é possível conseguir descontos nas cobranças dos serviços, devido a alta utilização nas members accounts (EC2, S3, e etc). Vc também pode ter compartilhamento de instancias reservadas e descontos através de multiplas contas com "Saving Plans". Além disso, com o AWS Organization, vc pode ter APIs para automatizar o processo de criação de contas AWS
-Com o AWS Organizations, vc pode ter "Unidades Organizacionais" (Organizational Units - OU) para organizar melhor suas contas AWS. E essa divisão pode ser feita de várias maneiras (divisão por negócio, ambiente ou projetos), conforme a imagem abaixo:
-![Alt text](exemplo_OU.png)
+**Exemplo:**
+![Alt text](exemplo_Identity_center_1.png)
 
-#### Vantagens do AWS Organizations:
-- Maior segurança e organização, pois multiplas contas separadas são mais seguras e mais fáceis de gerenciar do que uma única conta com múltiplas VPC;
-- Facilidade no gerenciamentos de logs: Vc pode habilitar "CloudTrail" em todas as contas, envio de logs para um conta central de logging com S3 e cloudwatch;
-- Habilitar iam roles compartilhadas entre contas para melhor administração das contas;
-- Service Control Policies (SCP): Políticas do IAM aplicadas em OU ou Contas AWS (exceto a management account) para restringir Users e Roles do IAM. Essas políticas por default não liberam nenhum acesso, e precisam ser explicitadas. Abaixo tem um exemplo de cenário de uso para SCP:
-![Alt text](SCP.png)
-Nesse caso, temos 4 OUs (Root, Prod, HR e Finance) e 4 accounts (Management, A, B e C). A Root OU tem uma SCP que concede acesso de admin completo, e a management account está dentro dessa OU porém, com uma SCP que bloqueia o acesso ao Athena. Nesse caso, a management account vai ter total acesso aos serviços da AWS, inclusive ao Athena, pois a SCP da OU é mais prioritária, garantindo total acesso. Para a account A, vamos ter um acesso total ao serviços da AWS (herdou da Root OU), porém não teremos acesso ao RedShift, pois a OU Prod tem uma SCP negando esse acesso e mesmo a account A permitindo com uma SCP o acesso ao RedShift, o acesso será negado, pois a negativa do SCP é mais prioritária.
-Para a account B, vms ter total acesso aos serviços da AWS (herdou da Root OU), não teremos acesso ao RedShif (herdou da OU Prod), e também não teremos acesso à Lambda (herdou da OU HR). E por fim, para Account C, vamos ter total acesso aos serviços da AWS (herdou da Root OU) e bloqueio ao RedShift (herdou da OU Prod); 
+Na imagem acima é possível entender como o Single Sign-On do IAM Identity Center funciona. Primeiro seria necessário acessar o Identity Center, através do browser, e realizar o login. O Identity Center vai consultar o identity provider para verificar e validar esse usuário em uma base (na imagem, fica claro que é possível usar o identity store ou um provedor externo como o Active Directory). Após esse processo, o Identity Center vai conseguir fornecer acesso à contas AWS que estejam com o AWS Organization configuradas, Aplicações Cloud (Salesforce, dropbox e etc) e até mesmo aplicações customizadas (necessário integração atravé sdo SAML2.0). É claro que nem todos os usuário vão conseguir ter acesso a todas aplicações ou contas, você pode controlar as permissões desse usuário através do IAM Identity Center a partir do Permission Sets (Conjunto de permissões).
 
-Abaixo temos dois exemplos diferentes de SCPs:
-![Alt text](exemplo_SCP.png)
-Na imagem mais à esquerda, temos um cenário no qual apenas o dynamodb será bloqueado nessa conta ou OU, e os demais serviços serão liberados. Já na imagem mais à direita, apenas o ec2 e cloudwatch serão liberados, os demais serviços serão bloqueados, pois a SCPs trabalha com permissões explicitas.
+**Exemplo:**
+Na figura abaixo temos um exemplo de funcionamento das Permission Set. Criamos 2 usuários e adicionamos em um grupo "developers"e a partir disso, foi criada uma permission set que vai fornecer aos usuários desse grupo acesso total às contas aws que estão dentro da OU "Development". Além disso, foi gerada uma outra permission set que vai conceder acesso apenas de leitura para os usuários do grupo "developers" em relação as contas aws que estão dentro da OU "Production"
+![Alt text](exemplo_Identity_center_2.png)
+
+**Porém, como essas permission sets funcionam?**
+ Basicamente cada permission set é um conjunto de uma ou mais IAM Policies que vão ser designadas para os usuários ou grupos que acessarem a conta AWS.
+ A cada vez que um usuário loga pelo Identity Center, ele vai estar assumindo uma IAM Role que será criada a partir das policies que são definidas nas permission sets. Um problema que o permission set consegue resolver, é a centralização do gerenciamento de acessos em multiplas contas aws dentro da AWS Organization. A imagem abaixo exemplifica bem um cenário no qual um grupo de database admins precisam ter acesso apenas ao RDS e ao Aurora de multiplas contas AWS que estão em OU diferentes dentro uma AWS Organization. Nesse caso, foi necessário apenas criar uma permission set a partir do Identity Center e designar ela para o grupo de database admins, assim toda vez que algum usuário realizar o login, ele vai estar assumindo um role que vai garantir a ele as permissões necessárias para o RDS e Aurora. No exemplo foi utilizado o RDS e o Aurora, mas o mesmo se vale para aplicações externas (Salesforce, aplicações com SALM2.0 e etc);
+
+ ![Alt text](exemplo_Identity_center_3.png) 
+
+ Por fim, com o IAM Identity Center, é possível ter um controle fino e granular de permissões. Além do permissoin sets, você consegue também controlar permissões através de tags que podem ser atreladas à um usuário do IAM Identity Center, esse recurso é o Attribute-Based Access Control (ABAC). E a partir dessas tags, é possível fornecer acesso à determinados serviços ou recursos da AWS. E o mais legal disso tudo é que com o ABAC, você não vai precisar modificar uma permissão, caso você precise trocar algum acesso de um usuário, ao invés disso, basta editar o valor da tag. Assim, é possível definir uma permissão apenas uma vez, e depois apenas modificar as tags/atributos do usuário do IAM Identity Center. 
+
+#### AWS Directory Services
+
+Antes de falar sobre o AWS Directory Service em si, é necessário antes explicar o que é o Microsoft AD.
+**Microsoft AD** é um sistema largamente utilizado em estrutura on premises, e ele serve como um gerenciador central de segurança, conseguindo criar contas, designar permissões, e ele consegue gerenciar usuário, contas, grupos de segurança, arquivos compartilhados, impressoras e etc.
+Um feature básica de funcionamento, é permitir a validação de login para computadores que estão dentro de uma mesma rede. Por exemplo, na imagem abaixo, temos um usuário john com um password. Esse usuário foi criado no controlador de dominios do microsoft AD, e a partir disso, é possível realizar o login desse usuário em qqlr outro computador que estiver dentro da rede on premise. 
+
+![Alt text](exemplo_microsoft_ad_1.png)
+
+Voltando para o AWS Directory Service (AWS AD), a AWS oferece 3 tipos diferente de uso para esse serviço, sendo eles:
+- AWS Managed Microsoft AD: Nesse caso, você consegue criar seu próprio AD na AWS, e a partir disso, estabelecer uma relação de confiança entre o AWS AD e o on-premise AD. A vantagem dessa abordagem é que é possível gerenciar usuários tanto no serviço on-premise quanto no serviço da aws. Caso o usuário realize um login em um ec2 windows na aws, é possível buscar o login desse usuário no serviço AWS AD e no servidor on-premise e vice-versa; Com essa opção é possível configurar também MFA;
+Exemplo: 
+![Alt text](exemplo_microsoft_ad_2.png)
+- AD Connector: Já nessa abordagem, não temos o AWS AD para criar o seu AD na cloud. Nesse caso, temos um proxy (gateway) que vai redirecionar toda parte de gerenciamento de usuários para o on-premise AD; Com essa opção é possível configurar também MFA;
+Exemplo:
+![Alt text](exemplo_microsoft_ad_3.png)
+- Simple AD: E por fim, temos somente o AWS AD, que vai permitir que você crie e gerencie seus usuários na AWS, sem a necessidade de ter um servidor on-premise do microsoft AD;
+
+**Integração Identity Center e AWS AD**
+É possível conectar o AWS AD com o IAM Identity Center, e existem algumas formas de se fazre isso, dependendo do tipo de AWS AD que está sendo utilizado.
+O primeiro cenário, seria uma conexão direta entre o AWS AD e o IAM Identity Center, uma vez que são dois serviços AWS, a integração é facilitada.
+O segundo cenário seria uma conexão na qual o AWS AD fique no meio da conexão entre o Identity Center e o on-premise AD, conforme mostrado na imagem abaixo:
+![Alt text](exemplo_microsoft_ad_4.png)
+
+Nesse cenário, podemos ter 2 subcasos, sendo que no primeiro, seria necessário estabelecer a relação de confiança de duas vias entre o on-premise AD e o AWS Managed Microsoft AD. Já no segundo subcaso, ao invés de estabelecer essa relação, seria necessário apenas configurar o AD Connector para atuar como proxy, repassando todo gerenciamento de usuários para o on-premise AD.
