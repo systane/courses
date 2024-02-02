@@ -136,7 +136,7 @@ R: Apesar do conflito do allow e do deny, não seria possível deletar um tópic
 3 - É possível ver as instâncias do ec2 (ec2:DescribeInstances)?
 R: Segunda a lógica do IAM Policy, por não ter uma permissão explicita de acesso, não é possível executar essa ação, pois implicitamente, essa ação já negada por padrão (principio do menor acesso)
 
-#### AWS IAM Identity Center
+## AWS IAM Identity Center
 Ele é o sucessor do AWS Single Sign-On, e com ele você consegue ter apenas um login para todas as suas contas AWS que ficam dentro de uma AWS Organization. Além disso, é possível conectar com outras cloud applications (salesforce, box, microsoft 365, e etc) ou até mesmo em qqlr outra aplicação, desde que seja realizada uma integração através do SAML2.0. Além disso, é possível também acessar instancias EC2 Windows;
 
 O IAM Identity Center também permite que você escolha qual provedor de identidade (identity provider) será utilizado. Esse identity provider serve para determinar na onde ficará salvo os dados do usuário para o login. Uma opção viável seria utilizar uma funçao do próprio IAM Identity Center chamada identity store. Além dela, é possível utilizar outros identity providers como por exemplo: Active Directory (AD), OneLogin, Okta e etc.
@@ -158,7 +158,7 @@ Na figura abaixo temos um exemplo de funcionamento das Permission Set. Criamos 2
 
  Por fim, com o IAM Identity Center, é possível ter um controle fino e granular de permissões. Além do permissoin sets, você consegue também controlar permissões através de tags que podem ser atreladas à um usuário do IAM Identity Center, esse recurso é o Attribute-Based Access Control (ABAC). E a partir dessas tags, é possível fornecer acesso à determinados serviços ou recursos da AWS. E o mais legal disso tudo é que com o ABAC, você não vai precisar modificar uma permissão, caso você precise trocar algum acesso de um usuário, ao invés disso, basta editar o valor da tag. Assim, é possível definir uma permissão apenas uma vez, e depois apenas modificar as tags/atributos do usuário do IAM Identity Center. 
 
-#### AWS Directory Services
+## AWS Directory Services
 
 Antes de falar sobre o AWS Directory Service em si, é necessário antes explicar o que é o Microsoft AD.
 **Microsoft AD** é um sistema largamente utilizado em estrutura on premises, e ele serve como um gerenciador central de segurança, conseguindo criar contas, designar permissões, e ele consegue gerenciar usuário, contas, grupos de segurança, arquivos compartilhados, impressoras e etc.
@@ -182,3 +182,41 @@ O segundo cenário seria uma conexão na qual o AWS AD fique no meio da conexão
 ![Alt text](exemplo_microsoft_ad_4.png)
 
 Nesse cenário, podemos ter 2 subcasos, sendo que no primeiro, seria necessário estabelecer a relação de confiança de duas vias entre o on-premise AD e o AWS Managed Microsoft AD. Já no segundo subcaso, ao invés de estabelecer essa relação, seria necessário apenas configurar o AD Connector para atuar como proxy, repassando todo gerenciamento de usuários para o on-premise AD.
+
+## AWS Control Tower
+É um serviço da AWS que permite você configurar e governar de modo seguro e fácil os ambientes de várias contas AWS. O Control Tower usa o AWS Organization para criar contas aws e com ele você tem alguns beneficios:
+- Automatizar a configuração do ambiente da conta aws com apenas alguns clicks;
+- Automatizar gerenciamento de políticas através de guardrails
+- Detectar violações de políticas e remedia-las;
+- Monitorar atividades por meio de um dashboard interativo;
+
+Com o AWS Control Tower, é possível utilizar dois tipos de guard rails, sendo eles:
+- Guardrail preventivo: Nesse guardrail, vc define algumas restrições para todas as contas AWS de uma vez só, como por exemplo, restringir as contas AWS a utilizares somente algumas regiões da AWS. Isso pode ser feito através do SCP do Aws Organizations;
+- Guardrail detectivo: Nesse guardrail, você consegue identificar recursos que estão fora de algum complaince ou regra definida, e isso é feito através do AWS Config. Um exemplo seria identificar recursos aws que não estão tageados e a partir disso tomar alguma ação como notificar algum adiministrador ou executar alguma lambda para adicoinar tags ao recurso;
+
+## Amazon EC2 (Elastic Compute Cloud)
+Serviço de IaaS (Infrastructure as a Service) da aws e ele permite que você consiga:
+- Alugar máquinas virtuais (EC2);
+- Armazenar dados em drives virtuais (EBS);
+- Distribuir a carga entre as máquinas virtuais (ELB);
+- Escalar seus serviços com autoscaling group (ASG);
+- Rodar scripts de inicialização (bootstrapping) conhecidos como "EC2 user data script" para automatizar tarefas de inicialização
+
+#### Tipos de instancias EC2
+A AWS oferece diferentes tipos de instancias que são otimizadas para casos de usos diferentes (armazenamento, memoria, computação e etc), e ela classifica essas instâncias usando o seguinte padrão:
+
+**Exemplo:** m5.2xlarge
+- m: representa a classe da instancia;
+- 5: representa a geração;
+- 2xlarge: representa o tamanho da instancia dentro de uma classe;
+
+A AWS oferece diversos tipos de instâncias, sendo alguns deles:
+
+- Uso generico: Oferecem um balanço entre processamento, rede e memória, tendo um bom match com servidores web ou repositórios de código. Alguns classes conhecidas são: T2, M4, T3, e etc;
+
+- Processamento otimizado: Oferece alta performance para tarefas que exigem bastante processamento, como processos batches, machine learning, gaming servers, web servers que exigem alta performances e etc. Algumas classes conhecidas: C4, C5, e etc;
+
+- Memória otimizada: Alta performance para tarefas que trabalham com grande quantidade de dados em memória, como por exemplo, base de dados não relacional de alta performance, caches em memoria e etc. Algumas classes são R4, R5 e etc;
+
+- Armazenamento otimizado: Perfeitas para tarefas que exigem uma grande quantidade de leitura e escrita de arquivos com grande quantidade de dados, alguns exemplos são: aplicações de Data warehouse, sistemas distruidos de arquivos e etc. Algumas classes são: D2, D3, e etc;
+
