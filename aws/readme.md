@@ -220,3 +220,5 @@ A AWS oferece diversos tipos de instâncias, sendo alguns deles:
 
 - Armazenamento otimizado: Perfeitas para tarefas que exigem uma grande quantidade de leitura e escrita de arquivos com grande quantidade de dados, alguns exemplos são: aplicações de Data warehouse, sistemas distruidos de arquivos e etc. Algumas classes são: D2, D3, e etc;
 
+#### Algumas portas classicas:
+![Alt text](exemplo_security_group_classic_ports.png)
