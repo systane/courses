@@ -222,3 +222,5 @@ A AWS oferece diversos tipos de instâncias, sendo alguns deles:
 
 #### Algumas portas classicas:
 ![Alt text](exemplo_security_group_classic_ports.png)
+
+**OBS:** Toda máquina ec2 da aws tem um usuário (ec2-user) para conseguirmos nos conectar via ssh nele.
